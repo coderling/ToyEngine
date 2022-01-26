@@ -1,0 +1,27 @@
+[
+{
+  "directory": "E:/GitProj/ToyEngine/out/build/windows-default",
+  "command": "C:\\PROGRA~1\\MICROS~4\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1430~1.307\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DUNICODE -D_UNICODE -IE:\\GitProj\\ToyEngine\\src\\core\\interface -IE:\\GitProj\\ToyEngine\\src\\core\\common -IE:\\GitProj\\ToyEngine\\src\\platform\\windows /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 /Fotest\\helloTriangle\\CMakeFiles\\HelloTriangle.dir\\test-hello-triangle.cpp.obj /FdTARGET_COMPILE_PDB /FS -c E:\\GitProj\\ToyEngine\\test\\helloTriangle\\test-hello-triangle.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\helloTriangle\\test-hello-triangle.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/out/build/windows-default",
+  "command": "C:\\PROGRA~1\\MICROS~4\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1430~1.307\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DUNICODE -D_UNICODE -IE:\\GitProj\\ToyEngine\\src\\core\\interface -IE:\\GitProj\\ToyEngine\\src\\core\\common -IE:\\GitProj\\ToyEngine\\src\\platform\\windows /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 /Fotest\\hellowindow\\CMakeFiles\\HelloWindow.dir\\test-hello-window.cpp.obj /FdTARGET_COMPILE_PDB /FS -c E:\\GitProj\\ToyEngine\\test\\hellowindow\\test-hello-window.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\hellowindow\\test-hello-window.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/out/build/windows-default",
+  "command": "C:\\PROGRA~1\\MICROS~4\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1430~1.307\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DUNICODE -D_UNICODE -IE:\\GitProj\\ToyEngine\\src\\core\\interface -IE:\\GitProj\\ToyEngine\\src\\core\\common -IE:\\GitProj\\ToyEngine\\src\\platform\\windows /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 /Fosrc\\core\\common\\CMakeFiles\\Common.dir\\App.cpp.obj /FdTARGET_COMPILE_PDB /FS -c E:\\GitProj\\ToyEngine\\src\\core\\common\\App.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\src\\core\\common\\App.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/out/build/windows-default",
+  "command": "C:\\PROGRA~1\\MICROS~4\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1430~1.307\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DUNICODE -D_UNICODE -IE:\\GitProj\\ToyEngine\\src\\core\\interface -IE:\\GitProj\\ToyEngine\\src\\core\\common -IE:\\GitProj\\ToyEngine\\src\\platform\\windows /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 /Fosrc\\platform\\windows\\CMakeFiles\\Platform.dir\\WinApp.cpp.obj /FdTARGET_COMPILE_PDB /FS -c E:\\GitProj\\ToyEngine\\src\\platform\\windows\\WinApp.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\src\\platform\\windows\\WinApp.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/out/build/windows-default",
+  "command": "C:\\PROGRA~1\\MICROS~4\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1430~1.307\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DUNICODE -D_UNICODE -IE:\\GitProj\\ToyEngine\\src\\core\\interface -IE:\\GitProj\\ToyEngine\\src\\core\\common -IE:\\GitProj\\ToyEngine\\src\\platform\\windows /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 /Fosrc\\platform\\windows\\CMakeFiles\\Platform.dir\\D3D12App.cpp.obj /FdTARGET_COMPILE_PDB /FS -c E:\\GitProj\\ToyEngine\\src\\platform\\windows\\D3D12App.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\src\\platform\\windows\\D3D12App.cpp"
+}
+]

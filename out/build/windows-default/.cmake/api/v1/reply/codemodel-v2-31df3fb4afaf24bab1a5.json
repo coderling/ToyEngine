@@ -1,0 +1,219 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "test",
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-test-Debug-f18be1977b403cfd1a50.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "test"
+				},
+				{
+					"build" : "test/helloTriangle",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-test.helloTriangle-Debug-b9917d7a48cab8819d56.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "test/helloTriangle",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "test/hellowindow",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-test.hellowindow-Debug-6af572aa6a1f4d0bd725.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "test/hellowindow",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						5,
+						7
+					],
+					"jsonFile" : "directory-src-Debug-c94b7c2814d5a21df52c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/core",
+					"childIndexes" : 
+					[
+						6
+					],
+					"jsonFile" : "directory-src.core-Debug-27980f60b5df84566cd6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 0,
+					"source" : "src/core"
+				},
+				{
+					"build" : "src/core/common",
+					"jsonFile" : "directory-src.core.common-Debug-a131723657ce6df3ce80.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 5,
+					"projectIndex" : 0,
+					"source" : "src/core/common",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "src/platform",
+					"childIndexes" : 
+					[
+						8
+					],
+					"jsonFile" : "directory-src.platform-Debug-960328cdc81829b1aecf.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 0,
+					"source" : "src/platform"
+				},
+				{
+					"build" : "src/platform/windows",
+					"jsonFile" : "directory-src.platform.windows-Debug-d3075c835671fbdbe8a6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 7,
+					"projectIndex" : 0,
+					"source" : "src/platform/windows",
+					"targetIndexes" : 
+					[
+						3
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"name" : "ToyEngine",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 6,
+					"id" : "Common::@c53d5c169a899c280af7",
+					"jsonFile" : "target-Common-Debug-5cf88d710525ecc2b6e8.json",
+					"name" : "Common",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "HelloTriangle::@21b86188d9939af2988d",
+					"jsonFile" : "target-HelloTriangle-Debug-114f491a8144744b30ad.json",
+					"name" : "HelloTriangle",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "HelloWindow::@a0c25f53ff17721b0586",
+					"jsonFile" : "target-HelloWindow-Debug-f956c9080c92f4e300b0.json",
+					"name" : "HelloWindow",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "Platform::@d2c628ff967e27c5d2b1",
+					"jsonFile" : "target-Platform-Debug-3e0ec05697c88e547c98.json",
+					"name" : "Platform",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "E:/GitProj/ToyEngine/out/build/windows-default",
+		"source" : "E:/GitProj/ToyEngine"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
