@@ -15,9 +15,10 @@ namespace Toy::Platform
 		void Finalize() override;
 
 		void Tick() override;
-
+		void* GetHwnd() override;
 	protected:
 		int CreateAppWindow() override;
+		int InitGraphics() override;
 
 	private:
 		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);

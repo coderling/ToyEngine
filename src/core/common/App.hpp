@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IApp.hpp"
-#include "AppArgs.hpp"
+#include "GlobalEnvironment.hpp"
 
 namespace Toy::Engine
 {
@@ -17,11 +17,12 @@ namespace Toy::Engine
 
 		void Quit() override;
 		void Destroy() override;
+
 	protected:
 		int CreateAppWindow() override;
+		virtual int InitGraphics();
 
 		static bool quit;
-		AppArgs args;
 	private:
 		App() = delete;
 	};

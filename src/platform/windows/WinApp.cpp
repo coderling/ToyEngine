@@ -71,6 +71,8 @@ int WinApp::CreateAppWindow()
 	return 0;
 }
 
+int WinApp::InitGraphics(){}
+
 void WinApp::Finalize()
 {
 	ReleaseDC(hwnd, hdc);
@@ -91,6 +93,11 @@ void WinApp::Tick()
 		// send msg to windproc
 		DispatchMessage(&msg);
 	}
+}
+
+void* WinApp::GetHwnd()
+{
+	return hwnd;
 }
 
 LRESULT CALLBACK WinApp::WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)

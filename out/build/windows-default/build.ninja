@@ -163,12 +163,12 @@ build test\list_install_components: phony
 #############################################
 # Order-only phony target for HelloTriangle
 
-build cmake_object_order_depends_target_HelloTriangle: phony || test\helloTriangle\CMakeFiles\HelloTriangle.dir
+build cmake_object_order_depends_target_HelloTriangle: phony || cmake_object_order_depends_target_Common cmake_object_order_depends_target_Graphics_D3D12 cmake_object_order_depends_target_Platform
 
 build test\helloTriangle\CMakeFiles\HelloTriangle.dir\test-hello-triangle.cpp.obj: CXX_COMPILER__HelloTriangle_Debug E$:\GitProj\ToyEngine\test\helloTriangle\test-hello-triangle.cpp || cmake_object_order_depends_target_HelloTriangle
   DEFINES = -DUNICODE -D_UNICODE
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
-  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\platform\windows
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
   OBJECT_DIR = test\helloTriangle\CMakeFiles\HelloTriangle.dir
   OBJECT_FILE_DIR = test\helloTriangle\CMakeFiles\HelloTriangle.dir
   TARGET_COMPILE_PDB = test\helloTriangle\CMakeFiles\HelloTriangle.dir\
@@ -182,10 +182,10 @@ build test\helloTriangle\CMakeFiles\HelloTriangle.dir\test-hello-triangle.cpp.ob
 #############################################
 # Link the executable test\helloTriangle\HelloTriangle.exe
 
-build test\helloTriangle\HelloTriangle.exe: CXX_EXECUTABLE_LINKER__HelloTriangle_Debug test\helloTriangle\CMakeFiles\HelloTriangle.dir\test-hello-triangle.cpp.obj
+build test\helloTriangle\HelloTriangle.exe: CXX_EXECUTABLE_LINKER__HelloTriangle_Debug test\helloTriangle\CMakeFiles\HelloTriangle.dir\test-hello-triangle.cpp.obj | src\core\common\Common.lib src\platform\windows\Platform.lib src\core\graphics\d3d12\Graphics_D3D12.lib || src\core\common\Common.lib src\core\graphics\d3d12\Graphics_D3D12.lib src\platform\windows\Platform.lib
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
-  LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
+  LINK_LIBRARIES = src\core\common\Common.lib  src\platform\windows\Platform.lib  src\core\graphics\d3d12\Graphics_D3D12.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = test\helloTriangle\CMakeFiles\HelloTriangle.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -264,7 +264,7 @@ build cmake_object_order_depends_target_HelloWindow: phony || cmake_object_order
 build test\hellowindow\CMakeFiles\HelloWindow.dir\test-hello-window.cpp.obj: CXX_COMPILER__HelloWindow_Debug E$:\GitProj\ToyEngine\test\hellowindow\test-hello-window.cpp || cmake_object_order_depends_target_HelloWindow
   DEFINES = -DUNICODE -D_UNICODE
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
-  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\platform\windows
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
   OBJECT_DIR = test\hellowindow\CMakeFiles\HelloWindow.dir
   OBJECT_FILE_DIR = test\hellowindow\CMakeFiles\HelloWindow.dir
   TARGET_COMPILE_PDB = test\hellowindow\CMakeFiles\HelloWindow.dir\
@@ -476,7 +476,7 @@ build cmake_object_order_depends_target_Common: phony || src\core\common\CMakeFi
 build src\core\common\CMakeFiles\Common.dir\App.cpp.obj: CXX_COMPILER__Common_Debug E$:\GitProj\ToyEngine\src\core\common\App.cpp || cmake_object_order_depends_target_Common
   DEFINES = -DUNICODE -D_UNICODE
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
-  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\platform\windows
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
   OBJECT_DIR = src\core\common\CMakeFiles\Common.dir
   OBJECT_FILE_DIR = src\core\common\CMakeFiles\Common.dir
   TARGET_COMPILE_PDB = src\core\common\CMakeFiles\Common.dir\Common.pdb
@@ -555,6 +555,194 @@ build src\core\common\list_install_components: phony
 
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
+# E:/GitProj/ToyEngine/src/core/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for install/local
+
+build src\core\graphics\CMakeFiles\install\local.util: CUSTOM_COMMAND src\core\graphics\all
+  COMMAND = cmd.exe /C "cd /D E:\GitProj\ToyEngine\out\build\windows-default\src\core\graphics && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake"
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build src\core\graphics\install\local: phony src\core\graphics\CMakeFiles\install\local.util
+
+
+#############################################
+# Utility command for install
+
+build src\core\graphics\CMakeFiles\install.util: CUSTOM_COMMAND src\core\graphics\all
+  COMMAND = cmd.exe /C "cd /D E:\GitProj\ToyEngine\out\build\windows-default\src\core\graphics && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -P cmake_install.cmake"
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build src\core\graphics\install: phony src\core\graphics\CMakeFiles\install.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build src\core\graphics\CMakeFiles\edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D E:\GitProj\ToyEngine\out\build\windows-default\src\core\graphics && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build src\core\graphics\edit_cache: phony src\core\graphics\CMakeFiles\edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build src\core\graphics\CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D E:\GitProj\ToyEngine\out\build\windows-default\src\core\graphics && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" --regenerate-during-build -SE:\GitProj\ToyEngine -BE:\GitProj\ToyEngine\out\build\windows-default"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build src\core\graphics\rebuild_cache: phony src\core\graphics\CMakeFiles\rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build src\core\graphics\list_install_components: phony
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# E:/GitProj/ToyEngine/src/core/graphics/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target Graphics_D3D12
+
+
+#############################################
+# Order-only phony target for Graphics_D3D12
+
+build cmake_object_order_depends_target_Graphics_D3D12: phony || src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+
+build src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\UploadBuffer_D3D12.cpp.obj: CXX_COMPILER__Graphics_D3D12_Debug E$:\GitProj\ToyEngine\src\core\graphics\d3d12\UploadBuffer_D3D12.cpp || cmake_object_order_depends_target_Graphics_D3D12
+  DEFINES = -DUNICODE -D_UNICODE
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
+  OBJECT_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  OBJECT_FILE_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  TARGET_COMPILE_PDB = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Graphics_D3D12.pdb
+  TARGET_PDB = src\core\graphics\d3d12\Graphics_D3D12.pdb
+
+build src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\GPUResource_D3D12.cpp.obj: CXX_COMPILER__Graphics_D3D12_Debug E$:\GitProj\ToyEngine\src\core\graphics\d3d12\GPUResource_D3D12.cpp || cmake_object_order_depends_target_Graphics_D3D12
+  DEFINES = -DUNICODE -D_UNICODE
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
+  OBJECT_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  OBJECT_FILE_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  TARGET_COMPILE_PDB = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Graphics_D3D12.pdb
+  TARGET_PDB = src\core\graphics\d3d12\Graphics_D3D12.pdb
+
+build src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Pipeline_D3D12.cpp.obj: CXX_COMPILER__Graphics_D3D12_Debug E$:\GitProj\ToyEngine\src\core\graphics\d3d12\Pipeline_D3D12.cpp || cmake_object_order_depends_target_Graphics_D3D12
+  DEFINES = -DUNICODE -D_UNICODE
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
+  OBJECT_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  OBJECT_FILE_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  TARGET_COMPILE_PDB = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Graphics_D3D12.pdb
+  TARGET_PDB = src\core\graphics\d3d12\Graphics_D3D12.pdb
+
+build src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Graphics_D3D12.cpp.obj: CXX_COMPILER__Graphics_D3D12_Debug E$:\GitProj\ToyEngine\src\core\graphics\d3d12\Graphics_D3D12.cpp || cmake_object_order_depends_target_Graphics_D3D12
+  DEFINES = -DUNICODE -D_UNICODE
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
+  OBJECT_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  OBJECT_FILE_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  TARGET_COMPILE_PDB = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Graphics_D3D12.pdb
+  TARGET_PDB = src\core\graphics\d3d12\Graphics_D3D12.pdb
+
+build src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\SwapChain_D3D12.cpp.obj: CXX_COMPILER__Graphics_D3D12_Debug E$:\GitProj\ToyEngine\src\core\graphics\d3d12\SwapChain_D3D12.cpp || cmake_object_order_depends_target_Graphics_D3D12
+  DEFINES = -DUNICODE -D_UNICODE
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
+  OBJECT_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  OBJECT_FILE_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  TARGET_COMPILE_PDB = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Graphics_D3D12.pdb
+  TARGET_PDB = src\core\graphics\d3d12\Graphics_D3D12.pdb
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target Graphics_D3D12
+
+
+#############################################
+# Link the static library src\core\graphics\d3d12\Graphics_D3D12.lib
+
+build src\core\graphics\d3d12\Graphics_D3D12.lib: CXX_STATIC_LIBRARY_LINKER__Graphics_D3D12_Debug src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\UploadBuffer_D3D12.cpp.obj src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\GPUResource_D3D12.cpp.obj src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Pipeline_D3D12.cpp.obj src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Graphics_D3D12.cpp.obj src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\SwapChain_D3D12.cpp.obj
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  LINK_FLAGS = /machine:x64
+  OBJECT_DIR = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_COMPILE_PDB = src\core\graphics\d3d12\CMakeFiles\Graphics_D3D12.dir\Graphics_D3D12.pdb
+  TARGET_FILE = src\core\graphics\d3d12\Graphics_D3D12.lib
+  TARGET_PDB = src\core\graphics\d3d12\Graphics_D3D12.pdb
+
+
+#############################################
+# Utility command for install/local
+
+build src\core\graphics\d3d12\CMakeFiles\install\local.util: CUSTOM_COMMAND src\core\graphics\d3d12\all
+  COMMAND = cmd.exe /C "cd /D E:\GitProj\ToyEngine\out\build\windows-default\src\core\graphics\d3d12 && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake"
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build src\core\graphics\d3d12\install\local: phony src\core\graphics\d3d12\CMakeFiles\install\local.util
+
+
+#############################################
+# Utility command for install
+
+build src\core\graphics\d3d12\CMakeFiles\install.util: CUSTOM_COMMAND src\core\graphics\d3d12\all
+  COMMAND = cmd.exe /C "cd /D E:\GitProj\ToyEngine\out\build\windows-default\src\core\graphics\d3d12 && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -P cmake_install.cmake"
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build src\core\graphics\d3d12\install: phony src\core\graphics\d3d12\CMakeFiles\install.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build src\core\graphics\d3d12\CMakeFiles\edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D E:\GitProj\ToyEngine\out\build\windows-default\src\core\graphics\d3d12 && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build src\core\graphics\d3d12\edit_cache: phony src\core\graphics\d3d12\CMakeFiles\edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build src\core\graphics\d3d12\CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D E:\GitProj\ToyEngine\out\build\windows-default\src\core\graphics\d3d12 && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" --regenerate-during-build -SE:\GitProj\ToyEngine -BE:\GitProj\ToyEngine\out\build\windows-default"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build src\core\graphics\d3d12\rebuild_cache: phony src\core\graphics\d3d12\CMakeFiles\rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build src\core\graphics\d3d12\list_install_components: phony
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
 # E:/GitProj/ToyEngine/src/CMakeLists.txt
 # =============================================================================
 
@@ -628,7 +816,7 @@ build cmake_object_order_depends_target_Platform: phony || src\platform\windows\
 build src\platform\windows\CMakeFiles\Platform.dir\WinApp.cpp.obj: CXX_COMPILER__Platform_Debug E$:\GitProj\ToyEngine\src\platform\windows\WinApp.cpp || cmake_object_order_depends_target_Platform
   DEFINES = -DUNICODE -D_UNICODE
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
-  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\platform\windows
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
   OBJECT_DIR = src\platform\windows\CMakeFiles\Platform.dir
   OBJECT_FILE_DIR = src\platform\windows\CMakeFiles\Platform.dir
   TARGET_COMPILE_PDB = src\platform\windows\CMakeFiles\Platform.dir\Platform.pdb
@@ -637,7 +825,16 @@ build src\platform\windows\CMakeFiles\Platform.dir\WinApp.cpp.obj: CXX_COMPILER_
 build src\platform\windows\CMakeFiles\Platform.dir\D3D12App.cpp.obj: CXX_COMPILER__Platform_Debug E$:\GitProj\ToyEngine\src\platform\windows\D3D12App.cpp || cmake_object_order_depends_target_Platform
   DEFINES = -DUNICODE -D_UNICODE
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
-  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\platform\windows
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
+  OBJECT_DIR = src\platform\windows\CMakeFiles\Platform.dir
+  OBJECT_FILE_DIR = src\platform\windows\CMakeFiles\Platform.dir
+  TARGET_COMPILE_PDB = src\platform\windows\CMakeFiles\Platform.dir\Platform.pdb
+  TARGET_PDB = src\platform\windows\Platform.pdb
+
+build src\platform\windows\CMakeFiles\Platform.dir\Platform_Win.cpp.obj: CXX_COMPILER__Platform_Debug E$:\GitProj\ToyEngine\src\platform\windows\Platform_Win.cpp || cmake_object_order_depends_target_Platform
+  DEFINES = -DUNICODE -D_UNICODE
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
+  INCLUDES = -IE:\GitProj\ToyEngine\src\core\interface -IE:\GitProj\ToyEngine\src\include -IE:\GitProj\ToyEngine\src\core\common -IE:\GitProj\ToyEngine\src\core\graphics -IE:\GitProj\ToyEngine\src\core\graphics\interface -IE:\GitProj\ToyEngine\src\platform -IE:\GitProj\ToyEngine\src\platform\windows
   OBJECT_DIR = src\platform\windows\CMakeFiles\Platform.dir
   OBJECT_FILE_DIR = src\platform\windows\CMakeFiles\Platform.dir
   TARGET_COMPILE_PDB = src\platform\windows\CMakeFiles\Platform.dir\Platform.pdb
@@ -651,7 +848,7 @@ build src\platform\windows\CMakeFiles\Platform.dir\D3D12App.cpp.obj: CXX_COMPILE
 #############################################
 # Link the static library src\platform\windows\Platform.lib
 
-build src\platform\windows\Platform.lib: CXX_STATIC_LIBRARY_LINKER__Platform_Debug src\platform\windows\CMakeFiles\Platform.dir\WinApp.cpp.obj src\platform\windows\CMakeFiles\Platform.dir\D3D12App.cpp.obj
+build src\platform\windows\Platform.lib: CXX_STATIC_LIBRARY_LINKER__Platform_Debug src\platform\windows\CMakeFiles\Platform.dir\WinApp.cpp.obj src\platform\windows\CMakeFiles\Platform.dir\D3D12App.cpp.obj src\platform\windows\CMakeFiles\Platform.dir\Platform_Win.cpp.obj
   LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64
   OBJECT_DIR = src\platform\windows\CMakeFiles\Platform.dir
@@ -721,6 +918,10 @@ build Common: phony src\core\common\Common.lib
 
 build Common.lib: phony src\core\common\Common.lib
 
+build Graphics_D3D12: phony src\core\graphics\d3d12\Graphics_D3D12.lib
+
+build Graphics_D3D12.lib: phony src\core\graphics\d3d12\Graphics_D3D12.lib
+
 build HelloTriangle: phony test\helloTriangle\HelloTriangle.exe
 
 build HelloTriangle.exe: phony test\helloTriangle\HelloTriangle.exe
@@ -755,7 +956,7 @@ build src\all: phony src\core\all src\platform\all
 #############################################
 # Folder: E:/GitProj/ToyEngine/out/build/windows-default/src/core
 
-build src\core\all: phony src\core\common\all
+build src\core\all: phony src\core\common\all src\core\graphics\all
 
 # =============================================================================
 
@@ -763,6 +964,20 @@ build src\core\all: phony src\core\common\all
 # Folder: E:/GitProj/ToyEngine/out/build/windows-default/src/core/common
 
 build src\core\common\all: phony src\core\common\Common.lib
+
+# =============================================================================
+
+#############################################
+# Folder: E:/GitProj/ToyEngine/out/build/windows-default/src/core/graphics
+
+build src\core\graphics\all: phony src\core\graphics\d3d12\all
+
+# =============================================================================
+
+#############################################
+# Folder: E:/GitProj/ToyEngine/out/build/windows-default/src/core/graphics/d3d12
+
+build src\core\graphics\d3d12\all: phony src\core\graphics\d3d12\Graphics_D3D12.lib
 
 # =============================================================================
 
@@ -806,14 +1021,14 @@ build test\hellowindow\all: phony test\hellowindow\HelloWindow.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ..\..\..\CMakeLists.txt ..\..\..\src\CMakeLists.txt ..\..\..\src\core\CMakeLists.txt ..\..\..\src\core\common\CMakeLists.txt ..\..\..\src\platform\CMakeLists.txt ..\..\..\src\platform\windows\CMakeLists.txt ..\..\..\test\CMakeLists.txt ..\..\..\test\helloTriangle\CMakeLists.txt ..\..\..\test\hellowindow\CMakeLists.txt C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeRCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\WindowsPaths.cmake CMakeCache.txt CMakeFiles\3.21.21080301-MSVC_2\CMakeCXXCompiler.cmake CMakeFiles\3.21.21080301-MSVC_2\CMakeRCCompiler.cmake CMakeFiles\3.21.21080301-MSVC_2\CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | ..\..\..\CMakeLists.txt ..\..\..\src\CMakeLists.txt ..\..\..\src\core\CMakeLists.txt ..\..\..\src\core\common\CMakeLists.txt ..\..\..\src\core\graphics\CMakeLists.txt ..\..\..\src\core\graphics\d3d12\CMakeLists.txt ..\..\..\src\platform\CMakeLists.txt ..\..\..\src\platform\windows\CMakeLists.txt ..\..\..\test\CMakeLists.txt ..\..\..\test\helloTriangle\CMakeLists.txt ..\..\..\test\hellowindow\CMakeLists.txt C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeRCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\WindowsPaths.cmake CMakeCache.txt CMakeFiles\3.21.21080301-MSVC_2\CMakeCXXCompiler.cmake CMakeFiles\3.21.21080301-MSVC_2\CMakeRCCompiler.cmake CMakeFiles\3.21.21080301-MSVC_2\CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ..\..\..\CMakeLists.txt ..\..\..\src\CMakeLists.txt ..\..\..\src\core\CMakeLists.txt ..\..\..\src\core\common\CMakeLists.txt ..\..\..\src\platform\CMakeLists.txt ..\..\..\src\platform\windows\CMakeLists.txt ..\..\..\test\CMakeLists.txt ..\..\..\test\helloTriangle\CMakeLists.txt ..\..\..\test\hellowindow\CMakeLists.txt C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeRCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\WindowsPaths.cmake CMakeCache.txt CMakeFiles\3.21.21080301-MSVC_2\CMakeCXXCompiler.cmake CMakeFiles\3.21.21080301-MSVC_2\CMakeRCCompiler.cmake CMakeFiles\3.21.21080301-MSVC_2\CMakeSystem.cmake: phony
+build ..\..\..\CMakeLists.txt ..\..\..\src\CMakeLists.txt ..\..\..\src\core\CMakeLists.txt ..\..\..\src\core\common\CMakeLists.txt ..\..\..\src\core\graphics\CMakeLists.txt ..\..\..\src\core\graphics\d3d12\CMakeLists.txt ..\..\..\src\platform\CMakeLists.txt ..\..\..\src\platform\windows\CMakeLists.txt ..\..\..\test\CMakeLists.txt ..\..\..\test\helloTriangle\CMakeLists.txt ..\..\..\test\hellowindow\CMakeLists.txt C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeRCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\Windows.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.21\Modules\Platform\WindowsPaths.cmake CMakeCache.txt CMakeFiles\3.21.21080301-MSVC_2\CMakeCXXCompiler.cmake CMakeFiles\3.21.21080301-MSVC_2\CMakeRCCompiler.cmake CMakeFiles\3.21.21080301-MSVC_2\CMakeSystem.cmake: phony
 
 
 #############################################
