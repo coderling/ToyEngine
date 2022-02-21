@@ -1,8 +1,9 @@
-#include "d3dx12.h"
-#include "UploadBuffer.hpp"
-#include "Utility.hpp"
-
 #include <algorithm>
+#include "d3dx12.h"
+#include "UploadBuffer_D3D12.hpp"
+#include "Utility.hpp"
+#include "../../interface/GlobalEnvironment.hpp"
+
 
 using namespace Toy::Graphics;
 
@@ -43,13 +44,15 @@ void UploadBuffer::Create(const std::wstring& name, size_t size)
 
 void* UploadBuffer::Map()
 {
-	void* memory;
-	p_resource->Map(0, &CD3DX12_RANGE(0, buffer_size), &memory);
+	void* memory = nullptr;
+	const auto& range = CD3DX12_RANGE(0, buffer_size);
+	p_resource->Map(0, &range, &memory);
 
 	return memory;
 }
 
-void UploadBuffer::UnMap(size_t begin = 0, size_t end = -1)
+void UploadBuffer::UnMap(size_t begin, size_t end)
 {
-	p_resource->Unmap(0, &CD3DX12_RANGE(begin, std::min(end, buffer_size)));
+	const auto& range = CD3DX12_RANGE(begin, (std::min)(end, buffer_size));
+	p_resource->Unmap(0, &range);
 }

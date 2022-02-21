@@ -1,2 +1,1 @@
-add_subdirectory(helloTriangle)
 add_subdirectory(hellowindow)

@@ -13,6 +13,7 @@ int WinApp::CreateAppWindow()
 
 	ZeroMemory(&wc, sizeof(WNDCLASSEX));
 
+	auto args = this->GetArgs();
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = WindowProc;
@@ -20,7 +21,7 @@ int WinApp::CreateAppWindow()
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	USES_CONVERSION;
-	wc.lpszClassName = A2W(args.app_name);
+	wc.lpszClassName = A2W(args->app_name);
 
 	if (!RegisterClassEx(&wc))
 	{
@@ -40,8 +41,8 @@ int WinApp::CreateAppWindow()
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, // window position x
 		CW_USEDEFAULT, // window position y
-		args.screen_width + add_width,
-		args.screen_height + add_height,
+		args->screen_width + add_width,
+		args->screen_height + add_height,
 		NULL,
 		NULL,
 		instance,
@@ -70,8 +71,6 @@ int WinApp::CreateAppWindow()
 	ShowWindow(hwnd, SW_SHOW);
 	return 0;
 }
-
-int WinApp::InitGraphics(){}
 
 void WinApp::Finalize()
 {

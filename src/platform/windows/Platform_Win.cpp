@@ -1,4 +1,4 @@
-#include "Platform.hpp"
+#include "../Platform.hpp"
 #include "D3D12App.hpp"
 
 using namespace Toy::Platform;

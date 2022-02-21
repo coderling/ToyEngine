@@ -4,7 +4,7 @@
 
 namespace Toy::Engine
 {
-class ISystem : public IObject
+class ISystem : public IObject, public NoCopy
 {
 public:
 	virtual int Initialize() = 0;

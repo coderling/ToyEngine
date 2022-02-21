@@ -1,5 +1,6 @@
 #include <wrl.h>
-#include "GPUResource.hpp"
+#include "GPUResource_D3D12.hpp"
+#include "../../interface/GlobalEnvironment.hpp"
 
 using namespace Toy::Graphics;
 using namespace Microsoft::WRL;

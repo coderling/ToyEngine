@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Def.hpp"
 #include "IGraphics.hpp"
 #include <memory>
 #include <wrl.h>
@@ -18,11 +17,13 @@ namespace Toy::Graphics
 		void Destroy() override;
 	
 		IDevice* GetDevice() const noexcept override { return device.Get(); }
-		ISwapChain* GetSwapChain() const noexcept { return swapchain.Get(); }
+		ISwapChain* GetSwapChain() const noexcept override { return swapchain.get(); }
+		IGraphicsCommandQueue* GetCommandQueue() override { return command_queue.get(); }
 	
 	private:
 		ComPtr<IDevice> device;
-		ComPtr<ISwapChain> swapchain;
-		ComPtr<IDeviceCommandQueue> command_queue;
+		std::unique_ptr<ISwapChain> swapchain;
+		std::unique_ptr<IGraphicsCommandQueue> command_queue;
+		ComPtr<IDeviceCommandAllocator> common_allocator;
 	};
 }

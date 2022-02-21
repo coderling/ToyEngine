@@ -1,25 +1,24 @@
 #pragma once
 
 #include <wrl.h>
-#include "GraphicsDef.hpp"
-#include "IObject.hpp"
+#include "IGPUResource.hpp"
 
 using namespace Toy::Engine;
 using namespace Microsoft::WRL;
 
 namespace Toy::Graphics
 {
-	class GPUResource : public IObject
+	class GPUResource : public IGPUResource
 	{
 	public:
 		GPUResource();
-		virtual void GPUResource() { Destroy(); }
+		virtual ~GPUResource() { Destroy(); }
 		IDeviceResource* operator->();
 		const IDeviceResource* operator->() const;
-		IDeviceResource* GetResource();
-		const IDeviceResource* GetResource() const;
-		IDeviceResource** GetAddressOf();
-		GPU_VIRTUAL_ADDRESS GetGpuVirtualAddress() const;
+		IDeviceResource* GetResource() override;
+		const IDeviceResource* GetResource() const override;
+		IDeviceResource** GetAddressOf() override;
+		GPU_VIRTUAL_ADDRESS GetGpuVirtualAddress() const override;
 		void Destroy() override;
 protected:
 	ComPtr<IDeviceResource> p_resource;

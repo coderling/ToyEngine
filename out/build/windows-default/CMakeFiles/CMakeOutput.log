@@ -26,8 +26,8 @@ The CXX compiler identification is MSVC, found in "E:/GitProj/ToyEngine/out/buil
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: E:/GitProj/ToyEngine/out/build/windows-default/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_d5d63 && [1/2] Building CXX object CMakeFiles\cmTC_d5d63.dir\CMakeCXXCompilerABI.cpp.obj
-[2/2] Linking CXX executable cmTC_d5d63.exe
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_aebad && [1/2] Building CXX object CMakeFiles\cmTC_aebad.dir\CMakeCXXCompilerABI.cpp.obj
+[2/2] Linking CXX executable cmTC_aebad.exe
 
 
 

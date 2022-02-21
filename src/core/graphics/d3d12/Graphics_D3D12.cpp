@@ -1,10 +1,19 @@
-#include "Graphics_D3D12.hpp"
-#include "Utility.hpp"a
-#include "IApp.hpp"
 #include <wrl.h>
+
+#include "Utility.hpp"
+#include "../../interface/IApp.hpp"
+#include "../../interface/GlobalEnvironment.hpp"
+#include "Graphics_D3D12.hpp"
+#include "GraphicsCommandQueue_D3D12.hpp"
+#include "SwapChain_D3D12.hpp"
 
 using namespace Toy::Graphics;
 using namespace Microsoft::WRL;
+
+std::unique_ptr<IGraphics> IGraphics::Create()
+{
+	return std::make_unique<Graphics>();
+}
 
 int Graphics::Initialize()
 {
@@ -22,7 +31,7 @@ int Graphics::Initialize()
 	ComPtr<IDXGIFactory7> factory;
 	ASSERT_SUCCEEDED(CreateDXGIFactory2(dxg_flactory_flags, MY_IID_PPV_ARGS(&factory)));
 
-	if (IApp::env->app->GetArgs().use_wrap_device)
+	if (IApp::env->GetApp()->GetArgs()->use_wrap_device)
 	{
 		ComPtr<IDXGIAdapter> wrap_adapter;
 		ASSERT_SUCCEEDED(factory->EnumWarpAdapter(MY_IID_PPV_ARGS(&wrap_adapter)));
@@ -56,6 +65,18 @@ int Graphics::Initialize()
 		}
 	}
 
+
+	D3D12_COMMAND_QUEUE_DESC queue_desc = {};
+	queue_desc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
+	queue_desc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
+	command_queue =  std::make_unique<GraphicsCommandQueue>(&queue_desc);
+
+	auto psw = std::make_unique<SwapChain>();
+	psw->Initialize(factory.Get());
+	swapchain = std::move(psw);
+
+	ASSERT_SUCCEEDED(device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, MY_IID_PPV_ARGS(&common_allocator)));
+	// todo descriptor heaps
 	return 0;
 }
 

@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <windowsx.h>
 
-#include <App.hpp>
+#include "../core/common/App.hpp"
 
 using namespace Toy::Engine;
 
@@ -18,7 +18,6 @@ namespace Toy::Platform
 		void* GetHwnd() override;
 	protected:
 		int CreateAppWindow() override;
-		int InitGraphics() override;
 
 	private:
 		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);

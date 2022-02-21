@@ -19,13 +19,5 @@ set(d3d12_libs
 "d3dcompiler.lib"
 )
 
-include_directories("${PROJECT_SOURCE_DIR}/src/core/interface")
-include_directories("${PROJECT_SOURCE_DIR}/src/include")
-include_directories("${PROJECT_SOURCE_DIR}/src/core/common")
-include_directories("${PROJECT_SOURCE_DIR}/src/core/graphics")
-include_directories("${PROJECT_SOURCE_DIR}/src/core/graphics/interface")
-include_directories("${PROJECT_SOURCE_DIR}/src/platform")
-include_directories("${PROJECT_SOURCE_DIR}/src/platform/windows")
-
-add_subdirectory(test)
 add_subdirectory(src)
+add_subdirectory(test)

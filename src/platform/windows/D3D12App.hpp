@@ -8,8 +8,8 @@ namespace Toy::Platform
 	{
 	public:
 		explicit D3D12App(const AppArgs& args) : WinApp(args){}
-
+		void Tick() override;
 	protected:
-		int InitGraphics() override;
+	
 	};
 }

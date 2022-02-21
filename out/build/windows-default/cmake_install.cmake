@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("E:/GitProj/ToyEngine/out/build/windows-default/test/cmake_install.cmake")
   include("E:/GitProj/ToyEngine/out/build/windows-default/src/cmake_install.cmake")
+  include("E:/GitProj/ToyEngine/out/build/windows-default/test/cmake_install.cmake")
 
 endif()
 
