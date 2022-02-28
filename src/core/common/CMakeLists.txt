@@ -1,9 +1,32 @@
 add_library(Common OBJECT)
-target_sources(Common
-	PRIVATE "App.cpp"
+
+target_compile_definitions(Common
+	PUBLIC
+		"$<BUILD_INTERFACE:Engine_EXPORTS>"
 )
 
+target_sources(Common
+	PRIVATE "App.cpp"
+ )
+
 target_include_directories(Common
-	PUBLIC "${PROJECT_SOURCE_DIR}/src/core/interface"
-				  "${PROJECT_SOURCE_DIR}/src/common"
+	PUBLIC 
+				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/interface>"
+				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/common>"
+				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/graphics>"
+				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/graphics/interface>"
+				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
+)
+
+set(public_headers
+	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/AppArgs.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/GlobalEnvironment.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IApp.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IObject.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/ISystem.hpp"
+)
+
+set_target_properties(Common
+	PROPERTIES
+		PUBLIC_HEADER "${public_headers}"
 )

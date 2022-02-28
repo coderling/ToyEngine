@@ -9,7 +9,7 @@ using namespace Toy::Graphics;
 
 void UploadBuffer::Create(const std::wstring& name, size_t size)
 {
-	Destroy();
+	OnDestroy();
 
 	buffer_size = size;
 	

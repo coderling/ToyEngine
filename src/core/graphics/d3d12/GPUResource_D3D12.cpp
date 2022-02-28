@@ -10,7 +10,7 @@ GPUResource::GPUResource()
 	usage_state(D3D12_RESOURCE_STATE_COMMON),
 	transitioning_state((D3D12_RESOURCE_STATES)-1) {}
 
-void GPUResource::Destroy()
+void GPUResource::OnDestroy()
 {
 	p_resource = nullptr;
 	gpu_virtual_address = GPU_VIRTUAL_ADDRESS_NULL;

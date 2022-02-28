@@ -31,7 +31,7 @@ void GraphicsCommandQueue::WaitGPU()
 
 }
 
-void GraphicsCommandQueue::Destroy()
+void GraphicsCommandQueue::OnDestroy()
 {
 
 }

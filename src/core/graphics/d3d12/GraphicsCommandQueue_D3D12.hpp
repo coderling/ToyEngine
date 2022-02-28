@@ -16,11 +16,11 @@ namespace Toy::Graphics
 		void ExecuteCommandLists(std::size_t num, IGraphicsCommandList* const *cmd_list) override;
 		void ExecuteCommandListsSync(std::size_t num,  IGraphicsCommandList* const *cmd_lists) override;
 		void WaitGPU() override;
-		void Destroy() override;
 
 		GraphicsCommandQueue(const COMMAND_QUEUE_DESC* desc);
 		GraphicsCommandQueue() = delete;
-
+	protected:
+		void OnDestroy() override;
 	private:
 		ComPtr<IDeviceCommandQueue> common_queue;
 	};

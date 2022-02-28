@@ -24,7 +24,7 @@ int App::Initialize()
 		return ret;
 	}
 
-	ret = InitGraphics();
+	ret = SystemSetup();
 	if (ret != 0)
 	{
 		Quit();
@@ -34,9 +34,15 @@ int App::Initialize()
 	return 0;
 }
 
-void App::Finalize(){ }
+void App::Finalize()
+{
+	system_mgr->Destroy();
+}
 
-void App::Tick(){}
+void App::Tick()
+{
+	system_mgr->Tick();
+}
 
 bool App::IsQuit() const
 {
@@ -53,15 +59,20 @@ const AppArgs* App::GetArgs() const noexcept
 	return args.get();
 }
 
-void App::Destroy() {
-	Finalize();
-}
-
 int App::CreateAppWindow() { return 0; }
 
-int App::InitGraphics()
+int App::SystemSetup()
 {
-	IApp::env->graphics = Toy::Graphics::IGraphics::Create();
+	system_mgr = std::make_unique<SystemMgr>();
+	system_mgr->Initialize();
+	IApp::env->graphics = Toy::Graphics::IGraphics::GetInstance();
 	int ret = IApp::env->graphics->Initialize();
+	if (ret != 0)
+		return ret;
+	
+	IApp::env->pipeline = Toy::Graphics::IPipeline::GetInstance();
+	ret = IApp::env->pipeline->Initialize();
+	system_mgr->RegisterSystem(IApp::env->pipeline);
+
 	return ret;
 }

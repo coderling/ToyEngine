@@ -10,7 +10,6 @@ namespace Toy::Graphics
 	{
 	public:
 		UploadBuffer(IDevice* device) :device(device), buffer_size(0) {}
-		virtual ~UploadBuffer() { Destroy(); }
 
 		void Create(const std::wstring& name, size_t size) override;
 

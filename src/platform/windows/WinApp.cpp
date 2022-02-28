@@ -20,8 +20,7 @@ int WinApp::CreateAppWindow()
 	wc.hInstance = instance;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	USES_CONVERSION;
-	wc.lpszClassName = A2W(args->app_name);
+	wc.lpszClassName = (args->app_name.c_str());
 
 	if (!RegisterClassEx(&wc))
 	{

@@ -54,7 +54,7 @@ void SwapChain::SetFullScreen(bool state)
 
 }
 
-void SwapChain::Destroy()
+void SwapChain::OnDestroy()
 {
 
 }

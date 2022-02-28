@@ -12,14 +12,12 @@ namespace Toy::Graphics
 	{
 	public:
 		int Initialize()  override;
-		void Tick() override;
-		void Finalize() override;
-		void Destroy() override;
 	
 		IDevice* GetDevice() const noexcept override { return device.Get(); }
 		ISwapChain* GetSwapChain() const noexcept override { return swapchain.get(); }
 		IGraphicsCommandQueue* GetCommandQueue() override { return command_queue.get(); }
-	
+	protected:
+		void Finalize() override;
 	private:
 		ComPtr<IDevice> device;
 		std::unique_ptr<ISwapChain> swapchain;

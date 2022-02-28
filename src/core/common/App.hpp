@@ -1,8 +1,10 @@
 #pragma once
 
-#include "../interface/IApp.hpp"
+#include "IApp.hpp"
+#include "../components/SystemMgr.hpp"
 
 #include <memory>
+#include <iostream>
 
 namespace Toy::Engine
 {
@@ -10,7 +12,7 @@ namespace Toy::Engine
 	{
 	public:
 		explicit App(const AppArgs& args);
-		~App() noexcept {}
+		~App() noexcept override { std::cout << "~App()" << std::endl; }
 		int  Initialize() override;
 		void Finalize() override;
 		void Tick() override;
@@ -20,15 +22,15 @@ namespace Toy::Engine
 		[[nodiscard("App::GetArgs")]] const AppArgs* GetArgs() const noexcept override;
 	
 		void Quit() override;
-		void Destroy() override;
 
 	protected:
 		int CreateAppWindow() override;
 
 		static bool quit;
 	private:
-		int InitGraphics();
+		int SystemSetup();
 
 		std::unique_ptr<AppArgs> args;
+		std::unique_ptr<SystemMgr> system_mgr;
 	};
 }

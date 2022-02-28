@@ -1,16 +1,27 @@
 #include "../Platform.hpp"
-#include "D3D12App.hpp"
+#include "WinApp.hpp"
+#include <memory>
 
-using namespace Toy::Platform;
+std::unique_ptr<IApp> p_app;
 
-bool StartEngine(const std::wstring& title)
+
+int Toy::Platform::InitEngine(const std::wstring& title)
 {
-	const AppArgs args;
-	IApp* p_app = new D3D12App(args);
+	const AppArgs args(title);
+	return InitEngine(args);
+}
+int Toy::Platform::InitEngine(const Toy::Engine::AppArgs& args)
+{
+	p_app = std::make_unique<WinApp>(args);
 	const int& ret = p_app->Initialize();
-	if(ret != 0)
+	return ret;
+}
+
+int Toy::Platform::StartEngine()
+{
+	if (p_app == nullptr)
 	{
-		return ret;
+		return -1;
 	}
 
 	while (!p_app->IsQuit())
@@ -18,5 +29,6 @@ bool StartEngine(const std::wstring& title)
 		p_app->Tick();
 	}
 
-	return true;
+	p_app->Destroy();
+	return 0;
 }

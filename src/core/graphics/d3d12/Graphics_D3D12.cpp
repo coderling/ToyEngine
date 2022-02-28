@@ -10,9 +10,15 @@
 using namespace Toy::Graphics;
 using namespace Microsoft::WRL;
 
-std::unique_ptr<IGraphics> IGraphics::Create()
+std::unique_ptr<IGraphics> graphics;
+
+IGraphics* IGraphics::GetInstance()
 {
-	return std::make_unique<Graphics>();
+	if (graphics == nullptr)
+	{
+		graphics = std::make_unique<Graphics>();
+	}
+	return graphics.get();
 }
 
 int Graphics::Initialize()
@@ -82,15 +88,4 @@ int Graphics::Initialize()
 
 void Graphics::Finalize()
 {
-	Destroy();
-}
-
-void Graphics::Tick()
-{
-
-}
-
-void Graphics::Destroy()
-{
-
 }
