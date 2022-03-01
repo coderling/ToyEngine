@@ -1,4 +1,6 @@
 #include "Pipeline.hpp"
+#include "IApp.hpp"
+#include "GlobalEnvironment.hpp"
 
 using namespace Toy::Graphics;
 
@@ -55,6 +57,7 @@ void Pipeline::Tick()
 		}
 	}
 	AfterRender();
+	Toy::Engine::IApp::env->GetGraphics()->GetSwapChain()->Present();
 }
 
 void Pipeline::AddPipelineFragment(PipelineFragment* fg)

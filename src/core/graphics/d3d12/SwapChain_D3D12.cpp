@@ -35,13 +35,14 @@ int SwapChain::Initialize(IDXGIFactory* factory)
 		auto command_queue = p_env->GetGraphics()->GetCommandQueue()->GetDeviceQueue();
 		HWND hwnd = reinterpret_cast<HWND>(p_env->GetApp()->GetHwnd());
 		ASSERT_SUCCEEDED(factory4->CreateSwapChainForHwnd(command_queue, hwnd, &swap_desc, &fsSwapChainDesc, nullptr, &tswapchain));
+		tswapchain.As(&swapchain);
 	}
 	return 0;
 }
 
 void SwapChain::Present()
 {
-
+	swapchain->Present(1, 0);
 }
 
 void SwapChain::Resize(uint32_t width, uint32_t height)
