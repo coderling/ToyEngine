@@ -22,6 +22,7 @@ set(public_headers
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IObject.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/ISystem.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IAllocator.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/Align.hpp"
 )
 
 set_target_properties(Common

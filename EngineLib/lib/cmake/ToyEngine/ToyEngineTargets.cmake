@@ -70,6 +70,7 @@ add_library(ToyEngine::Platform INTERFACE IMPORTED)
 
 set_target_properties(ToyEngine::Platform PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:ToyEngine::Components>"
 )
 
 # Create imported target ToyEngine::Graphics
@@ -77,7 +78,7 @@ add_library(ToyEngine::Graphics INTERFACE IMPORTED)
 
 set_target_properties(ToyEngine::Graphics PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "d3d12.lib;dxgi.lib;d3dcompiler.lib"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:ToyEngine::Common>;\$<LINK_ONLY:d3d12.lib>;\$<LINK_ONLY:dxgi.lib>;\$<LINK_ONLY:d3dcompiler.lib>"
 )
 
 # Create imported target ToyEngine::Components

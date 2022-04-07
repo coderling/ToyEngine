@@ -7,7 +7,7 @@ using namespace Toy::Engine;
 
 int main(int argc, char** argv)
 {
-	AppArgs args(L"HelloWindow");
+	AppArgs args("HelloWindow");
 	Toy::Platform::InitEngine(args);
 	Toy::Platform::StartEngine();
 	return 0;

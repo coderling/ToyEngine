@@ -40,8 +40,6 @@ get_target_property(CommonHeaders Common PUBLIC_HEADER)
 get_target_property(GraphicsHeaders Graphics PUBLIC_HEADER)
 get_target_property(PlatformHeaders Graphics PUBLIC_HEADER)
 
-message("KKK: ${CMAKE_PROJECT_VERSION}")
-message("KKK: ${PROJECT_VERSION_MAJOR}")
 set_target_properties(Engine
 	PROPERTIES
 		POSITION_INDEPENDENT_CODE 1 # 告诉编译器生成位置无关的代码，都采用相对路径。

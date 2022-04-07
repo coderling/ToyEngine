@@ -5,9 +5,14 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(ToyEngine REQUIRED CONFIG) 
 
+enable_testing()
+
 add_executable(test_align "test-align.cpp")
 
-target_link_libraries(test_align PRIVATE ToyEngine::Engine)
+target_link_libraries(test_align PRIVATE ToyEngine::Engine GTest::gtest_main)
+
+include(GoogleTest)
+gtest_discover_tests(test_align)
 
 # copy debug dll to debug run dir
 get_property(_location TARGET ToyEngine::Engine PROPERTY LOCATION)
