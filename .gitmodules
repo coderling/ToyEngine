@@ -1,3 +1,0 @@
-[submodule "ThirdLib/googletest"]
-	path = ThirdLib/googletest
-	url = https://github.com/coderling/googletest.git
