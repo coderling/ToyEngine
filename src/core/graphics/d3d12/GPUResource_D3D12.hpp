@@ -10,10 +10,10 @@ namespace Toy::Graphics
 {
 	class GPUResource : public IGPUResource
 	{
+		friend class GraphicsCommandlist;
+		friend class UploadBuffer;
 	public:
 		GPUResource();
-		IDeviceResource* operator->();
-		const IDeviceResource* operator->() const;
 		IDeviceResource* GetResource() override;
 		const IDeviceResource* GetResource() const override;
 		IDeviceResource** GetAddressOf() override;

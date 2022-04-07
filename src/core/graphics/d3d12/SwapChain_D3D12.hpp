@@ -17,6 +17,7 @@ namespace Toy::Graphics
 		void Resize(uint32_t width, uint32_t height) override;
 		void SetFullScreen(bool state) override;
 		bool IsFullScreen() const noexcept override { return is_fullscreen; }
+		uint32_t GetCurrentBackBufferIndex() override;
 	protected:
 		void OnDestroy() override;
 	private:

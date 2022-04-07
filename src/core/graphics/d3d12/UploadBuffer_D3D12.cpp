@@ -2,12 +2,21 @@
 #include "d3dx12.h"
 #include "UploadBuffer_D3D12.hpp"
 #include "Utility.hpp"
-#include "../../interface/GlobalEnvironment.hpp"
-
+#include "GlobalEnvironment.hpp"
+#include "IApp.hpp"
+#include "EngineUtility.hpp"
 
 using namespace Toy::Graphics;
 
-void UploadBuffer::Create(const std::wstring& name, size_t size)
+std::unique_ptr<IUploadBuffer> IUploadBuffer::Create(const std::string& name, size_t size)
+{
+	auto buffer = std::make_unique<UploadBuffer>();
+	buffer->Init(name, size);
+
+	return buffer;
+}
+
+void UploadBuffer::Init(const std::string& name, size_t size)
 {
 	OnDestroy();
 
@@ -31,14 +40,15 @@ void UploadBuffer::Create(const std::wstring& name, size_t size)
 	resource_desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	resource_desc.Flags = D3D12_RESOURCE_FLAG_NONE;
 
+	auto device = Toy::Engine::IApp::env->GetGraphics()->GetDevice();
 	ASSERT_SUCCEEDED(device->CreateCommittedResource(&heap_props, D3D12_HEAP_FLAG_NONE,
-		&resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, MY_IID_PPV_ARGS(&p_resource) ));
+		&resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, MY_IID_PPV_ARGS(&resource.p_resource) ));
 
-	gpu_virtual_address = p_resource->GetGPUVirtualAddress();
+	resource.gpu_virtual_address = resource.p_resource->GetGPUVirtualAddress();
 
 #ifdef RELEASE
 #else
-	p_resource->SetName(name.c_str());
+	resource.p_resource->SetName(s2ws(name).c_str());
 #endif
 }
 
@@ -46,13 +56,38 @@ void* UploadBuffer::Map()
 {
 	void* memory = nullptr;
 	const auto& range = CD3DX12_RANGE(0, buffer_size);
-	p_resource->Map(0, &range, &memory);
+	resource.p_resource->Map(0, &range, &memory);
 
 	return memory;
 }
 
 void UploadBuffer::UnMap(size_t begin, size_t end)
 {
-	const auto& range = CD3DX12_RANGE(begin, (std::min)(end, buffer_size));
-	p_resource->Unmap(0, &range);
+	const auto& range = CD3DX12_RANGE(begin, std::min(end, buffer_size));
+	resource.p_resource->Unmap(0, &range);
+}
+
+IDeviceResource* UploadBuffer::GetResource()
+{
+	return resource.GetResource();
+}
+
+const IDeviceResource* UploadBuffer::GetResource() const
+{
+	return resource.GetResource();
+}
+
+IDeviceResource** UploadBuffer::GetAddressOf()
+{
+	return resource.GetAddressOf();
+}
+
+GPU_VIRTUAL_ADDRESS UploadBuffer::GetGpuVirtualAddress() const
+{
+	return resource.GetGpuVirtualAddress();
+}
+
+void UploadBuffer::OnDestroy()
+{
+	resource.Destroy();
 }

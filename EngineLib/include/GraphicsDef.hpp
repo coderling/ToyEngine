@@ -15,6 +15,7 @@ typedef ID3D12CommandQueue IDeviceCommandQueue;
 typedef ID3D12CommandAllocator IDeviceCommandAllocator;
 typedef ID3D12GraphicsCommandList IDeviceCommandList;
 
+typedef D3D12_COMMAND_LIST_TYPE COMMAND_LIST_TYPE;
 // command queue args
 typedef D3D12_COMMAND_QUEUE_DESC  COMMAND_QUEUE_DESC;
 

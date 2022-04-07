@@ -21,7 +21,14 @@ namespace Toy::Graphics
 		void Render() override;
 		void BeforeRender() override;
 		void AfterRender() override;
+
 		
+		std::unordered_set<PipelineFragment*>& GetFuncs(const PIPELINE_STAGE& st) noexcept;
+		void ExecuteFuncs(const PIPELINE_STAGE& st);
+		void FinishFrame();
+
+		std::unordered_set<PipelineFragment*> custom_render_funcs_before;
 		std::unordered_set<PipelineFragment*> custom_render_funcs;
+		std::unordered_set<PipelineFragment*> custom_render_funcs_after;
 	};
 }

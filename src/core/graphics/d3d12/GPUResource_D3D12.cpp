@@ -16,16 +16,6 @@ void GPUResource::OnDestroy()
 	gpu_virtual_address = GPU_VIRTUAL_ADDRESS_NULL;
 }
 
-IDeviceResource* GPUResource::operator->() 
-{
-	return p_resource.Get();
-}
-
-const IDeviceResource* GPUResource::operator->()  const
-{
-	return p_resource.Get();
-}
-
 IDeviceResource* GPUResource::GetResource()
 {
 	return p_resource.Get();

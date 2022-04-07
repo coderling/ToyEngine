@@ -11,8 +11,10 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    Toy::Platform::InitEngine(L"HelloTriangle");
-    std::unique_ptr<Toy::Graphics::PipelineFragment> fg = std::make_unique<Toy::Graphics::PipelineFragment>();
+    Toy::Engine::AppArgs args("HelloTriangle");
+    args.ParseCommandArgs(argc, argv);
+    Toy::Platform::InitEngine(args);
+    std::unique_ptr<Toy::Graphics::PipelineFragment> fg = std::make_unique<Toy::Graphics::PipelineFragment>(Toy::Graphics::PIPELINE_STAGE::ONRENDER);
     auto logic = std::make_unique<RenderLogic>();
     fg->Init(logic.get());
     Toy::Engine::IApp::env->GetPipeline()->AddPipelineFragment(fg.get());

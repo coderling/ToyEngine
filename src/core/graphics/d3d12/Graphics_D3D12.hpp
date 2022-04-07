@@ -15,7 +15,8 @@ namespace Toy::Graphics
 	
 		IDevice* GetDevice() const noexcept override { return device.Get(); }
 		ISwapChain* GetSwapChain() const noexcept override { return swapchain.get(); }
-		IGraphicsCommandQueue* GetCommandQueue() override { return command_queue.get(); }
+		IGraphicsCommandQueue* GetCommandQueue() const noexcept override { return command_queue.get(); }
+		void WaitForGpu() override;
 	protected:
 		void Finalize() override;
 	private:
@@ -23,5 +24,11 @@ namespace Toy::Graphics
 		std::unique_ptr<ISwapChain> swapchain;
 		std::unique_ptr<IGraphicsCommandQueue> command_queue;
 		ComPtr<IDeviceCommandAllocator> common_allocator;
+
+		//synchronization
+		UINT frame_index = 0;
+		HANDLE fence_event;
+		ComPtr<ID3D12Fence> fence;
+		UINT64 fence_value;
 	};
 }

@@ -5,7 +5,7 @@
 std::unique_ptr<IApp> p_app;
 
 
-int Toy::Platform::InitEngine(const std::wstring& title)
+int Toy::Platform::InitEngine(const std::string & title)
 {
 	const AppArgs args(title);
 	return InitEngine(args);

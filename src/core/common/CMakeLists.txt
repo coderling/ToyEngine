@@ -6,15 +6,12 @@ target_compile_definitions(Common
 )
 
 target_sources(Common
-	PRIVATE "App.cpp"
- )
+	PRIVATE "VariableSizeAllocationsManager.cpp")
 
 target_include_directories(Common
 	PUBLIC 
 				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/interface>"
 				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/common>"
-				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/graphics>"
-				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/graphics/interface>"
 				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
 )
 
@@ -24,6 +21,7 @@ set(public_headers
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IApp.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IObject.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/ISystem.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IAllocator.hpp"
 )
 
 set_target_properties(Common

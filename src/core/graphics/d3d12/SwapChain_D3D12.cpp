@@ -55,6 +55,11 @@ void SwapChain::SetFullScreen(bool state)
 
 }
 
+uint32_t SwapChain::GetCurrentBackBufferIndex()
+{
+	return swapchain->GetCurrentBackBufferIndex();
+}
+
 void SwapChain::OnDestroy()
 {
 

@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <windowsx.h>
 
-#include "../core/common/App.hpp"
+#include <App.hpp>
 
 using namespace Toy::Engine;
 

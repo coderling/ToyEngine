@@ -4,6 +4,7 @@
 #include "GraphicsDef.hpp"
 #include "IGraphicsCommandList.hpp"
 #include <array>
+#include <cstdint>
 
 namespace Toy::Graphics
 {
@@ -12,10 +13,10 @@ namespace Toy::Graphics
 	{
 	public:
 		virtual IDeviceCommandQueue* GetDeviceQueue() const noexcept = 0;
-		virtual void ExecuteCommandList(IGraphicsCommandList* cmd_list) = 0;
-		virtual void ExecuteCommandListSync(IGraphicsCommandList* cmd_list) = 0;
-		virtual void ExecuteCommandLists(std::size_t num, IGraphicsCommandList* const *cmd_list) = 0;
-		virtual void ExecuteCommandListsSync(std::size_t num,  IGraphicsCommandList* const *cmd_lists) = 0;
-		virtual void WaitGPU() = 0;
+		virtual void ExecuteCommandList(const IGraphicsCommandList* cmd_list) = 0;
+		virtual void ExecuteCommandListSync(const IGraphicsCommandList* cmd_list) = 0;
+		virtual void ExecuteCommandLists(const std::size_t& num, const IGraphicsCommandList* const *cmd_list) = 0;
+		virtual void ExecuteCommandListsSync(const std::size_t& num,  const IGraphicsCommandList* const *cmd_lists) = 0;
+		virtual void Signal(std::uint64_t fence_value) = 0;
 	};
 }

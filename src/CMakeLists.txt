@@ -2,7 +2,17 @@ cmake_minimum_required(VERSION 3.6)
 project(ToyEngine LANGUAGES CXX VERSION 0.0.1)
 include(GNUInstallDirs)
 
-add_definitions(-DUNICODE -D_UNICODE)
+add_definitions(
+	-DUNICODE
+	-D_UNICODE
+	-DNOMINMAX # 使用stl min max
+)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+add_definitions(
+	-DENGINE_DEBUG
+)
+endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -42,8 +52,6 @@ set_target_properties(Engine
 		MACOSX_RPATH ON
 )
 
-message("aaa:${CMAKE_INSTALL_LIBDIR}")
-
 include(GenerateExportHeader)
 generate_export_header(Engine
 	BASE_NAME "Engine" # 头文件宏
@@ -78,7 +86,9 @@ install(TARGETS Engine
 
 install(
 	FILES
-		"${CMAKE_CURRENT_SOURCE_DIR}/include/pch.hpp" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/pch.hpp" 
+		"${CMAKE_CURRENT_SOURCE_DIR}/include/EngineUtility.hpp" 
+		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 install(EXPORT ToyEngineTargets
@@ -109,3 +119,7 @@ install(
 	DESTINATION
 		${CMAKE_INSTALL_LIBDIR}/cmake/ToyEngine
 )
+
+
+# test
+add_subdirectory(Test)

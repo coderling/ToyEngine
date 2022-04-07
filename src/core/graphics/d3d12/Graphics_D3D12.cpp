@@ -1,8 +1,8 @@
 #include <wrl.h>
 
 #include "Utility.hpp"
-#include "../../interface/IApp.hpp"
-#include "../../interface/GlobalEnvironment.hpp"
+#include "IApp.hpp"
+#include "GlobalEnvironment.hpp"
 #include "Graphics_D3D12.hpp"
 #include "GraphicsCommandQueue_D3D12.hpp"
 #include "SwapChain_D3D12.hpp"
@@ -37,7 +37,8 @@ int Graphics::Initialize()
 	ComPtr<IDXGIFactory7> factory;
 	ASSERT_SUCCEEDED(CreateDXGIFactory2(dxg_flactory_flags, MY_IID_PPV_ARGS(&factory)));
 
-	if (IApp::env->GetApp()->GetArgs()->use_wrap_device)
+	const auto& app_args = IApp::env->GetApp()->GetArgs();
+	if (app_args->use_wrap_device)
 	{
 		ComPtr<IDXGIAdapter> wrap_adapter;
 		ASSERT_SUCCEEDED(factory->EnumWarpAdapter(MY_IID_PPV_ARGS(&wrap_adapter)));
@@ -72,10 +73,19 @@ int Graphics::Initialize()
 	}
 
 
+	// fence
+	ASSERT_SUCCEEDED(device->CreateFence(0, D3D12_FENCE_FLAG_NONE, MY_IID_PPV_ARGS(&fence)));
+	fence_value = 1;
+	fence_event = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+	if (fence_event == nullptr)
+	{
+		ASSERT_SUCCEEDED(HRESULT_FROM_WIN32(GetLastError()));
+	}
+
 	D3D12_COMMAND_QUEUE_DESC queue_desc = {};
 	queue_desc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
 	queue_desc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-	command_queue =  std::make_unique<GraphicsCommandQueue>(&queue_desc);
+	command_queue =  std::make_unique<GraphicsCommandQueue>(&queue_desc, fence.Get());
 
 	auto psw = std::make_unique<SwapChain>();
 	psw->Initialize(factory.Get());
@@ -83,9 +93,33 @@ int Graphics::Initialize()
 
 	ASSERT_SUCCEEDED(device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, MY_IID_PPV_ARGS(&common_allocator)));
 	// todo descriptor heaps
+
+	for (int i = 0; i < app_args->frame_count; ++i)
+	{
+		
+	}
+
+	WaitForGpu();
 	return 0;
 }
 
 void Graphics::Finalize()
 {
+	WaitForGpu();
+	CloseHandle(fence_event);
+}
+
+void Graphics::WaitForGpu()
+{
+	const UINT64 t_fence_value = fence_value;
+	command_queue->Signal(t_fence_value);
+	fence_value++;
+
+	if (fence->GetCompletedValue() < t_fence_value)
+	{
+		ASSERT_SUCCEEDED(fence->SetEventOnCompletion(t_fence_value, fence_event));
+		WaitForSingleObject(fence_event, INFINITE);
+	}
+	
+	frame_index = swapchain->GetCurrentBackBufferIndex();
 }

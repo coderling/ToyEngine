@@ -6,12 +6,15 @@
 
 namespace Toy::Graphics
 {
-	class UploadBuffer : public GPUResource, public IUploadBuffer
+	class UploadBuffer : public IUploadBuffer
 	{
 	public:
-		UploadBuffer(IDevice* device) :device(device), buffer_size(0) {}
-
-		void Create(const std::wstring& name, size_t size) override;
+		IDeviceResource* GetResource() override;
+		const IDeviceResource* GetResource() const override;
+		IDeviceResource** GetAddressOf() override;
+		GPU_VIRTUAL_ADDRESS GetGpuVirtualAddress() const override;
+		
+		void Init(const std::string& name, size_t size) override;
 
 		void* Map(void) override;
 
@@ -20,7 +23,8 @@ namespace Toy::Graphics
 		size_t GetBufferSize() noexcept override { return buffer_size; }
 
 	protected:
+		void OnDestroy() override;
 		size_t buffer_size;
-		IDevice* device;
+		GPUResource resource;
 	};
 }

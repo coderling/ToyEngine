@@ -1,7 +1,6 @@
-#include <atlconv.h>
-
 #include "WinApp.hpp"
 #include "Util.hpp"
+#include "EngineUtility.hpp"
 
 using namespace Toy::Platform;
 
@@ -20,7 +19,8 @@ int WinApp::CreateAppWindow()
 	wc.hInstance = instance;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wc.lpszClassName = (args->app_name.c_str());
+	const auto& wstr = s2ws(args->app_name).c_str();
+	wc.lpszClassName = wstr;
 
 	if (!RegisterClassEx(&wc))
 	{

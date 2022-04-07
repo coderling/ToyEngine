@@ -3,7 +3,7 @@ add_library(Graphics OBJECT)
 target_sources(Graphics 
 	PRIVATE	
 					"Pipeline.cpp"
-					"PipelineFragment.cpp")
+					"PipelineFragment.cpp" "d3d12/DescriptorMemoryMgr.hpp" "d3d12/DescriptorMemoryMgr.cpp")
 
 target_compile_definitions(Graphics
 	PUBLIC
@@ -19,7 +19,7 @@ target_include_directories(Graphics
 						"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/interface>"
 )
 
-target_link_libraries(Graphics ${d3d12_libs})
+target_link_libraries(Graphics PRIVATE Common ${d3d12_libs} )
 
 set(public_headers
 	"${CMAKE_CURRENT_SOURCE_DIR}/PipelineFragment.hpp"
