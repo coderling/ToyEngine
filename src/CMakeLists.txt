@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.6)
-project(ToyEngine LANGUAGES CXX VERSION 0.0.1)
+cmake_minimum_required(VERSION 3.20)
+project(ToyEngine LANGUAGES CXX)
 include(GNUInstallDirs)
 
 add_definitions(
@@ -40,12 +40,14 @@ get_target_property(CommonHeaders Common PUBLIC_HEADER)
 get_target_property(GraphicsHeaders Graphics PUBLIC_HEADER)
 get_target_property(PlatformHeaders Graphics PUBLIC_HEADER)
 
+message("KKK: ${CMAKE_PROJECT_VERSION}")
+message("KKK: ${PROJECT_VERSION_MAJOR}")
 set_target_properties(Engine
 	PROPERTIES
 		POSITION_INDEPENDENT_CODE 1 # 告诉编译器生成位置无关的代码，都采用相对路径。
 		CXX_VISIBILITY_PRESET 1 # 
 		VERSION ${CMAKE_PROJECT_VERSION}
-		SOVERSION ${PROJECT_VERSION_MAJOR} # 版本
+		SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR} # 版本
 		OUTPUT_NAME "ToyEngine" # 输出名称
 		DEBUG_POSTFIX "_d" # debug版本output_name后缀
 		PUBLIC_HEADER "${CommonHeaders};${GraphicsHeaders};${PlatformHeaders}"
