@@ -119,7 +119,3 @@ install(
 	DESTINATION
 		${CMAKE_INSTALL_LIBDIR}/cmake/ToyEngine
 )
-
-
-# test
-add_subdirectory(Test)

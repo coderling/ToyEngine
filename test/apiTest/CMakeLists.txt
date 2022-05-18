@@ -1,18 +1,18 @@
 cmake_minimum_required(VERSION 3.20)
-project(test_align)
+project(apiTest)
 
 set(CMAKE_CXX_STANDARD 20)
 
 find_package(ToyEngine REQUIRED CONFIG) 
 
-enable_testing()
+file(GLOB source LIST_DIRECTORIES false src/*)
+file(GLOB include LIST_DIRECTORIES false include/*)
 
-add_executable(test_align "test-align.cpp")
+set(all_source ${source} ${include})
 
-target_link_libraries(test_align PRIVATE ToyEngine::Engine GTest::gtest_main)
+add_executable(apiTest ${all_source})
 
-include(GoogleTest)
-gtest_discover_tests(test_align)
+target_link_libraries(apiTest PRIVATE ToyEngine::Engine test_utility)
 
 # copy debug dll to debug run dir
 get_property(_location TARGET ToyEngine::Engine PROPERTY LOCATION)
@@ -24,7 +24,7 @@ string(
 	">"
 )
 
-add_custom_command(TARGET test_align
+add_custom_command(TARGET apiTest
 	POST_BUILD
 	COMMAND "${copy_cmd}"
 	COMMAND_EXPAND_LISTS
