@@ -30,5 +30,5 @@ namespace Toy
 		delete[] buf;
 		return r;
 
-	 }
+	}
 }

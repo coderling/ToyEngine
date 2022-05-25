@@ -90,3 +90,38 @@ TEST(Align, AlignDownPtr)
         EXPECT_EQ(AlignDown((void*)(0x1000 + i), (size_t)alignment), ptr_aligned);
     }
 }
+
+TEST(Align, AlignUpNonPow2)
+{
+    EXPECT_EQ(AlignUpNonPow2(0, 5), 0);
+    EXPECT_EQ(AlignUpNonPow2(std::uint16_t(15), std::uint16_t(6)), std::uint16_t(18));
+    EXPECT_EQ(AlignUpNonPow2(std::uint32_t(19), std::uint16_t(15)), std::uint32_t(30));
+    EXPECT_EQ(AlignUpNonPow2(std::uint64_t(19), std::uint64_t(1115)), std::uint64_t(1115));
+    EXPECT_EQ(AlignUpNonPow2(std::uint64_t(1119), std::uint64_t(1115)), std::uint64_t(2230));
+    EXPECT_EQ(AlignUpNonPow2((std::uint64_t(1) << 63) + 1, std::uint64_t(1024)), (std::uint64_t(1) << 63) + 1024);
+
+    for (size_t i = 0; i < 1024; ++i)
+    {
+        constexpr size_t alignment = 15;
+        size_t aligned = i + alignment - 1;
+        aligned = aligned - aligned % alignment;
+        EXPECT_EQ(AlignUpNonPow2(i, alignment), aligned);
+    }
+}
+
+TEST(Align, AlignDownNonPow2)
+{
+    EXPECT_EQ(AlignDownNonPow2(0, 5), 0);
+    EXPECT_EQ(AlignDownNonPow2(std::uint16_t(15), std::uint16_t(6)), std::uint16_t(12));
+    EXPECT_EQ(AlignDownNonPow2(std::uint32_t(19), std::uint16_t(15)), std::uint32_t(15));
+    EXPECT_EQ(AlignDownNonPow2(std::uint64_t(19), std::uint64_t(1115)), std::uint64_t(0));
+    EXPECT_EQ(AlignDownNonPow2(std::uint64_t(1119), std::uint64_t(1115)), std::uint64_t(1115));
+    EXPECT_EQ(AlignDownNonPow2((std::uint64_t(1) << 63) + 1, std::uint64_t(1024)), (std::uint64_t(1) << 63));
+
+    for (size_t i = 0; i < 1024; ++i)
+    {
+        constexpr size_t alignment = 15;
+        size_t aligned = i - i % alignment;
+        EXPECT_EQ(AlignDownNonPow2(i, alignment), aligned);
+    }
+}

@@ -24,4 +24,4 @@ set_target_properties(Platform
 		PUBLIC_HEADER "${public_headers}"
 )
 
-target_link_libraries(Platform PRIVATE Components)
+target_link_libraries(Platform PRIVATE Components Common)

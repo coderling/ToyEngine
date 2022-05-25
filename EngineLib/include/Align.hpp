@@ -35,10 +35,10 @@ namespace Toy
 		return (static_cast<T>(val) + static_cast<T>(alignment - 1)) & ~static_cast<T>(alignment - 1);
 	}
 
-	template<typename T1, typename T2>
-	inline T1* AlignUp(T1* ptr, T2 alignment)
+	template<typename PtrType, typename AlignmentType>
+	inline PtrType* AlignUp(PtrType* ptr, AlignmentType alignment)
 	{
-		return reinterpret_cast<T1*>(AlignUp(reinterpret_cast<uintptr_t>(ptr), static_cast<uintptr_t>(alignment)));
+		return reinterpret_cast<PtrType*>(AlignUp(reinterpret_cast<uintptr_t>(ptr), static_cast<uintptr_t>(alignment)));
 	}
 	
 	template<typename T1, typename T2>
@@ -61,10 +61,33 @@ namespace Toy
 
 		return (static_cast<T>(val)) & ~static_cast<T>(alignment - 1);
 	}
+	
+	template<typename PtrType, typename AlignmentType>
+	inline PtrType* AlignDown(PtrType* ptr, AlignmentType alignment)
+	{
+		return reinterpret_cast<PtrType*>(AlignDown(reinterpret_cast<uintptr_t>(ptr), static_cast<uintptr_t>(alignment)));
+	}
 
 	template<typename T1, typename T2>
-	inline T1* AlignDown(T1* ptr, T2 alignment)
+	inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignUpNonPow2(T1 val, T2 alignment)
 	{
-		return reinterpret_cast<T1*>(AlignDown(reinterpret_cast<uintptr_t>(ptr), static_cast<uintptr_t>(alignment)));
+		static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
+		static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
+		using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
+		
+		T tmp = static_cast<T>(val) + static_cast<T>(alignment - 1);
+
+		return tmp - tmp % alignment ;
+	}
+	template<typename T1, typename T2>
+	inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignDownNonPow2(T1 val, T2 alignment)
+	{
+		static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
+		static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
+		using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
+		
+		T tmp =  + static_cast<T>(alignment - 1);
+
+		return static_cast<T>(val) - static_cast<T>(val) % alignment;
 	}
 }

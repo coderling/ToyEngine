@@ -6,7 +6,7 @@ target_compile_definitions(Common
 )
 
 target_sources(Common
-	PRIVATE "VariableSizeAllocationsManager.cpp")
+	PRIVATE "VariableSizeAllocationsManager.cpp" "FormatString.hpp" "DebugUtility.hpp" "EngineUtility.hpp" "Logger.hpp")
 
 target_include_directories(Common
 	PUBLIC 
@@ -23,6 +23,10 @@ set(public_headers
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/ISystem.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IAllocator.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/Align.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/FormatString.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/DebugUtility.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/EngineUtility.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/Logger.hpp"
 )
 
 set_target_properties(Common

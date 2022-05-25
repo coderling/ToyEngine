@@ -12,10 +12,16 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 add_definitions(
 	-DENGINE_DEBUG
 )
+else()
+add_definitions(
+	-DENGINE_RELEASE
+)
 endif()
 
-set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 20)
+
+  message(${CMAKE_CXX_STANDARD})
 
 set(d3d12_libs
 "d3d12.lib"
@@ -87,7 +93,6 @@ install(TARGETS Engine
 install(
 	FILES
 		"${CMAKE_CURRENT_SOURCE_DIR}/include/pch.hpp" 
-		"${CMAKE_CURRENT_SOURCE_DIR}/include/EngineUtility.hpp" 
 		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 

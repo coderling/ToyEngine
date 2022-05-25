@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.20)
 project(apiTest)
 
 set(CMAKE_CXX_STANDARD 20)
-
 find_package(ToyEngine REQUIRED CONFIG) 
 
 file(GLOB source LIST_DIRECTORIES false src/*)
