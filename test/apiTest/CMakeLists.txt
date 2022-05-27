@@ -2,14 +2,20 @@ cmake_minimum_required(VERSION 3.20)
 project(apiTest)
 
 set(CMAKE_CXX_STANDARD 20)
+add_definitions(
+	-DUNICODE
+	-D_UNICODE
+	-DNOMINMAX #使用stl min max
+)
+
 find_package(ToyEngine REQUIRED CONFIG) 
 
 file(GLOB source LIST_DIRECTORIES false src/*)
 file(GLOB include LIST_DIRECTORIES false include/*)
 
 set(all_source ${source} ${include})
-
-add_executable(apiTest ${all_source})
+message("All:${all_source}")
+add_executable(apiTest ${all_source}) 
 
 target_link_libraries(apiTest PRIVATE ToyEngine::Engine test_utility)
 
