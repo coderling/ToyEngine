@@ -19,12 +19,13 @@ int WinApp::CreateAppWindow()
 	wc.hInstance = instance;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	const auto& wstr = s2ws(args->app_name).c_str();
+    const auto& w_name = s2ws(args->app_name);
+    const auto& wstr = w_name.c_str();
 	wc.lpszClassName = wstr;
 
 	if (!RegisterClassEx(&wc))
 	{
-		MessageBox(NULL, L"´°¿ÚÀà×¢²áÊ§°Ü",  L"ÌáÊ¾", MB_OK);
+		MessageBox(NULL, L"çª—å£ç±»æ³¨å†Œå¤±è´¥", L"æç¤º", MB_OK);
 		return -1;
 	}
 
@@ -63,7 +64,7 @@ int WinApp::CreateAppWindow()
 			0,
 			NULL );
 
-		MessageBox(NULL,  error_message,  L"ÌáÊ¾", MB_OK);
+		MessageBox(NULL,  error_message,  L"ï¿½ï¿½Ê¾", MB_OK);
 		return -1;
 	}
 	hdc = GetDC(hwnd);
@@ -107,7 +108,7 @@ LRESULT CALLBACK WinApp::WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPAR
 	{
 		p_this = static_cast<WinApp*>(reinterpret_cast<CREATESTRUCT*>(lparam)->lpCreateParams);
 		SetLastError(0);
-		// ´´½¨´°¿ÚµÄÊ±ºò±£´æ£¬WinAppÀàÊµÀıÖ¸Õë£¬ÒÔ±ãºóÃæ»ñÈ¡
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½Ê±ï¿½ò±£´æ£¬WinAppï¿½ï¿½Êµï¿½ï¿½Ö¸ï¿½ë£¬ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½È¡
 		if (!SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(p_this)))
 		{
 			if (GetLastError() != 0) return FALSE;
@@ -123,7 +124,7 @@ LRESULT CALLBACK WinApp::WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPAR
 	{
 	case WM_CHAR:
 	{
-		//0-127 asci ×Ö·ûÊäÈë
+		//0-127 asci ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½
 	} break;
 	case WM_KEYUP:
 	{

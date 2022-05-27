@@ -3,6 +3,7 @@
 #include <format>
 #include <string>
 #include <iostream>
+#include <sstream>
 
 namespace Toy
 {
@@ -42,5 +43,14 @@ namespace Toy
 	{
 		std::stringstream sst;
 		StreamFormatOutput(sst, format, args...);
+        return sst.str();
+	}
+	
+    template<typename... ArgsType>
+	std::string ConcatString(const ArgsType&... args)
+	{
+		std::stringstream sst;
+		StreamOutput(sst, args...);
+        return sst.str();
 	}
 }

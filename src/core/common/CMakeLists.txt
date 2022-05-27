@@ -6,7 +6,8 @@ target_compile_definitions(Common
 )
 
 target_sources(Common
-	PRIVATE "VariableSizeAllocationsManager.cpp" "FormatString.hpp" "DebugUtility.hpp" "EngineUtility.hpp" "Logger.hpp")
+	PRIVATE "VariableSizeAllocationsManager.cpp"
+				  "STDAllocator.hpp")
 
 target_include_directories(Common
 	PUBLIC 
@@ -14,7 +15,7 @@ target_include_directories(Common
 				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/common>"
 				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
 )
-
+message(${PROJECT_SOURCE_DIR})
 set(public_headers
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/AppArgs.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/GlobalEnvironment.hpp"

@@ -1,0 +1,21 @@
+BasedOnStyle: Google
+IndentWidth: 4
+IncludeBlocks: Preserve
+AlignEscapedNewlines: Right
+BreakBeforeBraces: Custom
+BraceWrapping:   
+  AfterClass:      true # false
+  AfterControlStatement: true # false
+  AfterEnum:       true # false
+  AfterFunction:   true # false
+  AfterNamespace:  true # false
+  AfterObjCDeclaration: true # false
+  AfterStruct:     true # false
+  AfterUnion:      true # false
+  AfterExternBlock: true # false
+  BeforeCatch:     true # false
+  BeforeElse:      true # false
+  IndentBraces:    true # false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true

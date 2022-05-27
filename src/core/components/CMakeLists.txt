@@ -9,5 +9,4 @@ target_include_directories(Components
 				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/components>"
 				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/interface>"
 )
-
-target_link_libraries(Components PRIVATE Graphics)
+target_link_libraries(Components PRIVATE Graphics Common)

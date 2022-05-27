@@ -3,7 +3,7 @@ add_library(Graphics OBJECT)
 target_sources(Graphics 
 	PRIVATE	
 					"Pipeline.cpp"
-					"PipelineFragment.cpp" "d3d12/DescriptorMemoryMgr.hpp" "d3d12/DescriptorMemoryMgr.cpp")
+					"PipelineFragment.cpp")
 
 target_compile_definitions(Graphics
 	PUBLIC

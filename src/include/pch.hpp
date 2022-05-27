@@ -22,7 +22,7 @@
 #endif
 
 #ifndef DEPRECATED_TOY_LIB_API
-#  define DEPRECATED_TOY_LIB_API __declspec(deprecated)
+#  define DEPRECATED_TOY_LIB_API __attribute__ ((__deprecated__))
 #endif
 
 #ifndef DEPRECATED_TOY_LIB_API_EXPORT

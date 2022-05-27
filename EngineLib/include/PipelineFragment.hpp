@@ -6,7 +6,7 @@
 
 namespace Toy::Graphics
 {
-	enum class TOY_LIB_API PIPELINE_STAGE
+	enum class PIPELINE_STAGE
 	{
 		BEFORE_RENDER,
 		ONRENDER,

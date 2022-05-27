@@ -4,7 +4,7 @@ if("${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" LESS 2.6)
    message(FATAL_ERROR "CMake >= 2.6.0 required")
 endif()
 cmake_policy(PUSH)
-cmake_policy(VERSION 2.6...3.20)
+cmake_policy(VERSION 2.6...3.21)
 #----------------------------------------------------------------
 # Generated CMake target import file.
 #----------------------------------------------------------------
@@ -70,7 +70,7 @@ add_library(ToyEngine::Platform INTERFACE IMPORTED)
 
 set_target_properties(ToyEngine::Platform PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:ToyEngine::Components>;\$<LINK_ONLY:ToyEngine::Common>"
+  INTERFACE_LINK_LIBRARIES "ToyEngine::Components;ToyEngine::Common"
 )
 
 # Create imported target ToyEngine::Graphics
@@ -78,7 +78,7 @@ add_library(ToyEngine::Graphics INTERFACE IMPORTED)
 
 set_target_properties(ToyEngine::Graphics PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:ToyEngine::Common>;\$<LINK_ONLY:d3d12.lib>;\$<LINK_ONLY:dxgi.lib>;\$<LINK_ONLY:d3dcompiler.lib>"
+  INTERFACE_LINK_LIBRARIES "ToyEngine::Common;d3d12.lib;dxgi.lib;d3dcompiler.lib"
 )
 
 # Create imported target ToyEngine::Components
@@ -86,7 +86,7 @@ add_library(ToyEngine::Components INTERFACE IMPORTED)
 
 set_target_properties(ToyEngine::Components PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:ToyEngine::Graphics>"
+  INTERFACE_LINK_LIBRARIES "ToyEngine::Graphics;ToyEngine::Common"
 )
 
 if(CMAKE_VERSION VERSION_LESS 3.0.0)

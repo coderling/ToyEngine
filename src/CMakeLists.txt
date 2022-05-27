@@ -1,11 +1,10 @@
-cmake_minimum_required(VERSION 3.20)
-project(ToyEngine LANGUAGES CXX)
+project(EngineLib LANGUAGES CXX)
 include(GNUInstallDirs)
 
 add_definitions(
 	-DUNICODE
 	-D_UNICODE
-	-DNOMINMAX # Ê¹ÓÃstl min max
+	-DNOMINMAX #ä½¿ç”¨stl min max
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -48,26 +47,26 @@ get_target_property(PlatformHeaders Graphics PUBLIC_HEADER)
 
 set_target_properties(Engine
 	PROPERTIES
-		POSITION_INDEPENDENT_CODE 1 # ¸æËß±àÒëÆ÷Éú³ÉÎ»ÖÃÎÞ¹ØµÄ´úÂë£¬¶¼²ÉÓÃÏà¶ÔÂ·¾¶¡£
+		POSITION_INDEPENDENT_CODE 1 # å‘Šè¯‰ç¼–è¯‘å™¨ç”Ÿæˆä½ç½®æ— å…³çš„ä»£ç ï¼Œéƒ½é‡‡ç”¨ç›¸å¯¹è·¯å¾„ã€‚
 		CXX_VISIBILITY_PRESET 1 # 
 		VERSION ${CMAKE_PROJECT_VERSION}
-		SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR} # °æ±¾
-		OUTPUT_NAME "ToyEngine" # Êä³öÃû³Æ
-		DEBUG_POSTFIX "_d" # debug°æ±¾output_nameºó×º
+		SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR} # ç‰ˆæœ¬
+		OUTPUT_NAME "ToyEngine" # è¾“å‡ºåç§°
+		DEBUG_POSTFIX "_d" # debugç‰ˆæœ¬output_nameåŽç¼€
 		PUBLIC_HEADER "${CommonHeaders};${GraphicsHeaders};${PlatformHeaders}"
 		MACOSX_RPATH ON
 )
 
 include(GenerateExportHeader)
 generate_export_header(Engine
-	BASE_NAME "Engine" # Í·ÎÄ¼þºê
-	EXPORT_MACRO_NAME "TOY_LIB_API" # µ¼³öºê
-	EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/include/pch.hpp" #µ¼³öÎÄ¼þÂ·¾¶
-	DEPRECATED_MACRO_NAME "DEPRECATED_TOY_LIB_API" # ·ÏÆú´úÂëµÄºê 
-	NO_EXPORT_MACRO_NAME "NOT_TOY_LIB_API" # ²»µ¼³öµÄºê
-	STATIC_DEFINE "AS_STATIC_LIB" # ±àÒë¾²Ì¬¿âµÄºê
-	NO_DEPRECATED_MACRO_NAME "WITHOUT_DEPRECATED" # ÅÅ³ý·ÏÆú´úÂëµÄºê
-	DEFINE_NO_DEPRECATED # ¸æËßÔ¤´¦ÀíÆ÷£¬±àÒëÅÅ³ý·ÏÆú´úÂë
+	BASE_NAME "Engine" # å¤´æ–‡ä»¶å®
+	EXPORT_MACRO_NAME "TOY_LIB_API" # å¯¼å‡ºå®
+	EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/include/pch.hpp" #å¯¼å‡ºæ–‡ä»¶è·¯å¾„
+	DEPRECATED_MACRO_NAME "DEPRECATED_TOY_LIB_API" # åºŸå¼ƒä»£ç çš„å® 
+	NO_EXPORT_MACRO_NAME "NOT_TOY_LIB_API" # ä¸å¯¼å‡ºçš„å®
+	STATIC_DEFINE "AS_STATIC_LIB" # ç¼–è¯‘é™æ€åº“çš„å®
+	NO_DEPRECATED_MACRO_NAME "WITHOUT_DEPRECATED" # æŽ’é™¤åºŸå¼ƒä»£ç çš„å®
+	DEFINE_NO_DEPRECATED # å‘Šè¯‰é¢„å¤„ç†å™¨ï¼Œç¼–è¯‘æŽ’é™¤åºŸå¼ƒä»£ç 
 )
 
 target_include_directories(Engine
