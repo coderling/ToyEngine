@@ -1,0 +1,24 @@
+﻿  Building Custom Rule E:/GitProj/ToyEngine/src/core/common/CMakeLists.txt
+  VariableSizeAllocationsManager.cpp
+E:\GitProj\ToyEngine\src\core\common\Align.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(52,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(68,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(69,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(70,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(78,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(81,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(97,21): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(114,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(121,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(130,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(136,13): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(189,13): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(220,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(235,1): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+E:\GitProj\ToyEngine\src\core\common\VariableSizeAllocationsManager.cpp(301,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+  DefaultMemoryAllocator.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+E:\GitProj\ToyEngine\src\core\common\DefaultMemoryAllocator.cpp(8,5): warning C4003: not enough arguments for function-like macro invocation 'ENGINE_ASSERT_EXPR'
+  Generating Code...
+  Common.vcxproj -> E:\GitProj\ToyEngine\msbuild\src\core\common\Common.dir\Debug\Common.lib

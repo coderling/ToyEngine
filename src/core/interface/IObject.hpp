@@ -3,31 +3,33 @@
 
 namespace Toy::Engine
 {
-	struct  TOY_LIB_API  NoCopy
-	{
-		NoCopy() = default; // Ä¬ÈÏ¹¹Ôìº¯Êı
-		NoCopy(const NoCopy&) = delete; // ²»ÔÊĞí¿½±´
-		NoCopy& operator=(const NoCopy&) = delete; // ²»ÔÊĞí¸³Öµ
-	};
+struct TOY_LIB_API NoCopy
+{
+    NoCopy() = default;                         // é»˜è®¤æ„é€ å‡½æ•°
+    NoCopy(const NoCopy&) = delete;             // ä¸å…è®¸æ‹·è´
+    NoCopy& operator=(const NoCopy&) = delete;  // ä¸å…è®¸èµ‹å€¼
+};
 
-	class TOY_LIB_API IObject
-	{
-	public:
-		virtual ~IObject() 
-		{
-			if (!is_destroy)
-			{
-				Destroy();
-			}
-		};
-		void Destroy()
-		{
-			is_destroy = true;
-			OnDestroy();
-		}
-	protected:
-		virtual void OnDestroy() = 0;
-	private:
-		bool is_destroy = false;
-	};
-}
+class TOY_LIB_API IObject
+{
+   public:
+    virtual ~IObject()
+    {
+        if (!is_destroy)
+            {
+                Destroy();
+            }
+    };
+    void Destroy()
+    {
+        is_destroy = true;
+        OnDestroy();
+    }
+
+   protected:
+    virtual void OnDestroy() = 0;
+
+   private:
+    bool is_destroy = false;
+};
+}  // namespace Toy::Engine

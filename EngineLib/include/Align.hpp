@@ -1,94 +1,92 @@
 #pragma once
 
-#include <type_traits>
 #include <IAllocator.hpp>
+#include <type_traits>
 
 namespace Toy
 {
-	template<typename T>
-	inline bool IsPowerOfTow(T val)
-	{
-		// ÅĞ¶ÏÒ»¸öÊıÊÇ·ñÊÇ2µÄn´ÎÃİ
-		// Èç¹ûÒ»¸öÊıÊÇ2µÄn´ÎÃİ£¬ÄÇÃ´¶ş½øÖÆ±íÊ¾ÏÂ±ØÈ»Ö»ÓĞÒ»¸ö1£¬
-		// ÀıÈç8£º1000 16£º10000µÈ£¬·´Ö®Ôò±ØÈ»ÓĞ¶à¸ö1£¬Èë9£º1001
-		// ÏÖÔÚ½«¸ÃÊıÖµ¼õ1ÔÙÓë×Ô¼º½øĞĞÔËËã£¬±ØÈ»µÈÓÚ0£¬ÀıÈç£º0111 & 1000 = 0
-		return val > 0 && (val & (val - 1)) == 0;
-	}
-
-	template<typename T1, typename T2>
-	inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignUp(T1 val, T2 alignment)
-	{
-		// ·µ»Ø±Èval´óµÄ×îÉÙÄÜ±»alignmentÕû³ıµÄÊı
-		// 1. T1,T2±ØĞëÊÇÏàÍ¬µÄÊı¾İÀàĞÍ£¬Éæ¼°µ½Î»ÔËËã£¬·ûºÅÎ»±£³ÖÒ»ÖÂ
-		// 2. ²»ÄÜÊÇÖ¸ÕëÀàĞÍ
-		// 3. alignmentÎª2µÄn´ÎÃİ
-		// 4. alignmentÎª2µÄn´ÎÃİ£¬ÄÇÃ´¶ş½øÖÆĞÎÊ½Ö»ÓĞÒ»¸ö1£¬Èç4£º100£¬8£º1000 ¡£¡£¡£
-		//     ÄÇÃ´(alignment -1)¶ş½øÖÆµÍÎ»¶¼ÊÇ1£¬4-1£º011£¬8-1£º0111£¬È¡·´ÔòÊÇµÍÎ»¶¼ÊÇ0£¬¸ßÎ»Ê±1£¬~(4-1):11...11100
-		//	    È¡·´ºó£¬È¥ÓëÄ³¸öÊıÖµ&£¬±£Ö¤µÍÎ»¶¼Îª0£¬ÕâÑù¾ÍÄÜ±»alignmentÕû³ı¡£ÒªÈ¡±Èval´óµÄµÚÒ»¸öÄÜ±»alignmentÕû³ıµÄ
-		//     ¼ÓÉÏalignment-1¼´¿É¡£
-		static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
-		static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
-		using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
-		
-		if (!IsPowerOfTow(alignment))
-			return static_cast<T>(0);
-
-		return (static_cast<T>(val) + static_cast<T>(alignment - 1)) & ~static_cast<T>(alignment - 1);
-	}
-
-	template<typename PtrType, typename AlignmentType>
-	inline PtrType* AlignUp(PtrType* ptr, AlignmentType alignment)
-	{
-		return reinterpret_cast<PtrType*>(AlignUp(reinterpret_cast<uintptr_t>(ptr), static_cast<uintptr_t>(alignment)));
-	}
-	
-	template<typename T1, typename T2>
-	inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignDown(T1 val, T2 alignment)
-	{
-		// ·µ»Ø±Èval´óµÄ×îÉÙÄÜ±»alignmentÕû³ıµÄÊı
-		// 1. T1,T2±ØĞëÊÇÏàÍ¬µÄÊı¾İÀàĞÍ£¬Éæ¼°µ½Î»ÔËËã£¬·ûºÅÎ»±£³ÖÒ»ÖÂ
-		// 2. ²»ÄÜÊÇÖ¸ÕëÀàĞÍ
-		// 3. alignmentÎª2µÄn´ÎÃİ
-		// 4. alignmentÎª2µÄn´ÎÃİ£¬ÄÇÃ´¶ş½øÖÆĞÎÊ½Ö»ÓĞÒ»¸ö1£¬Èç4£º100£¬8£º1000 ¡£¡£¡£
-		//     ÄÇÃ´(alignment -1)¶ş½øÖÆµÍÎ»¶¼ÊÇ1£¬4-1£º011£¬8-1£º0111£¬È¡·´ÔòÊÇµÍÎ»¶¼ÊÇ0£¬¸ßÎ»Ê±1£¬~(4-1):11...11100
-		//	    È¡·´ºó£¬È¥ÓëÄ³¸öÊıÖµ&£¬±£Ö¤µÍÎ»¶¼Îª0£¬ÕâÑù¾ÍÄÜ±»alignmentÕû³ı¡£ÒªÈ¡±Èval´óµÄµÚÒ»¸öÄÜ±»alignmentÕû³ıµÄ
-		//     ¼ÓÉÏalignment-1¼´¿É¡£
-		static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
-		static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
-		using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
-		
-		if (!IsPowerOfTow(alignment))
-			return static_cast<T>(0);
-
-		return (static_cast<T>(val)) & ~static_cast<T>(alignment - 1);
-	}
-	
-	template<typename PtrType, typename AlignmentType>
-	inline PtrType* AlignDown(PtrType* ptr, AlignmentType alignment)
-	{
-		return reinterpret_cast<PtrType*>(AlignDown(reinterpret_cast<uintptr_t>(ptr), static_cast<uintptr_t>(alignment)));
-	}
-
-	template<typename T1, typename T2>
-	inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignUpNonPow2(T1 val, T2 alignment)
-	{
-		static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
-		static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
-		using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
-		
-		T tmp = static_cast<T>(val) + static_cast<T>(alignment - 1);
-
-		return tmp - tmp % alignment ;
-	}
-	template<typename T1, typename T2>
-	inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignDownNonPow2(T1 val, T2 alignment)
-	{
-		static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
-		static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
-		using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
-		
-		T tmp =  + static_cast<T>(alignment - 1);
-
-		return static_cast<T>(val) - static_cast<T>(val) % alignment;
-	}
+template <typename T>
+inline bool IsPowerOfTow(T val)
+{
+    // åˆ¤æ–­ä¸€ä¸ªæ•°æ˜¯å¦æ˜¯2çš„næ¬¡å¹‚
+    // å¦‚æœä¸€ä¸ªæ•°æ˜¯2çš„næ¬¡å¹‚ï¼Œé‚£ä¹ˆäºŒè¿›åˆ¶è¡¨ç¤ºä¸‹å¿…ç„¶åªæœ‰ä¸€ä¸ª1ï¼Œ
+    // ä¾‹å¦‚8ï¼š1000 16ï¼š10000ç­‰ï¼Œåä¹‹åˆ™å¿…ç„¶æœ‰å¤šä¸ª1ï¼Œå…¥9ï¼š1001
+    // ç°åœ¨å°†è¯¥æ•°å€¼å‡1å†ä¸è‡ªå·±è¿›è¡Œè¿ç®—ï¼Œå¿…ç„¶ç­‰äº0ï¼Œä¾‹å¦‚ï¼š0111 & 1000 = 0
+    return val > 0 && (val & (val - 1)) == 0;
 }
+
+template <typename T1, typename T2>
+inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignUp(T1 val, T2 alignment)
+{
+    // è¿”å›æ¯”valå¤§çš„æœ€å°‘èƒ½è¢«alignmentæ•´é™¤çš„æ•°
+    // 1. T1,T2å¿…é¡»æ˜¯ç›¸åŒçš„æ•°æ®ç±»å‹ï¼Œæ¶‰åŠåˆ°ä½è¿ç®—ï¼Œç¬¦å·ä½ä¿æŒä¸€è‡´
+    // 2. ä¸èƒ½æ˜¯æŒ‡é’ˆç±»å‹
+    // 3. alignmentä¸º2çš„næ¬¡å¹‚
+    // 4. alignmentä¸º2çš„næ¬¡å¹‚ï¼Œé‚£ä¹ˆäºŒè¿›åˆ¶å½¢å¼åªæœ‰ä¸€ä¸ª1ï¼Œå¦‚4ï¼š100ï¼Œ8ï¼š1000 ã€‚ã€‚ã€‚
+    //     é‚£ä¹ˆ(alignment -1)äºŒè¿›åˆ¶ä½ä½éƒ½æ˜¯1ï¼Œ4-1ï¼š011ï¼Œ8-1ï¼š0111ï¼Œå–ååˆ™æ˜¯ä½ä½éƒ½æ˜¯0ï¼Œé«˜ä½æ—¶1ï¼Œ~(4-1):11...11100
+    //	    å–ååï¼Œå»ä¸æŸä¸ªæ•°å€¼&ï¼Œä¿è¯ä½ä½éƒ½ä¸º0ï¼Œè¿™æ ·å°±èƒ½è¢«alignmentæ•´é™¤ã€‚è¦å–æ¯”valå¤§çš„ç¬¬ä¸€ä¸ªèƒ½è¢«alignmentæ•´é™¤çš„
+    //     åŠ ä¸Šalignment-1å³å¯ã€‚
+    static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
+    static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
+    using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
+
+    if (!IsPowerOfTow(alignment)) return static_cast<T>(0);
+
+    return (static_cast<T>(val) + static_cast<T>(alignment - 1)) & ~static_cast<T>(alignment - 1);
+}
+
+template <typename PtrType, typename AlignmentType>
+inline PtrType* AlignUp(PtrType* ptr, AlignmentType alignment)
+{
+    return reinterpret_cast<PtrType*>(AlignUp(reinterpret_cast<uintptr_t>(ptr), static_cast<uintptr_t>(alignment)));
+}
+
+template <typename T1, typename T2>
+inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignDown(T1 val, T2 alignment)
+{
+    // è¿”å›æ¯”valå¤§çš„æœ€å°‘èƒ½è¢«alignmentæ•´é™¤çš„æ•°
+    // 1. T1,T2å¿…é¡»æ˜¯ç›¸åŒçš„æ•°æ®ç±»å‹ï¼Œæ¶‰åŠåˆ°ä½è¿ç®—ï¼Œç¬¦å·ä½ä¿æŒä¸€è‡´
+    // 2. ä¸èƒ½æ˜¯æŒ‡é’ˆç±»å‹
+    // 3. alignmentä¸º2çš„næ¬¡å¹‚
+    // 4. alignmentä¸º2çš„næ¬¡å¹‚ï¼Œé‚£ä¹ˆäºŒè¿›åˆ¶å½¢å¼åªæœ‰ä¸€ä¸ª1ï¼Œå¦‚4ï¼š100ï¼Œ8ï¼š1000 ã€‚ã€‚ã€‚
+    //     é‚£ä¹ˆ(alignment -1)äºŒè¿›åˆ¶ä½ä½éƒ½æ˜¯1ï¼Œ4-1ï¼š011ï¼Œ8-1ï¼š0111ï¼Œå–ååˆ™æ˜¯ä½ä½éƒ½æ˜¯0ï¼Œé«˜ä½æ—¶1ï¼Œ~(4-1):11...11100
+    //	    å–ååï¼Œå»ä¸æŸä¸ªæ•°å€¼&ï¼Œä¿è¯ä½ä½éƒ½ä¸º0ï¼Œè¿™æ ·å°±èƒ½è¢«alignmentæ•´é™¤ã€‚è¦å–æ¯”valå¤§çš„ç¬¬ä¸€ä¸ªèƒ½è¢«alignmentæ•´é™¤çš„
+    //     åŠ ä¸Šalignment-1å³å¯ã€‚
+    static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
+    static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
+    using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
+
+    if (!IsPowerOfTow(alignment)) return static_cast<T>(0);
+
+    return (static_cast<T>(val)) & ~static_cast<T>(alignment - 1);
+}
+
+template <typename PtrType, typename AlignmentType>
+inline PtrType* AlignDown(PtrType* ptr, AlignmentType alignment)
+{
+    return reinterpret_cast<PtrType*>(AlignDown(reinterpret_cast<uintptr_t>(ptr), static_cast<uintptr_t>(alignment)));
+}
+
+template <typename T1, typename T2>
+inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignUpNonPow2(T1 val, T2 alignment)
+{
+    static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
+    static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
+    using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
+
+    T tmp = static_cast<T>(val) + static_cast<T>(alignment - 1);
+
+    return tmp - tmp % alignment;
+}
+template <typename T1, typename T2>
+inline typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type AlignDownNonPow2(T1 val, T2 alignment)
+{
+    static_assert(std::is_unsigned<T1>::value == std::is_unsigned<T2>::value, "both types must be signed or unsigned");
+    static_assert(!std::is_pointer<T1>::value && !std::is_pointer<T2>::value, "types must not be pointers");
+    using T = typename std::conditional<sizeof(T1) >= sizeof(T2), T1, T2>::type;
+
+    T tmp = +static_cast<T>(alignment - 1);
+
+    return static_cast<T>(val) - static_cast<T>(val) % alignment;
+}
+}  // namespace Toy

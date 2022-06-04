@@ -1,0 +1,22 @@
+﻿  Building Custom Rule E:/GitProj/ToyEngine/src/core/graphics/CMakeLists.txt
+  Pipeline.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  PipelineFragment.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  UploadBuffer_D3D12.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  GPUResource_D3D12.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  Graphics_D3D12.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  SwapChain_D3D12.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  GraphicsCommandQueue_D3D12.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  DescriptorMemoryMgr.cpp
+E:\GitProj\ToyEngine\src\core\common\Align.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  GraphicsCommandList_D3D12.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  Generating Code...
+  Graphics.vcxproj -> E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\Debug\Graphics.lib

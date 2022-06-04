@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\GitProj\ToyEngine\src\core\graphics\Pipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\GitProj\ToyEngine\src\core\graphics\PipelineFragment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\GitProj\ToyEngine\src\core\graphics\d3d12\UploadBuffer_D3D12.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\GitProj\ToyEngine\src\core\graphics\d3d12\GPUResource_D3D12.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\GitProj\ToyEngine\src\core\graphics\d3d12\Graphics_D3D12.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\GitProj\ToyEngine\src\core\graphics\d3d12\SwapChain_D3D12.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\GitProj\ToyEngine\src\core\graphics\d3d12\GraphicsCommandQueue_D3D12.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\GitProj\ToyEngine\src\core\graphics\d3d12\DescriptorMemoryMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\GitProj\ToyEngine\src\core\graphics\d3d12\GraphicsCommandList_D3D12.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\GitProj\ToyEngine\src\core\graphics\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E7498068-8256-3BF3-B0B0-05D46B1C5587}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

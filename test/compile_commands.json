@@ -46,6 +46,11 @@
 },
 {
   "directory": "E:/GitProj/ToyEngine/test/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DNOMINMAX -DUNICODE -D_UNICODE -IE:/GitProj/ToyEngine/test/testUtility/include -isystem E:/GitProj/ToyEngine/EngineLib/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o apiTest\\CMakeFiles\\apiTest.dir\\src\\test-VariableSizeAllocationsManager.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-VariableSizeAllocationsManager.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-VariableSizeAllocationsManager.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/test/build",
   "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DNOMINMAX -DUNICODE -D_UNICODE -IE:/GitProj/ToyEngine/test/testUtility/include -isystem E:/GitProj/ToyEngine/EngineLib/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o apiTest\\CMakeFiles\\apiTest.dir\\src\\test-align.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-align.cpp",
   "file": "E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-align.cpp"
 }

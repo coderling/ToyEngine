@@ -3,6 +3,7 @@ IndentWidth: 4
 IncludeBlocks: Preserve
 AlignEscapedNewlines: Right
 BreakBeforeBraces: Custom
+ColumnLimit: 140
 BraceWrapping:   
   AfterClass:      true # false
   AfterControlStatement: true # false

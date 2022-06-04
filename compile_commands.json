@@ -6,6 +6,16 @@
 },
 {
   "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENGINE_DEBUG -DEngine_EXPORTS -DNOMINMAX -DUNICODE -D_UNICODE -IE:/GitProj/ToyEngine/src/core/interface -IE:/GitProj/ToyEngine/src/core/common -IE:/GitProj/ToyEngine/src/include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\common\\CMakeFiles\\Common.dir\\DefaultMemoryAllocator.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\common\\DefaultMemoryAllocator.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\src\\core\\common\\DefaultMemoryAllocator.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENGINE_DEBUG -DEngine_EXPORTS -DNOMINMAX -DUNICODE -D_UNICODE -IE:/GitProj/ToyEngine/src/core/interface -IE:/GitProj/ToyEngine/src/core/common -IE:/GitProj/ToyEngine/src/include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\common\\CMakeFiles\\Common.dir\\Time.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\common\\Time.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\src\\core\\common\\Time.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
   "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENGINE_DEBUG -DEngine_EXPORTS -DNOMINMAX -DUNICODE -D_UNICODE -IE:/GitProj/ToyEngine/src/core/graphics/interface -IE:/GitProj/ToyEngine/src/core/graphics -IE:/GitProj/ToyEngine/src/include -IE:/GitProj/ToyEngine/src/core/interface -IE:/GitProj/ToyEngine/src/core/common -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\graphics\\CMakeFiles\\Graphics.dir\\Pipeline.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\graphics\\Pipeline.cpp",
   "file": "E:\\GitProj\\ToyEngine\\src\\core\\graphics\\Pipeline.cpp"
 },

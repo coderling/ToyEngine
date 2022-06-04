@@ -1,0 +1,7 @@
+﻿  Building Custom Rule E:/GitProj/ToyEngine/src/core/components/CMakeLists.txt
+  SystemMgr.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  App.cpp
+E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  Generating Code...
+  Components.vcxproj -> E:\GitProj\ToyEngine\msbuild\src\core\components\Components.dir\Debug\Components.lib

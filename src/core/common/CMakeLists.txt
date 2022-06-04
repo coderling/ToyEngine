@@ -7,6 +7,8 @@ target_compile_definitions(Common
 
 target_sources(Common
 	PRIVATE "VariableSizeAllocationsManager.cpp"
+	        "DefaultMemoryAllocator.cpp"
+	        "Time.cpp"
 				  "STDAllocator.hpp")
 
 target_include_directories(Common
@@ -28,6 +30,10 @@ set(public_headers
 	"${CMAKE_CURRENT_SOURCE_DIR}/DebugUtility.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/EngineUtility.hpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/Logger.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/STDAllocator.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/VariableSizeAllocationsManager.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/DefaultMemoryAllocator.hpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/Time.hpp"
 )
 
 set_target_properties(Common

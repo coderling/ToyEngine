@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\GitProj\ToyEngine\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\common\Common.dir\$(Configuration)\VariableSizeAllocationsManager.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\common\Common.dir\$(Configuration)\DefaultMemoryAllocator.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\$(Configuration)\Pipeline.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\$(Configuration)\PipelineFragment.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\$(Configuration)\UploadBuffer_D3D12.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\$(Configuration)\GPUResource_D3D12.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\$(Configuration)\Graphics_D3D12.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\$(Configuration)\SwapChain_D3D12.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\$(Configuration)\GraphicsCommandQueue_D3D12.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\$(Configuration)\DescriptorMemoryMgr.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\graphics\Graphics.dir\$(Configuration)\GraphicsCommandList_D3D12.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\platform\Platform.dir\$(Configuration)\WinApp.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\platform\Platform.dir\$(Configuration)\D3D12App.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\platform\Platform.dir\$(Configuration)\Platform_Win.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\components\Components.dir\$(Configuration)\SystemMgr.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="E:\GitProj\ToyEngine\msbuild\src\core\components\Components.dir\$(Configuration)\App.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Object Libraries">
+      <UniqueIdentifier>{E6B2DDA1-F0B8-378D-BB1F-2968F1C3B855}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
