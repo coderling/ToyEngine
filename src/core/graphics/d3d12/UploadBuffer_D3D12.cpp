@@ -1,12 +1,12 @@
 #include "UploadBuffer_D3D12.hpp"
 #include <IGraphics.hpp>
 #include <algorithm>
+#include "CStringTool.hpp"
 #include "EngineUtility.hpp"
 #include "GlobalEnvironment.hpp"
 #include "IApp.hpp"
 #include "Utility.hpp"
 #include "d3dx12.h"
-
 
 using namespace Toy::Graphics;
 
@@ -51,7 +51,7 @@ void UploadBuffer::Init(const std::string& name, size_t size)
 
 #ifdef RELEASE
 #else
-    resource.p_resource->SetName(s2ws(name).c_str());
+    resource.p_resource->SetName(Str2Wstr(name).c_str());
 #endif
 }
 

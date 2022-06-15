@@ -11,7 +11,7 @@ namespace Toy::Graphics
 class PipelineStateCached final : public Toy::Engine::IObject, public Engine::NoCopy
 {
    private:
-    std::unordered_map<D3D12_GRAPHICS_PIPELINE_STATE_DESC, ComPtr<ID3D12PipelineState>> pipelinestates_map;
+    std::unordered_map<std::size_t, ComPtr<ID3D12PipelineState>> pipelinestates_map;
 
    private:
     PipelineStateCached() = default;
