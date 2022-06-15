@@ -1,6 +1,7 @@
 #include "Pipeline.hpp"
-#include "IApp.hpp"
+#include <IGraphics.hpp>
 #include "GlobalEnvironment.hpp"
+#include "IApp.hpp"
 
 using namespace Toy::Graphics;
 
@@ -8,118 +9,113 @@ std::unique_ptr<IPipeline> pipeline;
 
 IPipeline* IPipeline::GetInstance()
 {
-	if (pipeline == nullptr)
-	{
-		pipeline = std::make_unique<Pipeline>();
-	}
+    if (pipeline == nullptr)
+        {
+            pipeline = std::make_unique<Pipeline>();
+        }
 
-	return pipeline.get();
+    return pipeline.get();
 }
 
-int Pipeline::Initialize() 
-{
-	return 0;
-}
+int Pipeline::Initialize() { return 0; }
 
 void Pipeline::Finalize()
 {
-
+    for (auto it = custom_render_funcs.begin(); it != custom_render_funcs.end(); ++it)
+        {
+            (*it)->GetHandler()->Unload();
+        }
+    custom_render_funcs.clear();
 }
 
 void Pipeline::Tick()
 {
-	BeforeRender();
-	Render();
-	AfterRender();
-	FinishFrame();
+    BeforeRender();
+    Render();
+    AfterRender();
+    FinishFrame();
 }
 
 void Pipeline::FinishFrame()
 {
-	auto graphics = Toy::Engine::IApp::env->GetGraphics();
-	graphics->GetSwapChain()->Present();
-	graphics->WaitForGpu();
-}
-
-std::unordered_set<PipelineFragment*>& Pipeline::GetFuncs(const PIPELINE_STAGE& st) noexcept
-{
-	switch (st)
-	{
-	case PIPELINE_STAGE::BEFORE_RENDER:
-	{
-		return custom_render_funcs_before;
-	}
-	break;
-	case PIPELINE_STAGE::AFTER_RENDER:
-	{
-		return custom_render_funcs_after;
-	}
-	break;
-	default:
-	{
-		return custom_render_funcs;
-	}
-	break;
-	}
+    auto graphics = Toy::Engine::IApp::env->GetGraphics();
+    graphics->FinishFrame();
 }
 
 void Pipeline::AddPipelineFragment(PipelineFragment* fg)
 {
-	auto& funcs = GetFuncs(fg->GetStage());
-	if (!funcs.contains(fg))
-	{
-		funcs.emplace(fg);
-		auto handler = fg->GetHandler();
-		if (nullptr != handler)
-		{
-			handler->Load();
-		}
-		fg->Resume();
-	}
+    auto& funcs = custom_render_funcs;
+    if (!funcs.contains(fg))
+        {
+            funcs.emplace(fg);
+            auto handler = fg->GetHandler();
+            if (nullptr != handler)
+                {
+                    handler->Load();
+                }
+            fg->Resume();
+        }
 }
 
-void Pipeline::ExecuteFuncs(const PIPELINE_STAGE& st) 
+void Pipeline::ExecuteFuncs(const PIPELINE_STAGE& st)
 {
-	auto& funcs = GetFuncs(st);
-	for (auto it = funcs.begin(); it != funcs.end();)
-	{
-		auto fg = *it;
-		auto handler = fg->GetHandler();
+    auto& funcs = custom_render_funcs;
+    for (auto it = funcs.begin(); it != funcs.end();)
+        {
+            auto fg = *it;
+            auto handler = fg->GetHandler();
 
-		if (fg->GetState() > 0)
-		{
-			if (nullptr != handler)
-			{
-				handler->Render();
-			}
-		}
-
-		if (fg->GetState() < 0)
-		{
-			it = funcs.erase(it);
-			if (nullptr != handler)
-			{
-				handler->Unload();
-			}
-		}
-		else
-		{
-			++it;
-		}
-	}
+            if (fg->IsRuning() && nullptr != handler)
+                {
+                    switch (st)
+                        {
+                            case PIPELINE_STAGE::BEFORE_RENDER:
+                                handler->PreRender();
+                                break;
+                            case PIPELINE_STAGE::ONRENDER:
+                                handler->Render();
+                                break;
+                                ;
+                            case PIPELINE_STAGE::AFTER_RENDER:
+                                handler->PostRender();
+                                break;
+                            default:
+                                break;
+                        }
+                }
+        }
 }
 
-void Pipeline::Render()
+void Pipeline::TickFuncs()
 {
-	ExecuteFuncs(PIPELINE_STAGE::ONRENDER);
+    auto& funcs = custom_render_funcs;
+    for (auto it = funcs.begin(); it != funcs.end();)
+        {
+            auto fg = *it;
+            auto handler = fg->GetHandler();
+
+            if (fg->IsRuning() && nullptr != handler)
+                {
+                    handler->Tick();
+                }
+
+            if (fg->IsDead())
+                {
+                    it = funcs.erase(it);
+                    if (nullptr != handler)
+                        {
+                            handler->Unload();
+                        }
+                }
+            else
+                {
+                    ++it;
+                }
+        }
 }
 
-void Pipeline::BeforeRender()
-{
-	ExecuteFuncs(PIPELINE_STAGE::BEFORE_RENDER);
-}
+void Pipeline::Render() { ExecuteFuncs(PIPELINE_STAGE::ONRENDER); }
 
-void Pipeline::AfterRender()
-{
-	ExecuteFuncs(PIPELINE_STAGE::AFTER_RENDER);
-}
+void Pipeline::BeforeRender() { ExecuteFuncs(PIPELINE_STAGE::BEFORE_RENDER); }
+
+void Pipeline::AfterRender() { ExecuteFuncs(PIPELINE_STAGE::AFTER_RENDER); }

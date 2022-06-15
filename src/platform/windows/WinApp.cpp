@@ -1,5 +1,5 @@
 #include "WinApp.hpp"
-#include "EngineUtility.hpp"
+#include <CStringTool.hpp>
 #include "Util.hpp"
 
 using namespace Toy::Platform;
@@ -19,9 +19,8 @@ int WinApp::CreateAppWindow()
     wc.hInstance = instance;
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-    const auto& w_name = s2ws(args->app_name);
-    const auto& wstr = w_name.c_str();
-    wc.lpszClassName = wstr;
+    const auto& w_name = Str2Wstr(args->app_name);
+    wc.lpszClassName = w_name.c_str();
 
     if (!RegisterClassEx(&wc))
         {

@@ -1,8 +1,0 @@
-﻿  WinApp.cpp
-E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
-  D3D12App.cpp
-E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
-  Platform_Win.cpp
-E:\GitProj\ToyEngine\src\core\interface\IObject.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
-  Generating Code...
-  Platform.vcxproj -> E:\GitProj\ToyEngine\msbuild\src\platform\Platform.dir\Debug\Platform.lib

@@ -85,10 +85,28 @@ void LogFormat(ELOG_LEVEL level, const char *file, const char *function, const i
             LOG(Toy::Debug::LOG_LV_INFO, false, ##__VA_ARGS__);                                                                            \
     } while (false)
 
+#define LOG_INFO_EXPR(expr, ...)                                                                                                           \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_INFO(##__VA_ARGS__);                                                                                               \
+                }                                                                                                                          \
+    } while (false)
+
 #define LOG_INFO_FORMAT(format, ...)                                                                                                       \
     do                                                                                                                                     \
         {                                                                                                                                  \
             LOG_FORMAT(Toy::Debug::LOG_LV_INFO, false, format, ##__VA_ARGS__);                                                             \
+    } while (false)
+
+#define LOG_INFO_EXPR_FORMAT(expr, format, ...)                                                                                            \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_INFO(format, ##__VA_ARGS__);                                                                                       \
+                }                                                                                                                          \
     } while (false)
 
 #define LOG_WARNING(...)                                                                                                                   \
@@ -97,10 +115,28 @@ void LogFormat(ELOG_LEVEL level, const char *file, const char *function, const i
             LOG(Toy::Debug::LOG_LV_WARNING, false, ##__VA_ARGS__);                                                                         \
     } while (false)
 
+#define LOG_WARNING_EXPR(expr, ...)                                                                                                        \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_WARNING("", ##__VA_ARGS__);                                                                                        \
+                }                                                                                                                          \
+    } while (false)
+
 #define LOG_WARNING_FORMAT(format, ...)                                                                                                    \
     do                                                                                                                                     \
         {                                                                                                                                  \
             LOG_FORMAT(Toy::Debug::LOG_LV_WARNING, false, format, ##__VA_ARGS__);                                                          \
+    } while (false)
+
+#define LOG_WARNING_EXPR_FORMAT(expr, format, ...)                                                                                         \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_WARNING_FORMAT(format, ##__VA_ARGS__);                                                                             \
+                }                                                                                                                          \
     } while (false)
 
 #define LOG_ERROR(...)                                                                                                                     \
@@ -109,10 +145,28 @@ void LogFormat(ELOG_LEVEL level, const char *file, const char *function, const i
             LOG(Toy::Debug::LOG_LV_ERROR, false, ##__VA_ARGS__);                                                                           \
     } while (false)
 
+#define LOG_ERROR_EXPR(expr, ...)                                                                                                          \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_ERROR(##__VA_ARGS__);                                                                                              \
+                }                                                                                                                          \
+    } while (false)
+
 #define LOG_ERROR_EXCEPTION(...)                                                                                                           \
     do                                                                                                                                     \
         {                                                                                                                                  \
             LOG(Toy::Debug::LOG_LV_ERROR, true, ##__VA_ARGS__);                                                                            \
+    } while (false)
+
+#define LOG_ERROR_EXPR_EXCEPTION(expr, format, ...)                                                                                        \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_ERROR_EXCEPTION(format, ##__VA_ARGS__);                                                                            \
+                }                                                                                                                          \
     } while (false)
 
 #define LOG_ERROR_FORMAT(format, ...)                                                                                                      \
@@ -121,10 +175,28 @@ void LogFormat(ELOG_LEVEL level, const char *file, const char *function, const i
             LOG_FORMAT(Toy::Debug::LOG_LV_ERROR, false, format, ##__VA_ARGS__);                                                            \
     } while (false)
 
+#define LOG_ERROR_EXPR_FORMAT(expr, format, ...)                                                                                           \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_ERROR_FORMAT(format, ##__VA_ARGS__);                                                                               \
+                }                                                                                                                          \
+    } while (false)
+
 #define LOG_ERROR_EXCEPTION_FORMAT(format, ...)                                                                                            \
     do                                                                                                                                     \
         {                                                                                                                                  \
             LOG_FORMAT(Toy::Debug::LOG_LV_ERROR, true, format, ##__VA_ARGS__);                                                             \
+    } while (false)
+
+#define LOG_ERROR_EXPR_EXCEPTION_FORMAT(expr, format, ...)                                                                                 \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_ERROR_EXCEPTION_FORMAT(format, ##__VA_ARGS__);                                                                     \
+                }                                                                                                                          \
     } while (false)
 
 #define LOG_FATAL_ERROR(...)                                                                                                               \
@@ -133,10 +205,28 @@ void LogFormat(ELOG_LEVEL level, const char *file, const char *function, const i
             LOG(Toy::Debug::LOG_LV_FATAL_ERROR, false, ##__VA_ARGS__);                                                                     \
     } while (false)
 
+#define LOG_FATAL_ERROR_EXPR(expr, format, ...)                                                                                            \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_FATAL_ERROR(format, ##__VA_ARGS__);                                                                                \
+                }                                                                                                                          \
+    } while (false)
+
 #define LOG_FATAL_ERROR_EXCEPTION(...)                                                                                                     \
     do                                                                                                                                     \
         {                                                                                                                                  \
             LOG(Toy::Debug::LOG_LV_FATAL_ERROR, true, ##__VA_ARGS__);                                                                      \
+    } while (false)
+
+#define LOG_FATAL_ERROR_EXPR_EXCEPTION(expr, ...)                                                                                          \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG(Toy::Debug::LOG_LV_FATAL_ERROR, true, ##__VA_ARGS__);                                                              \
+                }                                                                                                                          \
     } while (false)
 
 #define LOG_FATAL_ERROR_FORMAT(format, ...)                                                                                                \
@@ -145,9 +235,27 @@ void LogFormat(ELOG_LEVEL level, const char *file, const char *function, const i
             LOG_FORMAT(Toy::Debug::LOG_LV_FATAL_ERROR, false, format, ##__VA_ARGS__);                                                      \
     } while (false)
 
+#define LOG_FATAL_ERROR_EXPR_FORMAT(expr, format, ...)                                                                                     \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_FATAL_ERROR_FORMAT(format, ##__VA_ARGS__);                                                                         \
+                }                                                                                                                          \
+    } while (false)
+
 #define LOG_FATAL_ERROR_EXCEPTION_FORMAT(format, ...)                                                                                      \
     do                                                                                                                                     \
         {                                                                                                                                  \
             LOG_FORMAT(Toy::Debug::LOG_LV_FATAL_ERROR, true, format, ##__VA_ARGS__);                                                       \
+    } while (false)
+
+#define LOG_FATAL_ERROR_EXPR_EXCEPTION_FORMAT(expr, format, ...)                                                                           \
+    do                                                                                                                                     \
+        {                                                                                                                                  \
+            if (!(expr))                                                                                                                   \
+                {                                                                                                                          \
+                    LOG_FATAL_ERROR_EXCEPTION_FORMAT(format, ##__VA_ARGS__);                                                               \
+                }                                                                                                                          \
     } while (false)
 }  // namespace Toy::Debug

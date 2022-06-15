@@ -17,8 +17,11 @@ target_include_directories(Graphics
 						"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
 						"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
 						"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/interface>"
+						"$<BUILD_INTERFACE:${DXCFolder}>"
 )
-
+message("dxcf:" ${PROJECT_SOURCE_DIR}/../External/dxc )
+message("dxcf:" ${DXCFolder})
+link_libraries(Graphics, DXCFolder_Lib)
 target_link_libraries(Graphics PRIVATE Common ${d3d12_libs} )
 
 set(public_headers

@@ -20,11 +20,10 @@ endif()
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 
-
 set(d3d12_libs
 "d3d12.lib"
 "dxgi.lib"
-"d3dcompiler.lib"
+"dxcompiler.lib"
 )
 
 add_library(Engine SHARED)

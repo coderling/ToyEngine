@@ -1,42 +1,28 @@
 #include "PipelineFragment.hpp"
+#include <DebugUtility.hpp>
 
 using namespace Toy::Graphics;
 
-PipelineFragment::PipelineFragment(PIPELINE_STAGE stage): stage(stage), running(0), handler(nullptr)
-{
-}
+PipelineFragment::PipelineFragment() : running(ERUNNING_STATE::RS_IDLE), handler(nullptr) {}
 
 void PipelineFragment::Stop()
 {
-	running = 0;
+    ENGINE_ASSERT_EXPR(running != ERUNNING_STATE::RS_END);
+    running = ERUNNING_STATE::RS_IDLE;
 }
 
 void PipelineFragment::Resume()
 {
-	running = 1;
+    ENGINE_DEV_CHECK_EXPR(running == ERUNNING_STATE::RS_IDLE);
+    running = ERUNNING_STATE::RS_RUNNING;
 }
 
-void PipelineFragment::End()
-{
-	running = -1;
-}
+void PipelineFragment::End() { running = ERUNNING_STATE::RS_END; }
 
-int PipelineFragment::GetState() const noexcept
-{
-	return running;
-}
+bool PipelineFragment::IsIdle() const noexcept { return running == ERUNNING_STATE::RS_IDLE; }
+bool PipelineFragment::IsRuning() const noexcept { return running == ERUNNING_STATE::RS_RUNNING; }
+bool PipelineFragment::IsDead() const noexcept { return running == ERUNNING_STATE::RS_END; }
 
-PIPELINE_STAGE PipelineFragment::GetStage() const noexcept
-{
-	return stage;
-}
+void PipelineFragment::Init(std::unique_ptr<IPipelineFragmentHandler> handler) { this->handler = std::move(handler); }
 
-void PipelineFragment::Init(IPipelineFragmentHandler* handler)
-{
-	this->handler = handler;
-}
-
-IPipelineFragmentHandler* PipelineFragment::GetHandler() const noexcept
-{
-	return handler;
-}
+IPipelineFragmentHandler* PipelineFragment::GetHandler() const noexcept { return handler.get(); }

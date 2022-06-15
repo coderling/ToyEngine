@@ -7,6 +7,9 @@
 
 namespace Toy
 {
+#define STRINGIFY(x) #x
+#define STRINGIFY_BUILTIN(x) STRINGIFY(x)
+
 template <typename StreamType, typename ArgsType>
 inline void StreamOutput(StreamType& st)
 {

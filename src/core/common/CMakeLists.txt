@@ -9,7 +9,7 @@ target_sources(Common
 	PRIVATE "VariableSizeAllocationsManager.cpp"
 	        "DefaultMemoryAllocator.cpp"
 	        "Time.cpp"
-				  "STDAllocator.hpp")
+			"STDAllocator.hpp")
 
 target_include_directories(Common
 	PUBLIC 

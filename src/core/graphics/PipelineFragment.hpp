@@ -1,37 +1,46 @@
 #pragma once
 
+#include <memory>
 #include "IObject.hpp"
-#include "pch.hpp"
 #include "IPipelineFragmentHandler.hpp"
+#include "pch.hpp"
 
 namespace Toy::Graphics
 {
-	enum class PIPELINE_STAGE
-	{
-		BEFORE_RENDER,
-		ONRENDER,
-		AFTER_RENDER
-	};
+enum class PIPELINE_STAGE
+{
+    BEFORE_RENDER,
+    ONRENDER,
+    AFTER_RENDER
+};
 
-	class  TOY_LIB_API PipelineFragment : public Toy::Engine::NoCopy
-	{
-	public:
-		PipelineFragment(PIPELINE_STAGE stage);
-		void Init(IPipelineFragmentHandler* handler);
-		IPipelineFragmentHandler* GetHandler() const noexcept;
-		void Stop();
+class PipelineFragment : public Toy::Engine::NoCopy
+{
+   private:
+    enum class ERUNNING_STATE
+    {
+        RS_IDLE = 0,
+        RS_RUNNING = 1,
+        RS_END = -1
+    };
 
-		void Resume();
+   public:
+    PipelineFragment();
+    void Init(std::unique_ptr<IPipelineFragmentHandler> handler);
+    IPipelineFragmentHandler* GetHandler() const noexcept;
+    void Stop();
 
-		void End();
+    void Resume();
 
-		int GetState() const noexcept;
-		PIPELINE_STAGE GetStage() const noexcept;
+    void End();
 
-	private:
-		int running = 0;
-		IPipelineFragmentHandler* handler;
-		PIPELINE_STAGE stage;
-	};
+    bool IsIdle() const noexcept;
+    bool IsRuning() const noexcept;
+    bool IsDead() const noexcept;
 
-}
+   private:
+    ERUNNING_STATE running = ERUNNING_STATE::RS_IDLE;
+    std::unique_ptr<IPipelineFragmentHandler> handler;
+};
+
+}  // namespace Toy::Graphics

@@ -7,12 +7,13 @@ using namespace Toy::Engine;
 
 namespace Toy::Graphics
 {
-	class IGPUResource : public IObject,public NoCopy
-	{
-	public:
-		virtual IDeviceResource* GetResource() = 0;
-		virtual const IDeviceResource* GetResource() const = 0;
-		virtual IDeviceResource** GetAddressOf() = 0;
-		virtual GPU_VIRTUAL_ADDRESS GetGpuVirtualAddress() const = 0;
-	};
-}
+class IGPUResource : public IObject, public NoCopy
+{
+   public:
+    virtual IDeviceResource* GetResource() = 0;
+    virtual const IDeviceResource* GetResource() const = 0;
+    virtual IDeviceResource** GetAddressOf() = 0;
+    virtual GPU_VIRTUAL_ADDRESS GetGpuVirtualAddress() const = 0;
+    virtual void Release() = 0;
+};
+}  // namespace Toy::Graphics
