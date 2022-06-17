@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.20)
-project(testDll)
-
-set(CMAKE_CXX_STANDARD 20)
-add_executable(testDll test-TimerInDll.cpp)
+add_executable(dll-test test-TimerInDll.cpp)
+target_link_libraries(dll-test PRIVATE Common Graphics-D3D12)
+SetTestCommonProperties(dll-test)

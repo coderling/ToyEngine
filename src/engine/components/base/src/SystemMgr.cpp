@@ -3,7 +3,6 @@
 #include "IGraphics.hpp"
 #include "IPipeline.hpp"
 
-
 using namespace Toy::Engine;
 
 int SystemMgr::Initialize()

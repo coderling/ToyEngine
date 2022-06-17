@@ -1,27 +1,10 @@
 #pragma once
-#include <chrono>
-#include "FormatString.hpp"
-#include "Logger.hpp"
+
 #ifdef EXPORT_DLL
 #include <Windows.h>
-#endif
-
+#include "Logger.hpp"
 namespace Toy::Engine
 {
-class Timer final
-{
-   public:
-    Timer() noexcept;
-    void Reset();
-    double ElapsedTime();
-    float ElapsedTimef();
-
-   private:
-    std::chrono::high_resolution_clock::time_point start_time;
-};
-
-typedef struct Timer& (*IGetGTimer)();
-#ifdef EXPORT_DLL
 inline FARPROC LoadDLL(const char* dll_name, const char* function_name)
 {
 #if _WIN64
@@ -55,9 +38,5 @@ inline FARPROC LoadDLL(const char* dll_name, const char* function_name)
 
     return p_func;
 }
-
-inline IGetGTimer TEngine_LoadGetTimer() { return (IGetGTimer)LoadDLL("Common", "GTimer"); }
-#else
-inline Timer& GTimer();
-#endif
 }  // namespace Toy::Engine
+#endif

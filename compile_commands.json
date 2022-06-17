@@ -26,12 +26,12 @@
 },
 {
   "directory": "E:/GitProj/ToyEngine/build",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -DUSE_dxc -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/include -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/interface -IE:/GitProj/ToyEngine/src/core/common/interface -isystem E:/GitProj/ToyEngine/external/dxc -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\graphics\\d3d12\\CMakeFiles\\Graphics-D3D12.dir\\src\\Graphics_D3D12.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\Graphics_D3D12.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -DUSE_dxc -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/include -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/interface -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/external/dxc -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\graphics\\d3d12\\CMakeFiles\\Graphics-D3D12.dir\\src\\Graphics_D3D12.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\Graphics_D3D12.cpp",
   "file": "E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\Graphics_D3D12.cpp"
 },
 {
   "directory": "E:/GitProj/ToyEngine/build",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -DUSE_dxc -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/include -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/interface -IE:/GitProj/ToyEngine/src/core/common/interface -isystem E:/GitProj/ToyEngine/external/dxc -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\graphics\\d3d12\\CMakeFiles\\Graphics-D3D12.dir\\src\\DXCCompiler.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\DXCCompiler.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -DUSE_dxc -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/include -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/interface -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/external/dxc -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\graphics\\d3d12\\CMakeFiles\\Graphics-D3D12.dir\\src\\DXCCompiler.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\DXCCompiler.cpp",
   "file": "E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\DXCCompiler.cpp"
 },
 {
@@ -53,5 +53,70 @@
   "directory": "E:/GitProj/ToyEngine/build",
   "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/src/engine/platform/windows/include -IE:/GitProj/ToyEngine/src/engine/platform/windows/interface -IE:/GitProj/ToyEngine/src/engine/platform/base/interface -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/engine/components/base/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\engine\\platform\\windows\\CMakeFiles\\EnginePlatform-windows.dir\\src\\Platform_Win.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\engine\\platform\\windows\\src\\Platform_Win.cpp",
   "file": "E:\\GitProj\\ToyEngine\\src\\engine\\platform\\windows\\src\\Platform_Win.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -IE:/GitProj/ToyEngine/test/ThirdParty/googletest/googlemock/include -IE:/GitProj/ToyEngine/test/ThirdParty/googletest/googlemock -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Wall -Wshadow -Werror -Wconversion -DGTEST_HAS_PTHREAD=0 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -o _deps\\googletest-build\\googlemock\\CMakeFiles\\gmock.dir\\src\\gmock-all.cc.obj -c E:\\GitProj\\ToyEngine\\test\\ThirdParty\\googletest\\googlemock\\src\\gmock-all.cc",
+  "file": "E:\\GitProj\\ToyEngine\\test\\ThirdParty\\googletest\\googlemock\\src\\gmock-all.cc"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googlemock/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googlemock -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Wall -Wshadow -Werror -Wconversion -DGTEST_HAS_PTHREAD=0 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -o _deps\\googletest-build\\googlemock\\CMakeFiles\\gmock_main.dir\\src\\gmock_main.cc.obj -c E:\\GitProj\\ToyEngine\\test\\ThirdParty\\googletest\\googlemock\\src\\gmock_main.cc",
+  "file": "E:\\GitProj\\ToyEngine\\test\\ThirdParty\\googletest\\googlemock\\src\\gmock_main.cc"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -IE:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -IE:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Wall -Wshadow -Werror -Wconversion -DGTEST_HAS_PTHREAD=0 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -o _deps\\googletest-build\\googletest\\CMakeFiles\\gtest.dir\\src\\gtest-all.cc.obj -c E:\\GitProj\\ToyEngine\\test\\ThirdParty\\googletest\\googletest\\src\\gtest-all.cc",
+  "file": "E:\\GitProj\\ToyEngine\\test\\ThirdParty\\googletest\\googletest\\src\\gtest-all.cc"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Wall -Wshadow -Werror -Wconversion -DGTEST_HAS_PTHREAD=0 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Wchar-subscripts -Winline -Wredundant-decls -o _deps\\googletest-build\\googletest\\CMakeFiles\\gtest_main.dir\\src\\gtest_main.cc.obj -c E:\\GitProj\\ToyEngine\\test\\ThirdParty\\googletest\\googletest\\src\\gtest_main.cc",
+  "file": "E:\\GitProj\\ToyEngine\\test\\ThirdParty\\googletest\\googletest\\src\\gtest_main.cc"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -IE:/GitProj/ToyEngine/test/testUtility/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\testUtility\\CMakeFiles\\test_utility.dir\\src\\TestEnv.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\testUtility\\src\\TestEnv.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\testUtility\\src\\TestEnv.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/test/testUtility/include -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\apiTest\\CMakeFiles\\apiTest.dir\\src\\main.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\main.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\main.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/test/testUtility/include -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\apiTest\\CMakeFiles\\apiTest.dir\\src\\test-DXCCompiler.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-DXCCompiler.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-DXCCompiler.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/test/testUtility/include -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\apiTest\\CMakeFiles\\apiTest.dir\\src\\test-DebugUtility.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-DebugUtility.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-DebugUtility.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/test/testUtility/include -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\apiTest\\CMakeFiles\\apiTest.dir\\src\\test-FormatString.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-FormatString.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-FormatString.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/test/testUtility/include -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\apiTest\\CMakeFiles\\apiTest.dir\\src\\test-Logger.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-Logger.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-Logger.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/test/testUtility/include -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\apiTest\\CMakeFiles\\apiTest.dir\\src\\test-VariableSizeAllocationsManager.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-VariableSizeAllocationsManager.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-VariableSizeAllocationsManager.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/test/testUtility/include -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest/include -isystem E:/GitProj/ToyEngine/test/ThirdParty/googletest/googletest -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\apiTest\\CMakeFiles\\apiTest.dir\\src\\test-align.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-align.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\apiTest\\src\\test-align.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DUSE_dxc -D_DEBUG -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/external/dxc -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\samples\\testCom\\CMakeFiles\\dll-test.dir\\test-TimerInDll.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\samples\\testCom\\test-TimerInDll.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\test\\samples\\testCom\\test-TimerInDll.cpp"
 }
 ]

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Windows.h>
-#include <DebugUtility.hpp>
+#include "DebugUtility.hpp"
 #include "d3dx12.h"
 
 namespace Toy::Graphics
@@ -24,7 +24,7 @@ namespace Toy::Graphics
     } while (false)
 #endif
 
-#if defined(_DEBUG) || defined(DGB)
+#if defined(_DEBUG) || defined(DEBUG)
 inline void SetName(ID3D12Object* pobj, LPCWSTR name) { pobj->SetName(name); }
 
 inline void SetNameIndexed(ID3D12Object* pobj, LPCWSTR name, UINT index)

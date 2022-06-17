@@ -12,7 +12,7 @@ set(Interfaces
 )
 
 add_library(EngineComponents-Basic STATIC ${Interfaces} ${Sources})
-set_common_target_properties(EngineComponents-Basic)
+SetCommonTargetProperties(EngineComponents-Basic)
 
 target_link_libraries(EngineComponents-Basic
     PRIVATE EngineBuildSetting

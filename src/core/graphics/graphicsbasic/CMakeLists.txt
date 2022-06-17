@@ -12,10 +12,12 @@ set(Interfaces
     "interface/IPipeline.hpp"
     "interface/PipelineFragment.hpp"
     "interface/IShader.hpp"
+    "interface/IGraphicsCommandQueue.hpp"
+    "interface/ISwapChain.hpp"
 )
 
 add_library(Graphics-Base STATIC ${Includes} ${Sources} ${Interfaces})
-set_common_target_properties(Graphics-Base)
+SetCommonTargetProperties(Graphics-Base)
 
 target_link_libraries(Graphics-Base
     PRIVATE Common EngineBuildSetting

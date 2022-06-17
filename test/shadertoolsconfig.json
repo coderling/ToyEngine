@@ -1,6 +1,0 @@
-{
-    "hlsl.additionalIncludeDirectories": [
-        "..\\assets\\builtin_shaders\\inc",
-        ","
-    ]
-}

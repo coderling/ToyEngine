@@ -1,10 +1,14 @@
 #include "EngineLoop.hpp"
+#include "GlobalEnvironment.hpp"
 #include "Logger.hpp"
 #include "SystemMgr.hpp"
 
 namespace Toy::Platform
 {
-EngineLoop::EngineLoop(std::unique_ptr<Engine::IClient> _client) : client(std::move(_client)), system_mgr(nullptr) {}
+EngineLoop::EngineLoop(std::unique_ptr<Engine::IClient> _client) : client(std::move(_client)), system_mgr(nullptr)
+{
+    Engine::GlobalEnvironment::GetEnv().init_args = &_client->GetArgs();
+}
 
 EngineLoop::~EngineLoop() noexcept { LOG_INFO("~EngineLoop()"); }
 

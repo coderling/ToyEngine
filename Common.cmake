@@ -1,4 +1,4 @@
-function(set_common_target_properties TARGET)
+function(SetCommonTargetProperties TARGET)
     set_target_properties(${TARGET} PROPERTIES
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON
@@ -11,6 +11,13 @@ function(set_common_target_properties TARGET)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interface>
         PUBLIC
         $<INSTALL_INTERFACE:interface>
+    )
+endfunction()
+
+function(SetTestCommonProperties TARGET)
+    set_target_properties(${TARGET} PROPERTIES
+        CXX_STANDARD 20
+        CXX_STANDARD_REQUIRED ON
     )
 endfunction()
 

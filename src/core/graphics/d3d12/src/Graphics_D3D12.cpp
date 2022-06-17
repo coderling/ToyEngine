@@ -3,7 +3,6 @@
 #include "GlobalEnvironment.hpp"
 #include "GraphicsCommandQueue_D3D12.hpp"
 #include "Graphics_D3D12.hpp"
-#include "IApp.hpp"
 #include "SwapChain_D3D12.hpp"
 #include "Utility.hpp"
 
@@ -37,7 +36,7 @@ int Graphics::Initialize()
     ComPtr<IDXGIFactory7> factory;
     ASSERT_SUCCEEDED(CreateDXGIFactory2(dxg_flactory_flags, MY_IID_PPV_ARGS(&factory)));
 
-    const auto& app_args = IApp::env->GetApp()->GetArgs();
+    const auto app_args = GlobalEnvironment::GetEnv().GetArgs();
     if (app_args->use_wrap_device)
         {
             ComPtr<IDXGIAdapter> wrap_adapter;

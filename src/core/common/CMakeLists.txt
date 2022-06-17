@@ -7,6 +7,7 @@ set(Sources
 )
 
 set(Interfaces
+    "interface/AppArgs.hpp"
     "interface/Align.hpp"
     "interface/CStringTool.hpp"
     "interface/DebugUtility.hpp"
@@ -24,7 +25,7 @@ set(Interfaces
 )
 
 add_library(Common STATIC ${Sources} ${Includes} ${Interfaces})
-set_common_target_properties(Common)
+SetCommonTargetProperties(Common)
 
 target_link_libraries(Common PRIVATE EngineBuildSetting)
 

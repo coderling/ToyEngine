@@ -14,7 +14,7 @@ set(Interfaces
 )
 
 add_library(EnginePlatform-windows STATIC ${Includes} ${Interfaces} ${Sources})
-set_common_target_properties(EnginePlatform-windows)
+SetCommonTargetProperties(EnginePlatform-windows)
 
 target_link_libraries(EnginePlatform-windows PRIVATE EnginePlatform-Basic EngineBuildSetting)
 

@@ -1,7 +1,7 @@
+#include "DXCCompiler.hpp"
 #include <string.h>
-#include <CStringTool.hpp>
 #include <functional>
-#include "DXCComplier.hpp"
+#include "CStringTool.hpp"
 #include "Utility.hpp"
 
 using namespace Toy::Graphics;

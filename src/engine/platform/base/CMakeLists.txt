@@ -8,12 +8,11 @@ set(Sources
 
 set(Interfaces
     "interface/Client.hpp"
-    "interface/AppArgs.hpp"
     "interface/EngineLoop.hpp"
 )
 
 add_library(EnginePlatform-Basic STATIC ${Includes} ${Interfaces} ${Sources})
-set_common_target_properties(EnginePlatform-Basic)
+SetCommonTargetProperties(EnginePlatform-Basic)
 
 target_link_libraries(
     EnginePlatform-Basic
