@@ -1,4 +1,3 @@
-#define ENGINE_DEBUG
 #include <gtest/gtest.h>
 #include <DebugUtility.hpp>
 TEST(ASSERT, ASSERT)

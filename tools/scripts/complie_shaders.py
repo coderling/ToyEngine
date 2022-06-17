@@ -11,7 +11,7 @@ self_dir, self_fname = os.path.split(self_path)
 engine_root = os.path.abspath(self_dir + "/../../")
 print("engine_root:", engine_root)
 builtin_shader_include_dir = os.path.join(engine_root, "assets", "builtin_shaders", "inc")
-fxc_path = os.path.join(engine_root, "External", "dxc", "bin", "x64", "dxc.exe")
+fxc_path = os.path.join(engine_root, "external", "dxc", "bin", "x64", "dxc.exe")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-P", "--path", help="folder path", type=str, default=engine_root, required=False)

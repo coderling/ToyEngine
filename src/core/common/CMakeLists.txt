@@ -1,42 +1,31 @@
-add_library(Common OBJECT)
+set(Includes "include/PreInc.hpp")
 
-target_compile_definitions(Common
-	PUBLIC
-		"$<BUILD_INTERFACE:Engine_EXPORTS>"
+set(Sources
+    "src/DefaultMemoryAllocator.cpp"
+    "src/Time.cpp"
+    "src/VariableSizeAllocationsManager.cpp"
 )
 
-target_sources(Common
-	PRIVATE "VariableSizeAllocationsManager.cpp"
-	        "DefaultMemoryAllocator.cpp"
-	        "Time.cpp"
-			"STDAllocator.hpp")
-
-target_include_directories(Common
-	PUBLIC 
-				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/interface>"
-				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/core/common>"
-				"$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
-)
-message(${PROJECT_SOURCE_DIR})
-set(public_headers
-	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/AppArgs.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/GlobalEnvironment.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IApp.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IObject.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/ISystem.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/../interface/IAllocator.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/Align.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/FormatString.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/DebugUtility.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/EngineUtility.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/Logger.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/STDAllocator.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/VariableSizeAllocationsManager.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/DefaultMemoryAllocator.hpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/Time.hpp"
+set(Interfaces
+    "interface/Align.hpp"
+    "interface/CStringTool.hpp"
+    "interface/DebugUtility.hpp"
+    "interface/DefaultMemoryAllocator.hpp"
+    "interface/FormatString.hpp"
+    "interface/HashUtils.hpp"
+    "interface/IAllocator.hpp"
+    "interface/IObject.hpp"
+    "interface/Logger.hpp"
+    "interface/pch.hpp"
+    "interface/STDAllocator.hpp"
+    "interface/Time.hpp"
+    "interface/CommonDefines.hpp"
+    "interface/VariableSizeAllocationsManager.hpp"
 )
 
-set_target_properties(Common
-	PROPERTIES
-		PUBLIC_HEADER "${public_headers}"
-)
+add_library(Common STATIC ${Sources} ${Includes} ${Interfaces})
+set_common_target_properties(Common)
+
+target_link_libraries(Common PRIVATE EngineBuildSetting)
+
+InstallEngineLib(Common)
