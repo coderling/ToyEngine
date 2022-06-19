@@ -19,9 +19,3 @@ float Timer::ElapsedTimef()
     const auto& time_span = std::chrono::duration_cast<std::chrono::duration<float>>(now - start_time);
     return time_span.count();
 }
-
-Timer& GTimer()
-{
-    static Timer g_timer;
-    return g_timer;
-}
