@@ -3,15 +3,6 @@ function(SetCommonTargetProperties TARGET)
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON
     )
-
-    target_include_directories(${TARGET}
-        PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interface>
-        PUBLIC
-        $<INSTALL_INTERFACE:interface>
-    )
 endfunction()
 
 function(SetTestCommonProperties TARGET)
@@ -35,7 +26,23 @@ function(InstallEngineLib _target)
         list(APPEND ENGINE_STATIC_LIBS_LIST ${_target})
         set(ENGINE_STATIC_LIBS_LIST ${ENGINE_STATIC_LIBS_LIST} CACHE INTERNAL "common libraries installation list")
     else()
-        message("unsupportd non static library install!")
+        install(TARGETS ${_target}
+            ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}/$<CONFIG>"
+            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}/$<CONFIG>"
+            RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}/$<CONFIG>"
+        )
+
+        install(FILES $<TARGET_PDB_FILE:${_target}> DESTINATION "${CMAKE_INSTALL_BINDIR}/$<CONFIG>" OPTIONAL)
+    endif()
+
+    # include install
+    get_target_property(target_source_dir ${_target} SOURCE_DIR)
+    file(RELATIVE_PATH target_relative_path "${CMAKE_SOURCE_DIR}" "${target_source_dir}")
+
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/interface")
+        install(DIRECTORY interface
+            DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${target_relative_path}"
+        )
     endif()
 endfunction()
 
@@ -99,6 +106,30 @@ function(SetTargetOutputName target_name out_name)
     foreach(r_config ${RELEASE_CONFIGS})
         set_target_properties(${target_name} PROPERTIES
             OUTPUT_NAME_${r_config} ${out_name}${RELEASE_DLL_SUFFIX}
+        )
+    endforeach()
+endfunction()
+
+function(CopyRequiredDLLs target_name)
+    list(APPEND Required_DLLs Graphics-D3D12-Shared)
+
+    if(TARGET DXC)
+        list(APPEND Required_DLLs DXC)
+        get_target_property(dxil_path DXC DXIL_PATH)
+        add_custom_command(TARGET ${target_name}
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${dxil_path}"
+            "\"$<TARGET_FILE_DIR:${target_name}>\""
+        )
+    endif()
+
+    foreach(DLL_PJ ${Required_DLLs})
+        add_custom_command(TARGET ${target_name}
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "\"$<TARGET_FILE:${DLL_PJ}>\""
+            "\"$<TARGET_FILE_DIR:${target_name}>\""
         )
     endforeach()
 endfunction()

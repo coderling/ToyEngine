@@ -1,8 +1,8 @@
 #pragma once
 
-#ifdef EXPORT_DLL
 #include <Windows.h>
-#include "Logger.hpp"
+#include <iostream>
+
 namespace Toy::Engine
 {
 inline FARPROC LoadDLL(const char* dll_name, const char* function_name)
@@ -19,19 +19,24 @@ inline FARPROC LoadDLL(const char* dll_name, const char* function_name)
     const char* config = "_r";
 #endif
 
-    auto lib_name = ConcatString(dll_name, arc, config, ".dll");
-    auto handle = LoadLibraryA(lib_name.c_str());
+    const size_t StringBufferSize = 4096;
+    char* lib_name = (char*)malloc(StringBufferSize);
+
+    sprintf_s(lib_name, StringBufferSize, "%s%s%s.dll", dll_name, arc, config);
+
+    auto handle = LoadLibraryA(lib_name);
+    auto error = GetLastError();
 
     if (handle == nullptr)
         {
-            LOG_ERROR("faile to Load ", dll_name);
+            std::cerr << "failed to load dll: " << lib_name << std::endl;
             return nullptr;
         }
 
     auto p_func = GetProcAddress(handle, function_name);
     if (p_func == nullptr)
         {
-            LOG_ERROR("fail to get function: ", function_name);
+            std::cerr << "failed to get function: " << function_name << std::endl;
             FreeLibrary(handle);
             return nullptr;
         }
@@ -39,4 +44,3 @@ inline FARPROC LoadDLL(const char* dll_name, const char* function_name)
     return p_func;
 }
 }  // namespace Toy::Engine
-#endif

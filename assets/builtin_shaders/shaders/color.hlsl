@@ -4,7 +4,7 @@
 //SM:6.1
 //ENDHEAD
 
-#include "vsoutput.hlsl"
+#include "../inc/vsoutput.hlsl"
 
 
 VSOut_POS_COLOR VS_Main(float4 position: POSITION, float color :COLOR)

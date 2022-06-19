@@ -3,6 +3,7 @@ set(Includes "include/PreInc.hpp")
 set(Sources
     "src/DefaultMemoryAllocator.cpp"
     "src/Time.cpp"
+    "src/GlobalEnviroment.cpp"
     "src/VariableSizeAllocationsManager.cpp"
 )
 
@@ -22,11 +23,23 @@ set(Interfaces
     "interface/Time.hpp"
     "interface/CommonDefines.hpp"
     "interface/VariableSizeAllocationsManager.hpp"
+    "interface/LoadDLL.hpp"
 )
+
+add_library(Common-Interface INTERFACE)
+target_include_directories(Common-Interface INTERFACE interface)
 
 add_library(Common STATIC ${Sources} ${Includes} ${Interfaces})
 SetCommonTargetProperties(Common)
+target_include_directories(Common
+    PRIVATE include
+)
 
-target_link_libraries(Common PRIVATE EngineBuildSetting)
+target_link_libraries(Common
+    PRIVATE
+    EngineBuildSetting
+    PUBLIC
+    Common-Interface
+)
 
 InstallEngineLib(Common)

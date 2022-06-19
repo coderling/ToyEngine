@@ -1,0 +1,3 @@
+EXPORTS
+    GetD3D12Factory
+    

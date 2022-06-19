@@ -6,8 +6,11 @@
 
 using namespace Toy::Graphics;
 
-void DXCCompiler::Compile(const DXCCompileArgs& args)
+ICompileArgs* DXCCompiler::ApplyArgsInstance(const wchar_t* path) { return new DXCCompileArgs(path); }
+
+void DXCCompiler::Compile(const ICompileArgs* p_args)
 {
+    auto args = *(reinterpret_cast<const DXCCompileArgs*>(p_args));
     ComPtr<IDxcUtils> p_utils = nullptr;
     ComPtr<IDxcCompiler3> p_compiler = nullptr;
     DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&p_utils));
@@ -17,8 +20,9 @@ void DXCCompiler::Compile(const DXCCompileArgs& args)
     p_utils->CreateDefaultIncludeHandler(&p_include_handler);
 
     ComPtr<IDxcBlobEncoding> p_source = nullptr;
-    auto hr = p_utils->LoadFile(Str2Wstr(args.file_path).c_str(), nullptr, &p_source);
-    ENGINE_DEV_CHECK_EXPR(SUCCEEDED(hr), "Load file fail:", args.file_path);
+    const auto& str_path = Wstr2Str(args.file_path);
+    auto hr = p_utils->LoadFile(args.file_path, nullptr, &p_source);
+    ENGINE_DEV_CHECK_EXPR(SUCCEEDED(hr), "Load file fail:", str_path);
 
     DxcBuffer source_buffer;
     source_buffer.Ptr = p_source->GetBufferPointer();
@@ -27,11 +31,11 @@ void DXCCompiler::Compile(const DXCCompileArgs& args)
 
     ComPtr<IDxcResult> p_result = nullptr;
     hr = p_compiler->Compile(&source_buffer, args.GetArguments(), args.GetArgCount(), p_include_handler.Get(), IID_PPV_ARGS(&p_result));
-    ENGINE_ASSERT_EXPR(SUCCEEDED(hr), "compile shader fail", args.file_path);
+    ENGINE_ASSERT_EXPR(SUCCEEDED(hr), "compile shader fail", str_path);
 
     ComPtr<IDxcBlobUtf8> p_errors = nullptr;
     hr = p_result->GetOutput(DXC_OUT_ERRORS, IID_PPV_ARGS(&p_errors), nullptr);
-    LOG_WARNING_EXPR(SUCCEEDED(hr), "error on get error output:", args.file_path);
+    LOG_WARNING_EXPR(SUCCEEDED(hr), "error on get error output:", str_path);
 
     std::size_t bytecode_length = 0;
     if (p_errors != nullptr && p_errors->GetStringLength() != 0)

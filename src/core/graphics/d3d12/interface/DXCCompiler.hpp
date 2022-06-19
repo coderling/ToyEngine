@@ -4,13 +4,14 @@
 #include <wrl/client.h>
 #include <vector>
 #include "CStringTool.hpp"
+#include "DXCCompileArgs.hpp"
 #include "DebugUtility.hpp"
 #include "ShaderInfos.hpp"
 
 using namespace Microsoft::WRL;
 namespace Toy::Graphics
 {
-class DXCCompiler final
+class DXCCompiler final : public IDXCCompiler
 {
    public:
 // copy from DxilContainer.h
@@ -120,81 +121,15 @@ class DXCCompiler final
         ShaderReflectInfo() noexcept : hr{S_FALSE}, shader_desc{} {}
     };
 
-    struct DXCCompileArgs
-    {
-       private:
-        friend class DXCCompiler;
-        const char* file_path;
-        ComPtr<IDxcCompilerArgs> p_args;
-
-       public:
-        DXCCompileArgs(const char* path) noexcept : file_path(path), p_args(nullptr)
-        {
-            DxcCreateInstance(CLSID_DxcCompilerArgs, IID_PPV_ARGS(&p_args));
-            ENGINE_ASSERT(p_args != NULL, "IDxcCompilerArgs create failed");
-        }
-        ~DXCCompileArgs() {}
-
-        DXCCompileArgs& SetEntry(LPCWSTR arg)
-        {
-            static LPCWSTR entry_opt[2] = {L"-E", arg};
-            p_args->AddArguments(entry_opt, 2);
-            return *this;
-        }
-
-        DXCCompileArgs& AddInlucdePath(LPCWSTR inc)
-        {
-            static LPCWSTR argv[2] = {L"-I", inc};
-            p_args->AddArguments(argv, 2);
-            return *this;
-        }
-
-        DXCCompileArgs& EnableDebug()
-        {
-            static LPCWSTR argv[1] = {L"-Zi"};
-            p_args->AddArguments(argv, 1);
-            return *this;
-        }
-
-        DXCCompileArgs& SetOutput(LPCWSTR out_path)
-        {
-            static LPCWSTR argv[2] = {L"-Fo", out_path};
-            p_args->AddArguments(argv, 2);
-            return *this;
-        }
-
-        DXCCompileArgs& EnablePDB(LPCWSTR path_pdb)
-        {
-            static LPCWSTR argv[2] = {L"-Fd", path_pdb};
-            p_args->AddArguments(argv, 2);
-            return *this;
-        }
-
-        DXCCompileArgs& SetShaderModel(LPCWSTR sm)
-        {
-            static LPCWSTR argv[2] = {L"-T", sm};
-            p_args->AddArguments(argv, 2);
-            return *this;
-        }
-        DXCCompileArgs& AddCustomArgs(LPCWSTR* argv, const UINT32& argc)
-        {
-            p_args->AddArguments(argv, argc);
-            return *this;
-        }
-
-        LPCWSTR* GetArguments() const { return p_args->GetArguments(); }
-
-        UINT32 GetArgCount() const { return p_args->GetCount(); }
-    };
-
    private:
     CompileResult result;
 
    public:
-    void Compile(const DXCCompileArgs& args);
-    void ReflectShader(const D3D12_SHADER_BYTECODE& bytecode, ShaderReflectInfo& out_info) const;
+    ICompileArgs* ApplyArgsInstance(const wchar_t* path) override;
+    void Compile(const ICompileArgs* p_args) override;
     void SaveByteCode(const wchar_t* path, const wchar_t* pdb_path) const;
-    void SaveByteCode() const;
+    void SaveByteCode() const override;
+    void ReflectShader(const D3D12_SHADER_BYTECODE& bytecode, ShaderReflectInfo& out_info) const;
 
    private:
     void CreatePSOInputLayout(const D3D12_SHADER_DESC& shader_desc, ShaderPSOInputLayout& layout,
