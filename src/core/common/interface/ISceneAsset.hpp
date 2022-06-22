@@ -1,12 +1,8 @@
 #pragma once
 
-#include "IObject.hpp"
-#include "pch.hpp"
-
-
 namespace Toy::Engine
 {
-class ISceneAsset : public IObject, public NoCopy
+class ISceneAsset
 {
    public:
 };

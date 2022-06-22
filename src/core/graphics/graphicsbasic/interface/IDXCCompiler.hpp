@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include "IDataBlob.hpp"
 
 namespace Toy::Graphics
 {

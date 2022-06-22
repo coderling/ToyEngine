@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <concepts>
 #include <iostream>
 #include "FormatString.hpp"
 #include "Logger.hpp"
@@ -116,5 +117,15 @@ namespace Toy::Debug
                 }                                                                                                                          \
     } while (false)
 #endif
+
+template <typename DestType, typename SourceType>
+inline DestType* StaticCheckPointerCast(SourceType* s_ptr)
+{
+#ifdef ENGINE_DEVELOPMENT
+    static_assert(std::is_convertible_v<DestType*, SourceType*>, "unsupported cast");
+#endif
+
+    return static_cast<DestType*>(s_ptr);
+}
 
 }  // namespace Toy::Debug

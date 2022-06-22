@@ -4,7 +4,6 @@
 #include <memory>
 #include "IAllocator.hpp"
 
-
 namespace Toy::Engine
 {
 template <typename T>

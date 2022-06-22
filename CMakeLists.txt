@@ -5,12 +5,6 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/../EngineLib)
 set(EXternalDIR ${PROJECT_SOURCE_DIR}/external CACHE INTERNAL "external dir root")
 set(EngineRootDIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "cache project root")
 
-add_library(EngineBuildSetting INTERFACE)
-
-if(NOT TARGET_PLATFORM_WIN)
-    set(TARGET_PLATFORM_WIN TRUE CACHE INTERNAL "set default target platform")
-endif()
-
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "" FORCE)
 endif()
@@ -30,8 +24,22 @@ endif()
 set(DEBUG_DLL_SUFFIX _x${ARCH}_d CACHE INTERNAL "")
 set(RELEASE_DLL_SUFFIX _x${ARCH}_r CACHE INTERNAL "")
 
+set(TARGET_PLATFORM_WIN FALSE CACHE INTERNAL "")
+
+if(WIN32)
+    set(TARGET_PLATFORM_WIN TRUE CACHE INTERNAL "set default target platform")
+    message("build target platform: Win32 arc: " ${ARCH} " " ${CMAKE_BUILD_TYPE})
+else()
+    message("Not support platform current platform")
+endif()
+
+add_library(EngineBuildSetting INTERFACE)
 target_compile_definitions(EngineBuildSetting INTERFACE "$<$<CONFIG:DEBUG>:_DEBUG;DEBUG;ENGINE_DEVELOPMENT;ENGINE_DEBUG>")
 target_compile_definitions(EngineBuildSetting INTERFACE "$<$<CONFIG:RELWITHDEBINFO>:ENGINE_DEVELOPMENT;>")
+
+if(TARGET_PLATFORM_WIN)
+    target_compile_definitions(EngineBuildSetting INTERFACE PLATFORM_WINDOWS=1)
+endif()
 
 set(DEBUG_CONFIGS DEBUG CACHE INTERNAL "release configs")
 set(RELEASE_CONFIGS RELEASE RELWITHDEBINFO MINSIZEREL CACHE INTERNAL "release configs")

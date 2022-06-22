@@ -10,7 +10,7 @@
 
 namespace Toy::Engine
 {
-class TOY_LIB_API VariableSizeAllocationsManager
+class VariableSizeAllocationsManager
 {
    public:
     using OffsetSizeType = size_t;

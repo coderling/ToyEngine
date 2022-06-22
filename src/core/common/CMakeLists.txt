@@ -1,4 +1,4 @@
-set(Includes "include/PreInc.hpp")
+set(Includes)
 
 set(Sources
     "src/DefaultMemoryAllocator.cpp"
@@ -9,21 +9,18 @@ set(Sources
 
 set(Interfaces
     "interface/AppArgs.hpp"
-    "interface/Align.hpp"
     "interface/CStringTool.hpp"
     "interface/DebugUtility.hpp"
     "interface/DefaultMemoryAllocator.hpp"
-    "interface/FormatString.hpp"
-    "interface/HashUtils.hpp"
-    "interface/IAllocator.hpp"
-    "interface/IObject.hpp"
-    "interface/Logger.hpp"
-    "interface/pch.hpp"
     "interface/STDAllocator.hpp"
     "interface/Time.hpp"
-    "interface/CommonDefines.hpp"
     "interface/VariableSizeAllocationsManager.hpp"
     "interface/LoadDLL.hpp"
+    "interface/ReferenceCounterObject.hpp"
+    "interface/ReferenceCounter.hpp"
+    "interface/RefCountPtr.hpp"
+    "interface/RefCountWeakPtr.hpp"
+    "interface/TObject.hpp"
 )
 
 add_library(Common-Interface INTERFACE)
@@ -39,6 +36,7 @@ target_link_libraries(Common
     PRIVATE
     EngineBuildSetting
     PUBLIC
+    CoreBasic
     Common-Interface
 )
 

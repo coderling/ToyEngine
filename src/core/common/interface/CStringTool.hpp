@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include "DebugUtility.hpp"
-#include "pch.hpp"
 
 namespace Toy
 {
