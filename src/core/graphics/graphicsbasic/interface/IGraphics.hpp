@@ -5,14 +5,18 @@
 #include "IObject.hpp"
 #include "ISwapChain.hpp"
 
-
 using namespace Toy::Engine;
 
 namespace Toy::Graphics
 {
-class IGraphics : public IObject, public NoCopy
+class IGraphics : public IObject
 {
    public:
+    static constexpr const IUUID CLS_UUID = {/* e392bb95-1463-4387-b111-6e0338cf7677 */
+                                             0xe392bb95,
+                                             0x1463,
+                                             0x4387,
+                                             {0xb1, 0x11, 0x6e, 0x03, 0x38, 0xcf, 0x76, 0x77}};
     static IGraphics* GetInstance();
     virtual int Initialize() = 0;
     virtual IDevice* GetDevice() const noexcept = 0;
@@ -22,9 +26,6 @@ class IGraphics : public IObject, public NoCopy
     virtual void FinishFrame() = 0;
 
    protected:
-    void OnDestroy() final override { Finalize(); }
-
    protected:
-    virtual void Finalize() = 0;
 };
 }  // namespace Toy::Graphics

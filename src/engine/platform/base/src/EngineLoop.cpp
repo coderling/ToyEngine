@@ -8,6 +8,7 @@ namespace Toy::Platform
 EngineLoop::EngineLoop(std::unique_ptr<Engine::IClient> _client) : client(std::move(_client)), system_mgr(nullptr)
 {
     Engine::GlobalEnvironment::GetEnv().init_args = &_client->GetArgs();
+    Engine::GlobalEnvironment::GetEnv().hwnd = _client->GetHwnd();
 }
 
 EngineLoop::~EngineLoop() noexcept { LOG_INFO("~EngineLoop()"); }
@@ -35,12 +36,6 @@ void EngineLoop::Tick()
 
 void EngineLoop::Finalize() { system_mgr->Destroy(); }
 
-int EngineLoop::SystemSetup()
-{
-    system_mgr = std::make_unique<Engine::SystemMgr>();
-    auto ret = system_mgr->Initialize();
-
-    return ret;
-}
+int EngineLoop::SystemSetup() { return Engine::SystemMgr::Instance().Initialize(); }
 
 }  // namespace Toy::Platform

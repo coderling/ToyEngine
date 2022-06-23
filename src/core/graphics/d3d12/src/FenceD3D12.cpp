@@ -1,15 +1,15 @@
-#include "Fence_D3D12.hpp"
+#include "FenceD3D12.hpp"
 #include <DebugUtility.hpp>
 #include <GlobalEnvironment.hpp>
-#include <IApp.hpp>
 #include <IGraphics.hpp>
 #include "Utility.hpp"
 
-using namespace Toy::Graphics;
-
-Fence::Fence(const uint64_t& init_va, const D3D12_FENCE_FLAGS& flag, HANDLE fence_event)
+namespace Toy::Graphics
 {
-    auto graphics = Toy::Engine::IApp::env->GetGraphics();
+
+IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, FenceD3D12, const uint64_t& init_va, const D3D12_FENCE_FLAGS& flag, HANDLE fence_event)
+{
+    auto graphics = GlobalEnvironment::GetEnv().GetGraphics();
     ENGINE_DEV_CHECK_EXPR(graphics != nullptr, "graphics is nullptr!");
     auto device = graphics->GetDevice();
     ENGINE_DEV_CHECK_EXPR(device != nullptr, "device is nullptr!");
@@ -17,18 +17,20 @@ Fence::Fence(const uint64_t& init_va, const D3D12_FENCE_FLAGS& flag, HANDLE fenc
     this->fence_event = fence_event;
 }
 
-void Fence::OnDestroy() { CloseHandle(fence_event); }
+IMPLEMENT_QUERYINTERFACE(FenceD3D12, TBase)
 
-uint64_t Fence::GetCompletedValue() const
+void FenceD3D12::OnDestroy() { CloseHandle(fence_event); }
+
+uint64_t FenceD3D12::GetCompletedValue() const
 {
     uint64_t va = fence->GetCompletedValue();
     ENGINE_ASSERT_EXPR(va != UINT64_MAX, "device has be remove, fence return completed value as UINT64_MAX");
     return va;
 }
 
-void Fence::Signal(uint64_t fence_value) { fence->Signal(fence_value); }
+void FenceD3D12::Signal(uint64_t fence_value) { fence->Signal(fence_value); }
 
-void Fence::Wait(uint64_t fence_value)
+void FenceD3D12::Wait(uint64_t fence_value)
 {
     ENGINE_ASSERT_EXPR(fence_event != nullptr);
     if (GetCompletedValue() >= fence_value)
@@ -40,4 +42,6 @@ void Fence::Wait(uint64_t fence_value)
     WaitForSingleObject(fence_event, INFINITE);
 }
 
-ID3D12Fence* Fence::GetFence() const noexcept { return fence.Get(); }
+ID3D12Fence* FenceD3D12::GetFence() const noexcept { return fence.Get(); }
+
+}  // namespace Toy::Graphics

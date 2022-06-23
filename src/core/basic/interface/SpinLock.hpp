@@ -19,7 +19,7 @@ class Spinlock
 
     Spinlock() noexcept {}
 
-    void Lock() noexcept
+    void lock() noexcept
     {
         while (true)
             {
@@ -36,9 +36,9 @@ class Spinlock
             }
     }
 
-    bool TryLock() noexcept { return !is_locked.load(std::memory_order_relaxed) && !is_locked.exchange(true, std::memory_order_acquire); }
+    bool try_Lock() noexcept { return !is_locked.load(std::memory_order_relaxed) && !is_locked.exchange(true, std::memory_order_acquire); }
 
-    void Unlock() noexcept { is_locked.store(false, std::memory_order_release); }
+    void unlock() noexcept { is_locked.store(false, std::memory_order_release); }
 
    private:
     void Pause() noexcept;

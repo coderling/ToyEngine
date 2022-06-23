@@ -4,10 +4,11 @@
 #include <unordered_set>
 #include "IPipeline.hpp"
 #include "PipelineFragment.hpp"
+#include "TObject.hpp"
 
 namespace Toy::Graphics
 {
-class Pipeline final : public IPipeline
+class Pipeline final : public Toy::Engine::TObject<IPipeline>
 {
    public:
     int Initialize() override;
@@ -16,7 +17,7 @@ class Pipeline final : public IPipeline
     void AddPipelineFragment(PipelineFragment* fg) override;
 
    private:
-    void Finalize() override;
+    void OnDestroy() override;
     void Render() override;
     void BeforeRender() override;
     void AfterRender() override;

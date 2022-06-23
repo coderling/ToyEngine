@@ -1,10 +1,8 @@
 #pragma once
 
-#include "IObject.hpp"
-
 namespace Toy::Graphics
 {
-class TOY_LIB_API IPipelineFragmentHandler : public Toy::Engine::IObject, public Toy::Engine::NoCopy
+class IPipelineFragmentHandler
 {
    public:
     virtual void Load() = 0;

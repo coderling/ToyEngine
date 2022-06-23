@@ -4,12 +4,10 @@
 #include <memory>
 #include "GraphicsDef.hpp"
 #include "IObject.hpp"
-#include "pch.hpp"
-
 
 namespace Toy::Graphics
 {
-class TOY_LIB_API IGraphicsCommandList : public Toy::Engine::IObject, public Toy::Engine::NoCopy
+class IGraphicsCommandList : public IObject
 {
    public:
     static std::unique_ptr<IGraphicsCommandList> Create(const uint32_t& node_mask, const COMMAND_LIST_TYPE& t);

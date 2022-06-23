@@ -2,15 +2,25 @@
 #include <string.h>
 #include <functional>
 #include "CStringTool.hpp"
+#include "DataBlob.hpp"
 #include "Utility.hpp"
 
-using namespace Toy::Graphics;
-
-ICompileArgs* DXCCompiler::ApplyArgsInstance(const wchar_t* path) { return new DXCCompileArgs(path); }
-
-void DXCCompiler::Compile(const ICompileArgs* p_args)
+namespace Toy::Graphics
 {
-    auto args = *(reinterpret_cast<const DXCCompileArgs*>(p_args));
+
+ICompileArgs* DXCCompiler::GetArgsHandle(const wchar_t* path)
+{
+    if (p_args == nullptr)
+        {
+            p_args = std::make_unique<DXCCompileArgs>(path);
+        }
+    return p_args.get();
+}
+
+void DXCCompiler::Compile()
+{
+    ENGINE_ASSERT_EXPR(p_args != nullptr, "DXCCompiler had not set args!!!");
+    const auto& args = *(p_args.get());
     ComPtr<IDxcUtils> p_utils = nullptr;
     ComPtr<IDxcCompiler3> p_compiler = nullptr;
     DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&p_utils));
@@ -47,12 +57,12 @@ void DXCCompiler::Compile(const ICompileArgs* p_args)
     ComPtr<IDxcBlobUtf16> p_shader_name = nullptr;
 
     ASSERT_SUCCEEDED(p_result->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&p_shader), &p_shader_name));
-    result.SetShaderCode(p_shader.Get(), p_shader_name.Get());
+    result.SetShaderCode(p_shader.Detach(), p_shader_name.Get());
 
     ComPtr<IDxcBlob> p_pdb = nullptr;
     ComPtr<IDxcBlobUtf16> p_pdbname = nullptr;
     ASSERT_SUCCEEDED(p_result->GetOutput(DXC_OUT_PDB, IID_PPV_ARGS(&p_pdb), &p_pdbname));
-    result.SetPDBCode(p_pdb.Get(), p_pdbname.Get());
+    result.SetPDBCode(p_pdb.Detach(), p_pdbname.Get());
 
     result.hr = S_OK;
 }
@@ -148,11 +158,11 @@ void DXCCompiler::SaveByteCode(const wchar_t* shader_path, const wchar_t* pdb_pa
     ENGINE_ASSERT(SUCCEEDED(result.hr), "Compile failed or not compile yet");
     if (shader_path != nullptr)
         {
-            if (result.p_shader_bytecode.pShaderBytecode != nullptr && result.p_shader_bytecode.BytecodeLength > 0)
+            if (result.p_shader_bytecode->GetBufferPointer() != nullptr && result.p_shader_bytecode->GetBufferSize() > 0)
                 {
                     FILE* fp = nullptr;
                     _wfopen_s(&fp, shader_path, L"wb");
-                    fwrite(result.p_shader_bytecode.pShaderBytecode, result.p_shader_bytecode.BytecodeLength, 1, fp);
+                    fwrite(result.p_shader_bytecode->GetBufferPointer(), result.p_shader_bytecode->GetBufferSize(), 1, fp);
                     fclose(fp);
                 }
         }
@@ -163,12 +173,12 @@ void DXCCompiler::SaveByteCode(const wchar_t* shader_path, const wchar_t* pdb_pa
 
     if (pdb_path != nullptr)
         {
-            if (result.p_shader_pdb.pShaderBytecode != nullptr && result.p_shader_pdb.BytecodeLength > 0)
+            if (result.p_shader_pdb->GetBufferPointer() != nullptr && result.p_shader_pdb->GetBufferSize() > 0)
                 {
                     FILE* fp = nullptr;
 
                     _wfopen_s(&fp, result.pdb_name.c_str(), L"wb");
-                    fwrite(result.p_shader_pdb.pShaderBytecode, result.p_shader_pdb.BytecodeLength, 1, fp);
+                    fwrite(result.p_shader_pdb->GetBufferPointer(), result.p_shader_pdb->GetBufferSize(), 1, fp);
                     fclose(fp);
                 }
         }
@@ -179,3 +189,18 @@ void DXCCompiler::SaveByteCode(const wchar_t* shader_path, const wchar_t* pdb_pa
 }
 
 void DXCCompiler::SaveByteCode() const { SaveByteCode(result.shader_name.c_str(), result.pdb_name.c_str()); }
+
+void DXCCompiler::GetOutput(Engine::IDataBlob** pp_shader_bytecode, TOY_RESULT& tr) const
+{
+    if (!SUCCEEDED(result.hr))
+        {
+            tr = TOY_RESULT::TR_ERROR;
+            return;
+        }
+
+    auto ref_ptr = Engine::DataBlob::Create(result.p_shader_bytecode->GetBufferSize(), result.p_shader_bytecode->GetBufferPointer());
+    (*pp_shader_bytecode) = std::move(ref_ptr);
+    tr = TOY_RESULT::TR_OK;
+}
+
+}  // namespace Toy::Graphics

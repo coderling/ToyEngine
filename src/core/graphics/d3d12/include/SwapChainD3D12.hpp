@@ -4,14 +4,22 @@
 
 #include <dxgi1_6.h>
 #include <wrl.h>
+#include "TObject.hpp"
 
 using namespace Microsoft::WRL;
 
 namespace Toy::Graphics
 {
-class SwapChain final : public ISwapChain
+class SwapChain final : public Toy::Engine::TObject<ISwapChain>
 {
+    using TBase = Toy::Engine::TObject<ISwapChain>;
+    bool is_fullscreen;
+    ComPtr<IDXGISwapChain3> swapchain = nullptr;
+
+    IMPLEMENT_CONSTRUCT_STATEMENT(SwapChain);
+
    public:
+    IMPLEMENT_QUERYINTERFACE_STATEMENT();
     int Initialize(IDXGIFactory* factory);
     void Present() override;
     void Resize(uint32_t width, uint32_t height) override;
@@ -21,9 +29,5 @@ class SwapChain final : public ISwapChain
 
    protected:
     void OnDestroy() override;
-
-   private:
-    bool is_fullscreen;
-    ComPtr<IDXGISwapChain3> swapchain = nullptr;
 };
 }  // namespace Toy::Graphics

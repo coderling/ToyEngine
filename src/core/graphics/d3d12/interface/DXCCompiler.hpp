@@ -46,9 +46,9 @@ class DXCCompiler final : public IDXCCompiler
         friend DXCCompiler;
         HRESULT hr;
         std::wstring shader_name;
-        D3D12_SHADER_BYTECODE p_shader_bytecode;
+        ComPtr<IDxcBlob> p_shader_bytecode;
         std::wstring pdb_name;
-        D3D12_SHADER_BYTECODE p_shader_pdb;
+        ComPtr<IDxcBlob> p_shader_pdb;
 
        private:
         void* CopyBytecode(void* bytecode_data, const std::size_t& byte_length) const
@@ -67,8 +67,7 @@ class DXCCompiler final : public IDXCCompiler
 
             if (blob != nullptr)
                 {
-                    p_shader_bytecode.pShaderBytecode = CopyBytecode(blob->GetBufferPointer(), blob->GetBufferSize());
-                    p_shader_bytecode.BytecodeLength = blob->GetBufferSize();
+                    p_shader_bytecode.Attach(blob);
                 }
         }
 
@@ -81,32 +80,16 @@ class DXCCompiler final : public IDXCCompiler
 
             if (blob != nullptr)
                 {
-                    p_shader_pdb.pShaderBytecode = CopyBytecode(blob->GetBufferPointer(), blob->GetBufferSize());
-                    p_shader_pdb.BytecodeLength = blob->GetBufferSize();
+                    p_shader_pdb.Attach(blob);
                 }
         }
 
        public:
         CompileResult() noexcept : hr(S_FALSE), shader_name{}, p_shader_bytecode{nullptr}, pdb_name{}, p_shader_pdb{nullptr} {}
-        ~CompileResult()
-        {
-            if (p_shader_bytecode.pShaderBytecode != nullptr)
-                {
-                    delete[] static_cast<const uint8_t*>(p_shader_bytecode.pShaderBytecode);
-                    p_shader_bytecode.pShaderBytecode = nullptr;
-                    p_shader_bytecode.BytecodeLength = 0;
-                }
+        ~CompileResult() {}
 
-            if (p_shader_pdb.pShaderBytecode != nullptr)
-                {
-                    delete[] static_cast<const uint8_t*>(p_shader_pdb.pShaderBytecode);
-                    p_shader_bytecode.pShaderBytecode = nullptr;
-                    p_shader_bytecode.BytecodeLength = 0;
-                }
-        }
-
-        const D3D12_SHADER_BYTECODE& GetShaderByteCode() const noexcept { return p_shader_bytecode; }
-        const D3D12_SHADER_BYTECODE& GetPDBByteCode() const noexcept { return p_shader_pdb; }
+        const IDxcBlob* GetShaderByteCode() const noexcept { return p_shader_pdb.Get(); }
+        const IDxcBlob* GetPDBByteCode() const noexcept { return p_shader_pdb.Get(); }
         bool IsComplied() const noexcept { return SUCCEEDED(hr); }
     };
 
@@ -123,12 +106,14 @@ class DXCCompiler final : public IDXCCompiler
 
    private:
     CompileResult result;
+    std::unique_ptr<DXCCompileArgs> p_args = nullptr;
 
    public:
-    ICompileArgs* ApplyArgsInstance(const wchar_t* path) override;
-    void Compile(const ICompileArgs* p_args) override;
+    ICompileArgs* GetArgsHandle(const wchar_t* path) override;
+    void Compile() override;
     void SaveByteCode(const wchar_t* path, const wchar_t* pdb_path) const;
     void SaveByteCode() const override;
+    void GetOutput(Engine::IDataBlob** pp_shader_bytecode, TOY_RESULT& tr) const override;
     void ReflectShader(const D3D12_SHADER_BYTECODE& bytecode, ShaderReflectInfo& out_info) const;
 
    private:

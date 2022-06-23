@@ -61,8 +61,8 @@ struct DXCCompileArgs : public ICompileArgs
 
     void AddCustomArgs(LPCWSTR* argv, const UINT32& argc) override { p_args->AddArguments(argv, argc); }
 
-    LPCWSTR* GetArguments() const override { return p_args->GetArguments(); }
+    LPCWSTR* GetArguments() const noexcept { return p_args->GetArguments(); }
 
-    UINT32 GetArgCount() const override { return p_args->GetCount(); }
+    UINT32 GetArgCount() const noexcept { return p_args->GetCount(); }
 };
 }  // namespace Toy::Graphics

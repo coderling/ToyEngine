@@ -2,6 +2,7 @@
 #include "GlobalEnvironment.hpp"
 #include "IGraphics.hpp"
 #include "IPipeline.hpp"
+#include "ISystem.hpp"
 
 using namespace Toy::Engine;
 
@@ -18,33 +19,8 @@ void SystemMgr::Tick()
 {
     for (auto& sys : systems)
         {
-            sys->Tick();
+            sys.second->Tick();
         }
 }
 
-void SystemMgr::Finalize()
-{
-    for (auto& sys : systems)
-        {
-            sys->Destroy();
-        }
-
-    systems.clear();
-}
-
-void SystemMgr::RegisterSystem(ISystem* sys)
-{
-    if (!systems.contains(sys))
-        {
-            systems.emplace(sys);
-        }
-}
-
-void SystemMgr::UnRegisterSystem(ISystem* sys)
-{
-    const auto& it = systems.find(sys);
-    if (it != systems.end())
-        {
-            systems.erase(it);
-        }
-}
+void SystemMgr::Finalize() { systems.clear(); }

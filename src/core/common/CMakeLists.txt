@@ -5,6 +5,7 @@ set(Sources
     "src/Time.cpp"
     "src/GlobalEnviroment.cpp"
     "src/VariableSizeAllocationsManager.cpp"
+    "src/DataBlob.cpp"
 )
 
 set(Interfaces
@@ -21,6 +22,7 @@ set(Interfaces
     "interface/RefCountPtr.hpp"
     "interface/RefCountWeakPtr.hpp"
     "interface/TObject.hpp"
+    "interface/DataBlob.hpp"
 )
 
 add_library(Common-Interface INTERFACE)

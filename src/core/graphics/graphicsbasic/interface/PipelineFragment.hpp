@@ -3,7 +3,6 @@
 #include <memory>
 #include "IObject.hpp"
 #include "IPipelineFragmentHandler.hpp"
-#include "pch.hpp"
 
 namespace Toy::Graphics
 {
@@ -14,7 +13,7 @@ enum class PIPELINE_STAGE
     AFTER_RENDER
 };
 
-class PipelineFragment : public Toy::Engine::NoCopy
+class PipelineFragment
 {
    private:
     enum class ERUNNING_STATE

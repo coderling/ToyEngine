@@ -38,11 +38,12 @@ class ReferenceCounter final : public IReferenceCounter
     template <typename AllocatorType>
     struct ObjectHandle final : ObjectHandleBase
     {
-        ObjectHandle(IObject* _p_object, AllocatorType* _p_allocator) : p_object{_p_object}, p_allocator{p_allocator} {}
+        ObjectHandle(IObject* _p_object, AllocatorType* _p_allocator) : p_object{_p_object}, p_allocator{_p_allocator} {}
         void DestroyObject() noexcept override
         {
             if (p_allocator != nullptr)
                 {
+                    p_object->Destroy();
                     p_object->~IObject();
                     p_allocator->Free(p_object);
                 }

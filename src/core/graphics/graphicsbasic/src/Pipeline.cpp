@@ -6,19 +6,9 @@ using namespace Toy::Graphics;
 
 std::unique_ptr<IPipeline> pipeline;
 
-IPipeline* IPipeline::GetInstance()
-{
-    if (pipeline == nullptr)
-        {
-            pipeline = std::make_unique<Pipeline>();
-        }
-
-    return pipeline.get();
-}
-
 int Pipeline::Initialize() { return 0; }
 
-void Pipeline::Finalize()
+void Pipeline::OnDestroy()
 {
     for (auto it = custom_render_funcs.begin(); it != custom_render_funcs.end(); ++it)
         {

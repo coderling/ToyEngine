@@ -2,6 +2,7 @@ add_executable(dll-test test-TimerInDll.cpp)
 target_link_libraries(dll-test
     PRIVATE
     EngineBuildSetting
+    CoreBasic
     Common-Interface
     Graphics-D3D12-Shared
     DXC)

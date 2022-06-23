@@ -14,6 +14,6 @@ class IReferenceCounter
     virtual long GetNumOfWeakRef() const = 0;
 
     virtual void GetObject(class IObject** pp_object) = 0;
-    virtual ~IReferenceCounter() = 0;
+    virtual ~IReferenceCounter() {}
 };
 }  // namespace Toy

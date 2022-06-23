@@ -1,18 +1,20 @@
-#include "SwapChain_D3D12.hpp"
+#include "SwapChainD3D12.hpp"
 #include <GlobalEnvironment.hpp>
 #include <GraphicsDef.hpp>
-#include <IApp.hpp>
-#include "GraphicsCommandQueue_D3D12.hpp"
+#include "GraphicsCommandQueueD3D12.hpp"
 #include "IGraphics.hpp"
 #include "Utility.hpp"
 
-using namespace Toy::Graphics;
+namespace Toy::Graphics
+{
+IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, SwapChain) {}
+
+IMPLEMENT_QUERYINTERFACE(SwapChain, TBase)
 
 int SwapChain::Initialize(IDXGIFactory* factory)
 {
     DXGI_SWAP_CHAIN_DESC1 swap_desc;
-    const auto p_env = Toy::Engine::IApp::env;
-    const auto args = p_env->GetApp()->GetArgs();
+    const auto args = GlobalEnvironment::GetEnv().GetArgs();
     swap_desc.Width = args->screen_width;
     swap_desc.Height = args->screen_height;
     swap_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -32,8 +34,8 @@ int SwapChain::Initialize(IDXGIFactory* factory)
     ComPtr<IDXGISwapChain1> tswapchain;
     if (SUCCEEDED(factory->QueryInterface(MY_IID_PPV_ARGS(&factory4))))
         {
-            auto command_queue = reinterpret_cast<GraphicsCommandQueue*>(p_env->GetGraphics()->GetCommandQueue());
-            HWND hwnd = reinterpret_cast<HWND>(p_env->GetApp()->GetHwnd());
+            auto command_queue = reinterpret_cast<GraphicsCommandQueueD3D12*>(GlobalEnvironment::GetEnv().GetGraphics()->GetCommandQueue());
+            HWND hwnd = reinterpret_cast<HWND>(GlobalEnvironment::GetEnv().GetHwnd());
             ASSERT_SUCCEEDED(factory4->CreateSwapChainForHwnd(command_queue->GetDeviceQueue(), hwnd, &swap_desc, &fsSwapChainDesc, nullptr,
                                                               &tswapchain));
             tswapchain.As(&swapchain);
@@ -50,3 +52,5 @@ void SwapChain::SetFullScreen(bool state) {}
 uint32_t SwapChain::GetCurrentBackBufferIndex() { return swapchain->GetCurrentBackBufferIndex(); }
 
 void SwapChain::OnDestroy() {}
+
+}  // namespace Toy::Graphics

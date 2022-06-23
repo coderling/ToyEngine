@@ -1,26 +1,20 @@
 #include <wrl.h>
 
 #include "GlobalEnvironment.hpp"
-#include "GraphicsCommandQueue_D3D12.hpp"
-#include "Graphics_D3D12.hpp"
-#include "SwapChain_D3D12.hpp"
+#include "GraphicsCommandQueueD3D12.hpp"
+#include "GraphicsD3D12.hpp"
+#include "SwapChainD3D12.hpp"
 #include "Utility.hpp"
 
-using namespace Toy::Graphics;
 using namespace Microsoft::WRL;
 
-std::unique_ptr<IGraphics> graphics;
-
-IGraphics* IGraphics::GetInstance()
+namespace Toy::Graphics
 {
-    if (graphics == nullptr)
-        {
-            graphics = std::make_unique<Graphics>();
-        }
-    return graphics.get();
-}
+IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, GraphicsD3D12) {}
 
-int Graphics::Initialize()
+IMPLEMENT_QUERYINTERFACE(GraphicsD3D12, TBase)
+
+int GraphicsD3D12::Initialize()
 {
     UINT dxg_flactory_flags = 0;
 #if defined(_DEBUG)
@@ -72,16 +66,16 @@ int Graphics::Initialize()
         {
             ASSERT_SUCCEEDED(HRESULT_FROM_WIN32(GetLastError()));
         }
-    fence = std::make_unique<Fence>(0, D3D12_FENCE_FLAG_NONE, fence_event);
+    p_fence = MakeReferenceCounter<FenceD3D12>()(0, D3D12_FENCE_FLAG_NONE, fence_event);
 
     D3D12_COMMAND_QUEUE_DESC queue_desc = {};
     queue_desc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     queue_desc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-    command_queue = std::make_unique<GraphicsCommandQueue>(&queue_desc);
+    command_queue = MakeReferenceCounter<GraphicsCommandQueueD3D12>()(queue_desc);
 
-    auto psw = std::make_unique<SwapChain>();
-    psw->Initialize(factory.Get());
-    swapchain = std::move(psw);
+    swapchain = MakeReferenceCounter<SwapChain>()();
+
+    swapchain->Initialize(factory.Get());
 
     ASSERT_SUCCEEDED(device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, MY_IID_PPV_ARGS(&common_allocator)));
     // todo descriptor heaps
@@ -97,17 +91,17 @@ int Graphics::Initialize()
     return 0;
 }
 
-void Graphics::Finalize() { WaitForGpu(); }
+void GraphicsD3D12::OnDestroy() { WaitForGpu(); }
 
-void Graphics::WaitForGpu()
+void GraphicsD3D12::WaitForGpu()
 {
     const UINT64 t_fence_value = fence_values[frame_index];
-    command_queue->Signal(fence->GetFence(), t_fence_value);
+    command_queue->Signal(p_fence->GetFence(), t_fence_value);
     ++fence_values[frame_index];
-    fence->Wait(t_fence_value);
+    p_fence->Wait(t_fence_value);
 }
 
-void Graphics::FinishFrame()
+void GraphicsD3D12::FinishFrame()
 {
     swapchain->Present();
     // update frameIndex
@@ -115,3 +109,5 @@ void Graphics::FinishFrame()
     // wai for current frame ready to render
     WaitForGpu();
 }
+
+}  // namespace Toy::Graphics

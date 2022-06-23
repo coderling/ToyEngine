@@ -5,7 +5,6 @@
 namespace Toy::Engine
 {
 template <typename Interface>
-requires std::derived_from<Interface, IObject>
 class RefCountPtr final
 {
     template <typename OtherInterface>
@@ -120,6 +119,26 @@ class RefCountPtr final
         return ret_object;
     }
 
+    long GetNumOfStrongRef()
+    {
+        if (p_object != nullptr)
+            {
+                return p_object->p_refcounter->GetNumOfStrongRef();
+            }
+
+        return 0;
+    }
+
+    long GetNumOfWeakRef()
+    {
+        if (p_object != nullptr)
+            {
+                return p_object->p_refcounter->GetNumOfWeakRef();
+            }
+
+        return 0;
+    }
+
     // 赋值操作，原生指针到引用计数
     RefCountPtr& operator=(Interface* _p_object) noexcept
     {
@@ -129,12 +148,13 @@ class RefCountPtr final
                     {
                         p_object->Release();
                     }
-                p_object == _p_object;
+                p_object = _p_object;
                 if (p_object != nullptr)
                     {
                         p_object->AddReference();
                     }
             }
+        return *this;
     }
 
     // 赋值函数，两个RefCountPtr
@@ -187,7 +207,16 @@ class RefCountPtr final
     const Interface& operator*() const noexcept { return *p_object; }
 
     Interface* RawPtr() noexcept { return p_object; }
-    const Interface* RawPtr() const noexcept { return p_object; }
+    Interface* RawPtr() const noexcept { return p_object; }
+
+    template <typename OtherInterface>
+    requires std::derived_from<OtherInterface, Interface> OtherInterface* RawPtr() noexcept
+    {
+        return Debug::StaticCheckPointerCast<OtherInterface, Interface>(p_object);
+    }
+    template <typename OtherInterface>
+    requires std::derived_from<OtherInterface, Interface>
+    const OtherInterface* RawPtr() const noexcept { return Debug::StaticCheckPointerCast<OtherInterface, Interface>(p_object); }
 
     // 隐式转换
     operator Interface*() noexcept { return RawPtr(); }

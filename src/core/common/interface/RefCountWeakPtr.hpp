@@ -7,7 +7,6 @@
 namespace Toy::Engine
 {
 template <typename Interface>
-requires std::derived_from<Interface, IObject>
 class RefCountWeakPtr final
 {
     Interface* p_object;
@@ -136,6 +135,16 @@ class RefCountWeakPtr final
     }
 
     bool IsValid() const noexcept { return p_object != nullptr && p_refcounter != nullptr && p_refcounter->GetNumOfStrongRef() > 0; }
+
+    long GetNumOfWeakRef() const noexcept
+    {
+        if (p_object != nullptr && p_refcounter != nullptr)
+            {
+                p_refcounter->GetNumOfWeakRef();
+            }
+
+        return 0;
+    }
 
     RefCountPtr<Interface> Lock()
     {

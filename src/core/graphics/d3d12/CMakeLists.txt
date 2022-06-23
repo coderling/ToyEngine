@@ -1,9 +1,9 @@
 set(Includes
-    "include/Graphics_D3D12.hpp"
+    "include/GraphicsD3D12.hpp"
 )
 
 set(Sources
-    "src/Graphics_D3D12.cpp"
+    "src/GraphicsD3D12.cpp"
     "src/DXCCompiler.cpp"
     "src/D3D12Factory.cpp"
 )

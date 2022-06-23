@@ -26,6 +26,11 @@
 },
 {
   "directory": "E:/GitProj/ToyEngine/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DPLATFORM_WINDOWS=1 -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/src/core/common/include -IE:/GitProj/ToyEngine/src/core/basic/interface -IE:/GitProj/ToyEngine/src/core/common/interface -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\common\\CMakeFiles\\Common.dir\\src\\DataBlob.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\common\\src\\DataBlob.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\src\\core\\common\\src\\DataBlob.cpp"
+},
+{
+  "directory": "E:/GitProj/ToyEngine/build",
   "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DPLATFORM_WINDOWS=1 -DUNICODE -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/include -IE:/GitProj/ToyEngine/src/core/basic/interface -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\graphics\\graphicsbasic\\CMakeFiles\\Graphics-Base.dir\\src\\PipelineFragment.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\graphics\\graphicsbasic\\src\\PipelineFragment.cpp",
   "file": "E:\\GitProj\\ToyEngine\\src\\core\\graphics\\graphicsbasic\\src\\PipelineFragment.cpp"
 },
@@ -36,8 +41,8 @@
 },
 {
   "directory": "E:/GitProj/ToyEngine/build",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DPLATFORM_WINDOWS=1 -DUNICODE -DUSE_dxc -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/include -IE:/GitProj/ToyEngine/src/core/basic/interface -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/interface -isystem E:/GitProj/ToyEngine/external/dxc -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\graphics\\d3d12\\CMakeFiles\\Graphics-D3D12.dir\\src\\Graphics_D3D12.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\Graphics_D3D12.cpp",
-  "file": "E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\Graphics_D3D12.cpp"
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DNOMINMAX -DPLATFORM_WINDOWS=1 -DUNICODE -DUSE_dxc -D_DEBUG -D_UNICODE -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/include -IE:/GitProj/ToyEngine/src/core/basic/interface -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/interface -isystem E:/GitProj/ToyEngine/external/dxc -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o src\\core\\graphics\\d3d12\\CMakeFiles\\Graphics-D3D12.dir\\src\\GraphicsD3D12.cpp.obj -c E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\GraphicsD3D12.cpp",
+  "file": "E:\\GitProj\\ToyEngine\\src\\core\\graphics\\d3d12\\src\\GraphicsD3D12.cpp"
 },
 {
   "directory": "E:/GitProj/ToyEngine/build",
@@ -141,7 +146,7 @@
 },
 {
   "directory": "E:/GitProj/ToyEngine/build",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DENGINE_DLL_EXPORT=1 -DPLATFORM_WINDOWS=1 -DUSE_dxc -D_DEBUG -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/external/dxc -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\samples\\testCom\\CMakeFiles\\dll-test.dir\\test-TimerInDll.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\samples\\testCom\\test-TimerInDll.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DDEBUG -DENGINE_DEBUG -DENGINE_DEVELOPMENT -DENGINE_DLL_EXPORT=1 -DPLATFORM_WINDOWS=1 -DUSE_dxc -D_DEBUG -IE:/GitProj/ToyEngine/src/core/basic/interface -IE:/GitProj/ToyEngine/src/core/common/interface -IE:/GitProj/ToyEngine/src/core/graphics/d3d12/interface -IE:/GitProj/ToyEngine/src/core/graphics/graphicsbasic/interface -isystem E:/GitProj/ToyEngine/external/dxc -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o test\\samples\\testCom\\CMakeFiles\\dll-test.dir\\test-TimerInDll.cpp.obj -c E:\\GitProj\\ToyEngine\\test\\samples\\testCom\\test-TimerInDll.cpp",
   "file": "E:\\GitProj\\ToyEngine\\test\\samples\\testCom\\test-TimerInDll.cpp"
 }
 ]
