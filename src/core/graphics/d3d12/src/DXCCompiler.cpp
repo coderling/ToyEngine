@@ -8,6 +8,10 @@
 namespace Toy::Graphics
 {
 
+IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, DXCCompiler) {}
+
+IMPLEMENT_QUERYINTERFACE(DXCCompiler, TBase)
+
 ICompileArgs* DXCCompiler::GetArgsHandle(const wchar_t* path)
 {
     if (p_args == nullptr)
@@ -17,7 +21,7 @@ ICompileArgs* DXCCompiler::GetArgsHandle(const wchar_t* path)
     return p_args.get();
 }
 
-void DXCCompiler::Compile()
+void DXCCompiler::Compile(Engine::IDataBlob** pp_shader_bytecode, Engine::IDataBlob** pp_shader_pdb, TOY_RESULT& tr)
 {
     ENGINE_ASSERT_EXPR(p_args != nullptr, "DXCCompiler had not set args!!!");
     const auto& args = *(p_args.get());
@@ -29,10 +33,22 @@ void DXCCompiler::Compile()
     ComPtr<IDxcIncludeHandler> p_include_handler = nullptr;
     p_utils->CreateDefaultIncludeHandler(&p_include_handler);
 
+    HRESULT hr;
     ComPtr<IDxcBlobEncoding> p_source = nullptr;
     const auto& str_path = Wstr2Str(args.file_path);
-    auto hr = p_utils->LoadFile(args.file_path, nullptr, &p_source);
-    ENGINE_DEV_CHECK_EXPR(SUCCEEDED(hr), "Load file fail:", str_path);
+    if (args.source != nullptr && args.source_length > 0)
+        {
+            ComPtr<IDxcLibrary> p_library;
+            DxcCreateInstance(CLSID_DxcLibrary, IID_PPV_ARGS(&p_library));
+            p_library->CreateBlobWithEncodingFromPinned(args.source, args.source_length, CP_UTF8, &p_source);
+            ENGINE_DEV_CHECK_EXPR(SUCCEEDED(hr), "create source encoding fail:");
+        }
+    else
+        {
+            const auto& str_path = Wstr2Str(args.file_path);
+            hr = p_utils->LoadFile(args.file_path, nullptr, &p_source);
+            ENGINE_DEV_CHECK_EXPR(SUCCEEDED(hr), "Load file fail:", str_path);
+        }
 
     DxcBuffer source_buffer;
     source_buffer.Ptr = p_source->GetBufferPointer();
@@ -41,7 +57,7 @@ void DXCCompiler::Compile()
 
     ComPtr<IDxcResult> p_result = nullptr;
     hr = p_compiler->Compile(&source_buffer, args.GetArguments(), args.GetArgCount(), p_include_handler.Get(), IID_PPV_ARGS(&p_result));
-    ENGINE_ASSERT_EXPR(SUCCEEDED(hr), "compile shader fail", str_path);
+    ENGINE_ASSERT_EXPR(SUCCEEDED(hr), "compile shader fail");
 
     ComPtr<IDxcBlobUtf8> p_errors = nullptr;
     hr = p_result->GetOutput(DXC_OUT_ERRORS, IID_PPV_ARGS(&p_errors), nullptr);
@@ -57,18 +73,50 @@ void DXCCompiler::Compile()
     ComPtr<IDxcBlobUtf16> p_shader_name = nullptr;
 
     ASSERT_SUCCEEDED(p_result->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&p_shader), &p_shader_name));
-    result.SetShaderCode(p_shader.Detach(), p_shader_name.Get());
+    auto ref_ptr = Engine::DataBlob::Create(p_shader->GetBufferSize(), p_shader->GetBufferPointer());
+    tr = ref_ptr->QueryInterface(Engine::IDataBlob::CLS_UUID, reinterpret_cast<IObject**>(pp_shader_bytecode));
+    if (p_shader_name != nullptr)
+        {
+            try
+                {
+                    FILE* fp = nullptr;
+                    _wfopen_s(&fp, p_shader_name->GetStringPointer(), L"wb");
+                    fwrite(p_shader->GetBufferPointer(), p_shader->GetBufferSize(), 1, fp);
+                    fclose(fp);
+                }
+            catch (...)
+                {
+                    LOG_ERROR("Fail save shader compile result to path: ", p_shader_name->GetStringPointer());
+                }
+        }
 
     ComPtr<IDxcBlob> p_pdb = nullptr;
     ComPtr<IDxcBlobUtf16> p_pdbname = nullptr;
-    ASSERT_SUCCEEDED(p_result->GetOutput(DXC_OUT_PDB, IID_PPV_ARGS(&p_pdb), &p_pdbname));
-    result.SetPDBCode(p_pdb.Detach(), p_pdbname.Get());
+    hr = p_result->GetOutput(DXC_OUT_PDB, IID_PPV_ARGS(&p_pdb), &p_pdbname);
 
-    result.hr = S_OK;
+    if (SUCCEEDED(hr))
+        {
+            auto pdb_ref_ptr = Engine::DataBlob::Create(p_pdb->GetBufferSize(), p_pdb->GetBufferPointer());
+            ref_ptr->QueryInterface(Engine::IDataBlob::CLS_UUID, reinterpret_cast<IObject**>(pp_shader_pdb));
+            if (p_pdbname != nullptr)
+                {
+                    try
+                        {
+                            FILE* fp = nullptr;
+                            _wfopen_s(&fp, p_pdbname->GetStringPointer(), L"wb");
+                            fwrite(p_pdb->GetBufferPointer(), p_pdb->GetBufferSize(), 1, fp);
+                            fclose(fp);
+                        }
+                    catch (...)
+                        {
+                            LOG_ERROR("Fail save shader compile result to path: ", p_pdbname->GetStringPointer());
+                        }
+                }
+        }
 }
 
-void DXCCompiler::CreatePSOInputLayout(const D3D12_SHADER_DESC& shader_desc, ShaderPSOInputLayout& layout,
-                                       ID3D12ShaderReflection* p_reflection) const
+/*
+void CreatePSOInputLayout(const D3D12_SHADER_DESC& shader_desc, ShaderPSOInputLayout& layout, ID3D12ShaderReflection* p_reflection)
 {
     // create pos inputlayout
     // ref:https://blog.techlab-xe.net/dxc-shader-reflection
@@ -127,7 +175,7 @@ void DXCCompiler::CreatePSOInputLayout(const D3D12_SHADER_DESC& shader_desc, Sha
         }
 }
 
-void DXCCompiler::ReflectShader(const D3D12_SHADER_BYTECODE& bytecode, ShaderReflectInfo& out_info) const
+void ReflectShader(const D3D12_SHADER_BYTECODE& bytecode, ShaderReflectInfo& out_info)
 {
     ENGINE_ASSERT(bytecode.pShaderBytecode != nullptr && bytecode.BytecodeLength > 0, "null shader bytecode");
     ComPtr<IDxcLibrary> p_library = nullptr;
@@ -153,54 +201,6 @@ void DXCCompiler::ReflectShader(const D3D12_SHADER_BYTECODE& bytecode, ShaderRef
     return;
 }
 
-void DXCCompiler::SaveByteCode(const wchar_t* shader_path, const wchar_t* pdb_path) const
-{
-    ENGINE_ASSERT(SUCCEEDED(result.hr), "Compile failed or not compile yet");
-    if (shader_path != nullptr)
-        {
-            if (result.p_shader_bytecode->GetBufferPointer() != nullptr && result.p_shader_bytecode->GetBufferSize() > 0)
-                {
-                    FILE* fp = nullptr;
-                    _wfopen_s(&fp, shader_path, L"wb");
-                    fwrite(result.p_shader_bytecode->GetBufferPointer(), result.p_shader_bytecode->GetBufferSize(), 1, fp);
-                    fclose(fp);
-                }
-        }
-    else
-        {
-            LOG_ERROR("got empty shader path!");
-        }
-
-    if (pdb_path != nullptr)
-        {
-            if (result.p_shader_pdb->GetBufferPointer() != nullptr && result.p_shader_pdb->GetBufferSize() > 0)
-                {
-                    FILE* fp = nullptr;
-
-                    _wfopen_s(&fp, result.pdb_name.c_str(), L"wb");
-                    fwrite(result.p_shader_pdb->GetBufferPointer(), result.p_shader_pdb->GetBufferSize(), 1, fp);
-                    fclose(fp);
-                }
-        }
-    else
-        {
-            LOG_ERROR("got empty shader path!");
-        }
-}
-
-void DXCCompiler::SaveByteCode() const { SaveByteCode(result.shader_name.c_str(), result.pdb_name.c_str()); }
-
-void DXCCompiler::GetOutput(Engine::IDataBlob** pp_shader_bytecode, TOY_RESULT& tr) const
-{
-    if (!SUCCEEDED(result.hr))
-        {
-            tr = TOY_RESULT::TR_ERROR;
-            return;
-        }
-
-    auto ref_ptr = Engine::DataBlob::Create(result.p_shader_bytecode->GetBufferSize(), result.p_shader_bytecode->GetBufferPointer());
-    (*pp_shader_bytecode) = std::move(ref_ptr);
-    tr = TOY_RESULT::TR_OK;
-}
+*/
 
 }  // namespace Toy::Graphics

@@ -27,3 +27,7 @@ enum TOY_RESULT
     TR_ERROR = -1,
     TR_OK = 0
 };
+
+inline bool Succeed(const TOY_RESULT& tr) { return tr >= 0; }
+
+inline bool Failed(const TOY_RESULT& tr) { return !Succeed(tr); }

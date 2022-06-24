@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <vcruntime_string.h>
+#include "Logger.hpp"
 
 namespace Toy
 {
@@ -13,7 +14,7 @@ struct IUUID
 
     bool operator==(const IUUID& rhs) const
     {
-        return d1 == rhs.d1 && d2 == rhs.d2 && d3 == rhs.d3 && memcmp(array, rhs.array, sizeof(array));
+        return d1 == rhs.d1 && d2 == rhs.d2 && d3 == rhs.d3 && memcmp(array, rhs.array, sizeof(array)) == 0;
     }
 };
 

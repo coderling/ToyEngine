@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include "IDataBlob.hpp"
+#include "RefCountPtr.hpp"
 
 namespace Toy::Graphics
 {
@@ -20,14 +21,20 @@ struct ICompileArgs
     virtual void SetShaderModel(const wchar_t* sm) = 0;
 
     virtual void AddCustomArgs(const wchar_t** argv, const std::uint32_t& argc) = 0;
+
+    virtual void Clear() = 0;
 };
 
-class IDXCCompiler
+class IDXCCompiler : public Toy::IObject
 {
    public:
+    static constexpr const IUUID CLS_UUID = {/* 3f7fdf04-0208-43b3-8428-dbe1cbbbb36b */
+                                             0x3f7fdf04,
+                                             0x0208,
+                                             0x43b3,
+                                             {0x84, 0x28, 0xdb, 0xe1, 0xcb, 0xbb, 0xb3, 0x6b}};
+
     virtual ICompileArgs* GetArgsHandle(const wchar_t* path) = 0;
-    virtual void Compile() = 0;
-    virtual void SaveByteCode() const = 0;
-    virtual void GetOutput(Engine::IDataBlob** pp_shader_bytecode, TOY_RESULT& tr) const = 0;
+    virtual void Compile(Engine::IDataBlob** pp_shader_bytecode, Engine::IDataBlob** pp_shader_pdb, TOY_RESULT& tr) = 0;
 };
 }  // namespace Toy::Graphics

@@ -1,4 +1,6 @@
 #include "DataBlob.hpp"
+#include <iostream>
+#include "Logger.hpp"
 
 namespace Toy::Engine
 {

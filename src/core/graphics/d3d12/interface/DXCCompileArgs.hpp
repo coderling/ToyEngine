@@ -15,13 +15,19 @@ struct DXCCompileArgs : public ICompileArgs
     const wchar_t* file_path;
     ComPtr<IDxcCompilerArgs> p_args;
 
+    const char* source;
+    std::size_t source_length;
+
    public:
-    DXCCompileArgs(const wchar_t* path) noexcept : file_path(path), p_args(nullptr)
+    DXCCompileArgs(const wchar_t* path) noexcept : file_path(path), p_args(nullptr), source(nullptr), source_length(0)
     {
         DxcCreateInstance(CLSID_DxcCompilerArgs, IID_PPV_ARGS(&p_args));
         // ENGINE_ASSERT(p_args != NULL, "IDxcCompilerArgs create failed");
     }
+
     ~DXCCompileArgs() {}
+
+    void SetSource(const char* p_source, const std::size_t& _source_length) { source = p_source, source_length = _source_length; }
 
     void SetEntry(LPCWSTR arg) override
     {
@@ -60,6 +66,12 @@ struct DXCCompileArgs : public ICompileArgs
     }
 
     void AddCustomArgs(LPCWSTR* argv, const UINT32& argc) override { p_args->AddArguments(argv, argc); }
+
+    void Clear() override
+    {
+        p_args.Reset();
+        DxcCreateInstance(CLSID_DxcCompilerArgs, IID_PPV_ARGS(&p_args));
+    }
 
     LPCWSTR* GetArguments() const noexcept { return p_args->GetArguments(); }
 

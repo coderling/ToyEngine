@@ -1,5 +1,6 @@
 #pragma once
 #include "CommonDefines.hpp"
+#include "Logger.hpp"
 #include "ReferenceCounter.hpp"
 
 namespace Toy::Engine
@@ -38,7 +39,7 @@ class RefCountPtr final
         }
 
         TInterface*& operator*() noexcept { return new_raw_ptr; }
-        const TInterface*& operator*() const noexcept { return new_raw_ptr; }
+        const TInterface* operator*() const noexcept { return new_raw_ptr; }
 
         // 隐式转换
         operator TInterface**() noexcept { return &new_raw_ptr; }
@@ -123,7 +124,11 @@ class RefCountPtr final
     {
         if (p_object != nullptr)
             {
-                return p_object->p_refcounter->GetNumOfStrongRef();
+                auto p_refcounter = Debug::StaticCheckPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
+                if (p_refcounter != nullptr)
+                    {
+                        return p_refcounter->GetNumOfStrongRef();
+                    }
             }
 
         return 0;
@@ -133,7 +138,11 @@ class RefCountPtr final
     {
         if (p_object != nullptr)
             {
-                return p_object->p_refcounter->GetNumOfWeakRef();
+                auto p_refcounter = Debug::StaticCheckPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
+                if (p_refcounter != nullptr)
+                    {
+                        return p_refcounter->GetNumOfWeakRef();
+                    }
             }
 
         return 0;
@@ -225,14 +234,14 @@ class RefCountPtr final
     Interface* operator->() noexcept { return p_object; }
     const Interface* operator->() const noexcept { return p_object; }
 
-    Interface** GetAddressOf() noexcept { return &p_object; }
+    Interface** GetRawAddressOf() noexcept { return &p_object; }
 
-    const Interface** GetAddressOf() const noexcept { return &p_object; }
+    const Interface** GetRawAddressOf() const noexcept { return &p_object; }
 
     template <typename OtherInterface>
     requires std::derived_from<OtherInterface, Interface>
 
-        OtherInterface** GetAddressOf() noexcept
+        OtherInterface** GetRawAddressOf() noexcept
     {
         return static_cast<OtherInterface**>(&p_object);
     }

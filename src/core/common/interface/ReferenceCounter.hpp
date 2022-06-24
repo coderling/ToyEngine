@@ -43,12 +43,14 @@ class ReferenceCounter final : public IReferenceCounter
         {
             if (p_allocator != nullptr)
                 {
+                    LOG_INFO("destroy object");
                     p_object->Destroy();
                     p_object->~IObject();
                     p_allocator->Free(p_object);
                 }
             else
                 {
+                    LOG_INFO("destroy object");
                     delete p_object;
                 }
         }

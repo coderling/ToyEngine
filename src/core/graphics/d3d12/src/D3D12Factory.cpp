@@ -1,5 +1,6 @@
 #include "DXCCompiler.hpp"
 #include "ID3D12Factory.hpp"
+#include "ReferenceCounterObject.hpp"
 
 namespace Toy::Graphics
 {
@@ -14,8 +15,8 @@ class D3D12Factory final : public ID3D12Factory
 
     void CreateDXCCompiler(IDXCCompiler** pp_compiler) override
     {
-        DXCCompiler* p_compiler = new DXCCompiler();
-        *pp_compiler = p_compiler;
+        auto raw_ptr = Engine::MakeReferenceCounter<DXCCompiler>()();
+        raw_ptr->QueryInterface(IDXCCompiler::CLS_UUID, reinterpret_cast<IObject**>(pp_compiler));
     }
 };
 }  // namespace Toy::Graphics

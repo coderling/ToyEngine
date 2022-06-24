@@ -4,6 +4,7 @@
 #include <IShader.hpp>
 #include <memory>
 #include "ShaderResources.hpp"
+#include "TObject.hpp"
 
 using namespace Microsoft::WRL;
 
@@ -11,14 +12,18 @@ namespace Toy::Graphics
 {
 // -> shader bytecode
 // -> shader ionfo (reflection infos)
-class Shader : public IShader
+class ShaderD3D12 : public Engine::TObject<IShader>
 {
-    std::unique_ptr<ShaderResources> p_resourecs;
-    ComPtr<ID3DBlob> p_bytecode;
+    using TBase = Engine::TObject<IShader>;
+    ShaderResources p_resourecs;
+
     ShaderDesc desc;
 
+    IMPLEMENT_CONSTRUCT_STATEMENT(ShaderD3D12, const ShaderCreateInfo& shaer_create_info);
+
    public:
-    Shader(const ShaderCreateInfo& create_info);
+    IMPLEMENT_QUERYINTERFACE_STATEMENT();
+
     const ShaderDesc& GetDesc() const override;
 };
 }  // namespace Toy::Graphics

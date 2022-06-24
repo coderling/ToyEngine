@@ -3,6 +3,9 @@
 #include <CStringTool.hpp>
 #include <IObject.hpp>
 #include <string>
+#include "IDataBlob.hpp"
+#include "InterfaceUUID.hpp"
+#include "RefCountPtr.hpp"
 
 namespace Toy::Graphics
 {
@@ -54,7 +57,6 @@ struct ShaderDesc
 
 struct ShaderCreateInfo
 {
-   private:
     // the source file path or the bytecode filepath, ignore when bytecode or source not null
     const char* file_path = nullptr;
     // load bytecode from file
@@ -62,12 +64,8 @@ struct ShaderCreateInfo
 
     // shader source code, ignore when bytecode not null
     const char* source = nullptr;
-    const void* bytecode = nullptr;
-    union
-    {
-        std::size_t source_length = 0;
-        std::size_t bytecode_length;
-    };
+    std::size_t source_length = 0;
+    Engine::RefCountPtr<Engine::IDataBlob> p_shader_bytecode;
 
     const char* entry = nullptr;
 
@@ -93,16 +91,18 @@ struct ShaderCreateInfo
         this->macro = macro;
     }
 
-    void InitASByteCode(const void* bytecode, const std::size_t& len)
-    {
-        this->bytecode = bytecode;
-        this->bytecode_length = len;
-    }
+    void InitASByteCode(const Engine::RefCountPtr<Engine::IDataBlob>& bytecode) { p_shader_bytecode = std::move(bytecode); }
 };
 
-class IShader : public Engine::IObject, public Engine::NoCopy
+class IShader : public Toy::IObject
 {
    public:
+    static constexpr const IUUID CLS_UUID = {/* 83006833-6598-4387-a374-d76dccefe15d */
+                                             0x83006833,
+                                             0x6598,
+                                             0x4387,
+                                             {0xa3, 0x74, 0xd7, 0x6d, 0xcc, 0xef, 0xe1, 0x5d}};
+
     virtual const ShaderDesc& GetDesc() const = 0;
 };
 }  // namespace Toy::Graphics
