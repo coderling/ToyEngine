@@ -9,10 +9,10 @@ enum struct EFileAccess
     APPEND
 };
 
-class TFile
+enum struct ESeekOrigin
 {
-    const char* path;
-
-   public:
+    ESEEK_BEGIN,
+    ESEEK_CUR,
+    ESEEK_END
 };
 }  // namespace Toy::IO

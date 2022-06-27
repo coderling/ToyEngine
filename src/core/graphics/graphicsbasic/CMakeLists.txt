@@ -30,6 +30,7 @@ target_include_directories(Graphics-Base-Interface INTERFACE interface)
 target_link_libraries(Graphics-Base
     PRIVATE
     Common
+    CoreBasic
     EngineBuildSetting
     PUBLIC
     Graphics-Base-Interface
