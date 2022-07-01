@@ -65,12 +65,24 @@ struct DXCCompileArgs : public ICompileArgs
         p_args->AddArguments(argv, 2);
     }
 
+    void AddMacro(LPCWSTR macro) override
+    {
+        static LPCWSTR argv[2] = {L"-D", macro};
+        p_args->AddArguments(argv, 2);
+    }
+
     void AddCustomArgs(LPCWSTR* argv, const UINT32& argc) override { p_args->AddArguments(argv, argc); }
 
     void Clear() override
     {
         p_args.Reset();
         DxcCreateInstance(CLSID_DxcCompilerArgs, IID_PPV_ARGS(&p_args));
+    }
+
+    void Assign(const void* source, const std::size_t& source_length) override
+    {
+        this->source = reinterpret_cast<const char*>(source);
+        this->source_length = source_length;
     }
 
     LPCWSTR* GetArguments() const noexcept { return p_args->GetArguments(); }

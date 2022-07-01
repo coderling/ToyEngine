@@ -11,8 +11,8 @@ enum struct EFileAccess
 
 enum struct ESeekOrigin
 {
-    ESEEK_BEGIN,
-    ESEEK_CUR,
-    ESEEK_END
+    ESEEK_BEGIN = 0,
+    ESEEK_CUR = 1,
+    ESEEK_END = 2
 };
 }  // namespace Toy::IO

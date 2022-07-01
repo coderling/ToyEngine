@@ -28,6 +28,9 @@ enum TOY_RESULT
     TR_OK = 0
 };
 
+namespace Toy
+{
 inline bool Succeed(const TOY_RESULT& tr) { return tr >= 0; }
 
 inline bool Failed(const TOY_RESULT& tr) { return !Succeed(tr); }
+}  // namespace Toy

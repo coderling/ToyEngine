@@ -66,4 +66,10 @@ class TObject : public ReferenceCounterObject<Interface>
 
 #define IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBASE, CLASS_TYPE, ...)                                                                            \
     CLASS_TYPE::CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept : TBase(p_refcounter)
+
+#define IMPLEMENT_CONSTRUCT_LOCALLY(TBASE, CLASS_TYPE, ...)                                                                                \
+    template <typename ObjectType, typename AllocatorType>                                                                                 \
+    friend class Toy::Engine::MakeReferenceCounter;                                                                                        \
+    explicit CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept : TBase(p_refcounter)
+
 }  // namespace Toy::Engine

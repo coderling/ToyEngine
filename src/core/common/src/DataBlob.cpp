@@ -11,9 +11,13 @@ RefCountPtr<DataBlob> DataBlob::Create(const std::size_t& size, const void* p_da
 
 IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, DataBlob, std::size_t size, const void* p_data), data_buffer(size)
 {
-    if (size > 0 && !data_buffer.empty() && p_data != nullptr)
+    Resize(size);
+    if (size > 0)
         {
-            std::memcpy(data_buffer.data(), p_data, size);
+            if (p_data != nullptr)
+                {
+                    std::memcpy(data_buffer.data(), p_data, size);
+                }
         }
 }
 

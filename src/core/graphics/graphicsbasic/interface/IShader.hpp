@@ -20,7 +20,7 @@ enum SHADER_TYPE
     SHADER_TYPE_COMPUTE = 1 << 5,
     SHADER_TYPE_MESH = 1 << 6,
 };
-// shader modle struct etc:5.1
+// shader modle struct etc:6.1
 struct ShaderModel
 {
     uint8_t major;
@@ -30,13 +30,12 @@ struct ShaderModel
 // shader macro
 struct ShaderMacro
 {
-    const char* name = nullptr;
-    const char* definition = nullptr;
+    const char* macro = nullptr;
 
     constexpr ShaderMacro() noexcept {}
-    constexpr ShaderMacro(const char* _name, const char* _definition) noexcept : name(_name), definition(_definition) {}
+    constexpr ShaderMacro(const char* _macro) noexcept : macro(_macro) {}
 
-    bool operator==(const ShaderMacro& rhs) const { return CStrEqual(this->name, rhs.name) && CStrEqual(this->definition, rhs.definition); }
+    bool operator==(const ShaderMacro& rhs) const { return CStrEqual(this->macro, rhs.macro); }
 
     bool operator!=(const ShaderMacro& rhs) const { return !(*this == rhs); }
 };
@@ -73,6 +72,8 @@ struct ShaderCreateInfo
 
     ShaderDesc desc;
 
+    ShaderModel shader_model;
+
    public:
     void InitASCompileFromeSourceFile(const char* file_path, const char* entry = "SDMain", const ShaderMacro* macro = nullptr)
     {
@@ -92,6 +93,42 @@ struct ShaderCreateInfo
     }
 
     void InitASByteCode(const Engine::RefCountPtr<Engine::IDataBlob>& bytecode) { p_shader_bytecode = std::move(bytecode); }
+
+    NODISCARD std::string GetShaderModelString() const noexcept
+    {
+        std::string sm = "";
+        switch (desc.shader_type)
+            {
+                case SHADER_TYPE_VERTEX:
+                    sm += "vs";
+                    break;
+                case SHADER_TYPE_PIXEL:
+                    sm += "ps";
+                    break;
+                case SHADER_TYPE_GEOMETRY:
+                case SHADER_TYPE_HULL:
+                case SHADER_TYPE_DOMAIN:
+                case SHADER_TYPE_COMPUTE:
+                case SHADER_TYPE_MESH:
+                case SHADER_TYPE_UNKNOWN:
+                    LOG_ERROR("not support this shader type: ", desc.shader_type);
+                    break;
+            }
+
+        if (!sm.empty())
+            {
+                if (shader_model.major == 6)
+                    {
+                        sm += "_6_" + std::to_string(shader_model.minor);
+                    }
+                else
+                    {
+                        LOG_ERROR("only support shader model greater 6!!!");
+                    }
+            }
+
+        return sm;
+    }
 };
 
 class IShader : public Toy::IObject

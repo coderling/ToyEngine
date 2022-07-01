@@ -18,6 +18,10 @@ ICompileArgs* DXCCompiler::GetArgsHandle(const wchar_t* path)
         {
             p_args = std::make_unique<DXCCompileArgs>(path);
         }
+    else
+        {
+            p_args->Clear();
+        }
     return p_args.get();
 }
 
@@ -43,11 +47,17 @@ void DXCCompiler::Compile(Engine::IDataBlob** pp_shader_bytecode, Engine::IDataB
             p_library->CreateBlobWithEncodingFromPinned(args.source, args.source_length, CP_UTF8, &p_source);
             ENGINE_DEV_CHECK_EXPR(SUCCEEDED(hr), "create source encoding fail:");
         }
-    else
+    else if (args.file_path != nullptr)
         {
             const auto& str_path = Wstr2Str(args.file_path);
             hr = p_utils->LoadFile(args.file_path, nullptr, &p_source);
             ENGINE_DEV_CHECK_EXPR(SUCCEEDED(hr), "Load file fail:", str_path);
+        }
+    else
+        {
+            tr = TR_ERROR;
+            LOG_ERROR("expected DXCCompilerArgs.source or file path to compile shader!!!");
+            return;
         }
 
     DxcBuffer source_buffer;
@@ -88,6 +98,11 @@ void DXCCompiler::Compile(Engine::IDataBlob** pp_shader_bytecode, Engine::IDataB
                 {
                     LOG_ERROR("Fail save shader compile result to path: ", p_shader_name->GetStringPointer());
                 }
+        }
+
+    if (pp_shader_pdb == nullptr)
+        {
+            return;
         }
 
     ComPtr<IDxcBlob> p_pdb = nullptr;

@@ -35,6 +35,7 @@ target_link_libraries(Graphics-D3D12
     Graphics-Base
     "d3d12.lib"
     "dxgi.lib"
+    CorePlatform
     PUBLIC
     Graphics-D3D12-Interface
 )

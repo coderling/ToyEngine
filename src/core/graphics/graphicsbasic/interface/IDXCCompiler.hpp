@@ -20,7 +20,11 @@ struct ICompileArgs
 
     virtual void SetShaderModel(const wchar_t* sm) = 0;
 
+    virtual void AddMacro(const wchar_t* macro) = 0;
+
     virtual void AddCustomArgs(const wchar_t** argv, const std::uint32_t& argc) = 0;
+
+    virtual void Assign(const void* source, const std::size_t& source_length) = 0;
 
     virtual void Clear() = 0;
 };
