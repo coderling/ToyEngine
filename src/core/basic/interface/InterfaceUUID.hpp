@@ -19,4 +19,6 @@ struct IUUID
 };
 
 static constexpr const IUUID UUID_UNKNOWN = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
+
+#define INTERFACEUUID(TYPE) static constexpr const IUUID TYPE##_UUID
 }  // namespace Toy

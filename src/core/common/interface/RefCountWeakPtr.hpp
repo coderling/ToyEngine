@@ -13,18 +13,22 @@ class RefCountWeakPtr final
     ReferenceCounter* p_refcounter;
 
    public:
-    explicit RefCountWeakPtr(Interface* _p_object = nullptr) noexcept : p_object(_p_object), p_refcounter(nullptr)
+    explicit RefCountWeakPtr(Interface* _p_object = nullptr) noexcept
+        : p_object(_p_object),
+          p_refcounter(nullptr)
     {
         if (p_object != nullptr)
             {
-                p_refcounter = StaticCheckPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
+                p_refcounter = CheckDynamicPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
             }
     }
 
     ~ReferenceCounter() noexcept { Release(); }
 
     // 赋值构造函数
-    RefCountWeakPtr(const RefCountWeakPtr& ref_ptr) noexcept : p_object(ref_ptr.p_object), p_refcounter(ref_ptr.p_refcounter)
+    RefCountWeakPtr(const RefCountWeakPtr& ref_ptr) noexcept
+        : p_object(ref_ptr.p_object),
+          p_refcounter(ref_ptr.p_refcounter)
     {
         if (p_refcounter != nullptr)
             {
@@ -34,18 +38,21 @@ class RefCountWeakPtr final
 
     // 移动构造函数
     RefCountWeakPtr(RefCountWeakPtr&& ref_ptr) noexcept
-        : p_object(std::move(ref_ptr.p_object)), p_refcounter(std::move(ref_ptr.p_refcounter))
+        : p_object(std::move(ref_ptr.p_object)),
+          p_refcounter(std::move(ref_ptr.p_refcounter))
     {
         ref_ptr.p_object = nullptr;
         ref_ptr.p_refcounter = nullptr;
     }
 
     // 由RefCountPtr的类型转换，显式
-    explicit RefCountWeakPtr(RefCountPtr<Interface>& ref_ptr) noexcept : p_object(ref_ptr.RawPtr()), p_refcounter(nullptr)
+    explicit RefCountWeakPtr(RefCountPtr<Interface>& ref_ptr) noexcept
+        : p_object(ref_ptr.RawPtr()),
+          p_refcounter(nullptr)
     {
         if (p_object != nullptr)
             {
-                p_refcounter = Debug::StaticCheckPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
+                p_refcounter = Debug::CheckDynamicPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
             }
         if (p_refcounter != nullptr)
             {
@@ -82,7 +89,7 @@ class RefCountWeakPtr final
         p_object = _p_object;
         if (p_object != nullptr)
             {
-                p_refcounter = Debug::StaticCheckPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
+                p_refcounter = Debug::CheckDynamicPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
             }
         if (p_refcounter != nullptr)
             {
@@ -115,7 +122,7 @@ class RefCountWeakPtr final
         p_object = ref_ptr.RawPtr();
         if (p_object != nullptr)
             {
-                p_refcounter = Debug::StaticCheckPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
+                p_refcounter = Debug::CheckDynamicPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
             }
 
         if (p_refcounter != nullptr)

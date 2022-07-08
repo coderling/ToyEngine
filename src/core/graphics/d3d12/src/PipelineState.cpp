@@ -3,7 +3,7 @@
 #include <GlobalEnvironment.hpp>
 #include <GraphicsDef.hpp>
 #include <IApp.hpp>
-#include <IGraphics.hpp>
+#include <IRenderDevice.hpp>
 #include "Utility.hpp"
 
 using namespace Toy::Graphics;

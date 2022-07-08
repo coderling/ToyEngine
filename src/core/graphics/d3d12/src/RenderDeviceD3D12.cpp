@@ -1,8 +1,9 @@
 #include <wrl.h>
 
+#include "DefaultMemoryAllocator.hpp"
 #include "GlobalEnvironment.hpp"
 #include "GraphicsCommandQueueD3D12.hpp"
-#include "GraphicsD3D12.hpp"
+#include "RenderDeviceD3D12.hpp"
 #include "SwapChainD3D12.hpp"
 #include "Utility.hpp"
 
@@ -10,11 +11,35 @@ using namespace Microsoft::WRL;
 
 namespace Toy::Graphics
 {
-IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, GraphicsD3D12) {}
+IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, RenderDeviceD3D12, const EngineSetting& setting),
+    // 0: D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV
+    // 1: D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER
+    // 2: D3D12_DESCRIPTOR_HEAP_TYPE_RTV
+    //  3:D3D12_DESCRIPTOR_HEAP_TYPE_DSV
+    cpu_descriptorheap{
+        {Toy::Engine::DefaultMemoryAllocator::GetGobalAllocator(), *this, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
+         setting.d3d12.CPU_heap_size.cbv_srv_uav},
+        {Toy::Engine::DefaultMemoryAllocator::GetGobalAllocator(), *this, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,
+         setting.d3d12.CPU_heap_size.sampler},
+        {Toy::Engine::DefaultMemoryAllocator::GetGobalAllocator(), *this, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, setting.d3d12.CPU_heap_size.rtv},
+        {Toy::Engine::DefaultMemoryAllocator::GetGobalAllocator(), *this, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, setting.d3d12.CPU_heap_size.dsv},
+    },
+    // 0: D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV
+    // 1: D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER
+    gpu_descriptorheap{
+        {Toy::Engine::DefaultMemoryAllocator::GetGobalAllocator(), *this, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,
+         setting.d3d12.GPU_static_mutable.cbv_srv_uav, setting.d3d12.GPU_dynamic.cbv_srv_uav,
+         setting.d3d12.GPU_dynamic_chunk_size.cbv_srv_uav},
 
-IMPLEMENT_QUERYINTERFACE(GraphicsD3D12, TBase)
+        {Toy::Engine::DefaultMemoryAllocator::GetGobalAllocator(), *this, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,
+         setting.d3d12.GPU_static_mutable.sampler, setting.d3d12.GPU_dynamic.sampler, setting.d3d12.GPU_dynamic_chunk_size.sampler},
+    }
+{
+}
 
-int GraphicsD3D12::Initialize()
+IMPLEMENT_QUERYINTERFACE(RenderDeviceD3D12, TBase, IRenderDevice)
+
+int RenderDeviceD3D12::Initialize()
 {
     UINT dxg_flactory_flags = 0;
 #if defined(_DEBUG)
@@ -91,9 +116,9 @@ int GraphicsD3D12::Initialize()
     return 0;
 }
 
-void GraphicsD3D12::OnDestroy() { WaitForGpu(); }
+void RenderDeviceD3D12::OnDestroy() { WaitForGpu(); }
 
-void GraphicsD3D12::WaitForGpu()
+void RenderDeviceD3D12::WaitForGpu()
 {
     const UINT64 t_fence_value = fence_values[frame_index];
     command_queue->Signal(p_fence->GetFence(), t_fence_value);
@@ -101,7 +126,7 @@ void GraphicsD3D12::WaitForGpu()
     p_fence->Wait(t_fence_value);
 }
 
-void GraphicsD3D12::FinishFrame()
+void RenderDeviceD3D12::FinishFrame()
 {
     swapchain->Present();
     // update frameIndex

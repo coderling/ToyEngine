@@ -1,8 +1,8 @@
 #pragma once
 #include <stdint.h>
 #include <CStringTool.hpp>
-#include <IObject.hpp>
 #include <string>
+#include "DeviceObject.hpp"
 #include "IDataBlob.hpp"
 #include "InterfaceUUID.hpp"
 #include "RefCountPtr.hpp"
@@ -33,7 +33,10 @@ struct ShaderMacro
     const char* macro = nullptr;
 
     constexpr ShaderMacro() noexcept {}
-    constexpr ShaderMacro(const char* _macro) noexcept : macro(_macro) {}
+    constexpr ShaderMacro(const char* _macro) noexcept
+        : macro(_macro)
+    {
+    }
 
     bool operator==(const ShaderMacro& rhs) const { return CStrEqual(this->macro, rhs.macro); }
 
@@ -47,7 +50,11 @@ struct ShaderDesc
     SHADER_TYPE shader_type = SHADER_TYPE_UNKNOWN;
 
     constexpr ShaderDesc() noexcept {}
-    constexpr ShaderDesc(const char* _name, const SHADER_TYPE& _shader_type) noexcept : name(_name), shader_type(_shader_type) {}
+    constexpr ShaderDesc(const char* _name, const SHADER_TYPE& _shader_type) noexcept
+        : name(_name),
+          shader_type(_shader_type)
+    {
+    }
 
     bool operator==(const ShaderDesc& rhs) const { return this->shader_type == rhs.shader_type && CStrEqual(name, rhs.name); }
 
@@ -82,7 +89,9 @@ struct ShaderCreateInfo
         this->macro = macro;
     }
 
-    void InitASCompileFromSourceCode(const char* source_code, const std::size_t& len, const char* entry = "SDMain",
+    void InitASCompileFromSourceCode(const char* source_code,
+                                     const std::size_t& len,
+                                     const char* entry = "SDMain",
                                      const ShaderMacro* macro = nullptr)
     {
         this->source = source_code;
@@ -131,14 +140,14 @@ struct ShaderCreateInfo
     }
 };
 
-class IShader : public Toy::IObject
+class IShader : public Toy::Graphics::IDeviceObject
 {
    public:
-    static constexpr const IUUID CLS_UUID = {/* 83006833-6598-4387-a374-d76dccefe15d */
-                                             0x83006833,
-                                             0x6598,
-                                             0x4387,
-                                             {0xa3, 0x74, 0xd7, 0x6d, 0xcc, 0xef, 0xe1, 0x5d}};
+    INTERFACEUUID(IShader) = {/* 83006833-6598-4387-a374-d76dccefe15d */
+                              0x83006833,
+                              0x6598,
+                              0x4387,
+                              {0xa3, 0x74, 0xd7, 0x6d, 0xcc, 0xef, 0xe1, 0x5d}};
 
     virtual const ShaderDesc& GetDesc() const = 0;
 };

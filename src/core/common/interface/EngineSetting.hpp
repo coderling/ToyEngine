@@ -13,6 +13,12 @@ struct EngineD3D12Setting final
         uint32_t sampler;
     };
 
+    struct GPUDynamicChunkSize
+    {
+        uint32_t cbv_srv_uav;
+        uint32_t sampler;
+    };
+
     struct CPUHeapSize
     {
         uint32_t cbv_srv_uav;
@@ -23,6 +29,7 @@ struct EngineD3D12Setting final
 
     GPUHeapSize GPU_static_mutable{8912, 1024};
     GPUHeapSize GPU_dynamic{8912, 1024};
+    GPUDynamicChunkSize GPU_dynamic_chunk_size{256, 32};
 
     CPUHeapSize CPU_heap_size{8912, 2048, 1024, 1024};
 };

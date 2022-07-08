@@ -1,9 +1,8 @@
 #include "GraphicsCommandList_D3D12.hpp"
-#include <IGraphics.hpp>
+#include <IRenderDevice.hpp>
 #include "GlobalEnvironment.hpp"
 #include "IApp.hpp"
 #include "Utility.hpp"
-
 
 using namespace Toy::Graphics;
 

@@ -8,7 +8,10 @@ requires std::derived_from<Interface, IObject>
 class TObject : public ReferenceCounterObject<Interface>
 {
    public:
-    TObject(IReferenceCounter* _p_refcounter) noexcept : ReferenceCounterObject<Interface>(_p_refcounter) {}
+    TObject(IReferenceCounter* _p_refcounter) noexcept
+        : ReferenceCounterObject<Interface>(_p_refcounter)
+    {
+    }
     ~TObject() override {}
 
     TOY_RESULT ENGINE_FUNCTION_CALL_CONVENTION QueryInterface(const IUUID& iid, IObject** pp_interface) override
@@ -48,13 +51,13 @@ class TObject : public ReferenceCounterObject<Interface>
         return TOY_RESULT::TR_ERROR;                                                                                                       \
     }
 
-#define IMPLEMENT_QUERYINTERFACE(CLASS_TYPE, BASE_CLASS_TYPE)                                                                              \
+#define IMPLEMENT_QUERYINTERFACE(CLASS_TYPE, BASE_CLASS_TYPE, INTERFACE_TYPE)                                                              \
     TOY_RESULT CLASS_TYPE::QueryInterface(const IUUID& iid, IObject** pp_interface)                                                        \
-        IMPLEMENT_QUERYINTERFACE_LOGIC(CLASS_TYPE::CLS_UUID, BASE_CLASS_TYPE)
+        IMPLEMENT_QUERYINTERFACE_LOGIC(CLASS_TYPE::INTERFACE_TYPE##_UUID, BASE_CLASS_TYPE)
 
-#define IMPLEMENT_QUERYINTERFACE_LOCALLY(CLASS_TYPE, BASE_CLASS_TYPE)                                                                      \
+#define IMPLEMENT_QUERYINTERFACE_LOCALLY(CLASS_TYPE, BASE_CLASS_TYPE, INTERFACE_TYPE)                                                      \
     IMPLEMENT_QUERYINTERFACE_STATEMENT()                                                                                                   \
-    IMPLEMENT_QUERYINTERFACE_LOGIC(CLASS_TYPE::CLS_UUID, BASE_CLASS_TYPE)
+    IMPLEMENT_QUERYINTERFACE_LOGIC(CLASS_TYPE::INTERFACE_TYPE##_UUID, BASE_CLASS_TYPE)
 
 #define IMPLEMENT_QUERYINTERFACE_STATEMENT()                                                                                               \
     TOY_RESULT ENGINE_FUNCTION_CALL_CONVENTION QueryInterface(const IUUID& iid, IObject** pp_interface) override
@@ -65,11 +68,13 @@ class TObject : public ReferenceCounterObject<Interface>
     explicit CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept
 
 #define IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBASE, CLASS_TYPE, ...)                                                                            \
-    CLASS_TYPE::CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept : TBase(p_refcounter)
+    CLASS_TYPE::CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept                                                        \
+        : TBase(p_refcounter)
 
 #define IMPLEMENT_CONSTRUCT_LOCALLY(TBASE, CLASS_TYPE, ...)                                                                                \
     template <typename ObjectType, typename AllocatorType>                                                                                 \
     friend class Toy::Engine::MakeReferenceCounter;                                                                                        \
-    explicit CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept : TBase(p_refcounter)
+    explicit CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept                                                           \
+        : TBase(p_refcounter)
 
 }  // namespace Toy::Engine

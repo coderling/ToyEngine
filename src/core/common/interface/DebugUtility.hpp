@@ -119,7 +119,7 @@ namespace Toy::Debug
 #endif
 
 template <typename DestType, typename SourceType>
-inline DestType* StaticCheckPointerCast(SourceType* s_ptr)
+inline DestType* CheckDynamicPointerCast(SourceType* s_ptr)
 {
 #ifdef ENGINE_DEVELOPMENT
     static_assert(std::is_convertible_v<DestType*, SourceType*>, "unsupported cast");

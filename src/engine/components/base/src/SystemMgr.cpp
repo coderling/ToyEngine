@@ -1,8 +1,9 @@
 #include "SystemMgr.hpp"
 #include "GlobalEnvironment.hpp"
-#include "IGraphics.hpp"
 #include "IPipeline.hpp"
+#include "IRenderDevice.hpp"
 #include "ISystem.hpp"
+
 
 using namespace Toy::Engine;
 
@@ -10,7 +11,7 @@ int SystemMgr::Initialize()
 {
     // setup pipeline
     GlobalEnvironment::GetEnv().pipeline = Graphics::IPipeline::GetInstance();
-    GlobalEnvironment::GetEnv().graphics = Graphics::IGraphics::GetInstance();
+    GlobalEnvironment::GetEnv().graphics = Graphics::IRenderDevice::GetInstance();
 
     return 0;
 }

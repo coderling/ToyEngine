@@ -21,9 +21,15 @@ class RefCountPtr final
         RefCountPtr* p_ref_ptr;
 
        public:
-        DDPtrHandle(RefCountPtr& ref_ptr) noexcept : new_raw_ptr(ref_ptr.RawPtr()), p_ref_ptr(std::addressof(ref_ptr)) {}
+        DDPtrHandle(RefCountPtr& ref_ptr) noexcept
+            : new_raw_ptr(ref_ptr.RawPtr()),
+              p_ref_ptr(std::addressof(ref_ptr))
+        {
+        }
 
-        DDPtrHandle(DDPtrHandle&& dd_ptr) noexcept : new_raw_ptr(dd_ptr.new_raw_ptr), p_ref_ptr(dd_ptr)
+        DDPtrHandle(DDPtrHandle&& dd_ptr) noexcept
+            : new_raw_ptr(dd_ptr.new_raw_ptr),
+              p_ref_ptr(dd_ptr)
         {
             dd_ptr.new_raw_ptr = nullptr;
             dd_ptr.p_ref_ptr = nullptr;
@@ -50,10 +56,14 @@ class RefCountPtr final
     };
 
    public:
-    RefCountPtr() noexcept : p_object(nullptr) {}
+    RefCountPtr() noexcept
+        : p_object(nullptr)
+    {
+    }
 
     // 显式构造函数，防止隐式转换
-    explicit RefCountPtr(Interface* _p_object) noexcept : p_object(_p_object)
+    explicit RefCountPtr(Interface* _p_object) noexcept
+        : p_object(_p_object)
     {
         if (_p_object != nullptr)
             {
@@ -70,7 +80,8 @@ class RefCountPtr final
     }
 
     // 复制构造函数, 增加引用计数
-    RefCountPtr(const RefCountPtr& rfc_ptr) noexcept : p_object(rfc_ptr.p_object)
+    RefCountPtr(const RefCountPtr& rfc_ptr) noexcept
+        : p_object(rfc_ptr.p_object)
     {
         if (p_object != nullptr)
             {
@@ -83,17 +94,28 @@ class RefCountPtr final
     requires std::derived_from<OtherInterface, Interface>
 
     RefCountPtr(const RefCountPtr<OtherInterface>& ref_ptr)
-    noexcept : RefCountPtr<Interface>(ref_ptr.p_object) {}
+    noexcept
+        : RefCountPtr<Interface>(ref_ptr.p_object)
+    {
+    }
 
     // 移动构造函数
-    RefCountPtr(RefCountPtr&& ref_ptr) noexcept : p_object(std::move(ref_ptr.p_object)) { ref_ptr.p_object = nullptr; }
+    RefCountPtr(RefCountPtr&& ref_ptr) noexcept
+        : p_object(std::move(ref_ptr.p_object))
+    {
+        ref_ptr.p_object = nullptr;
+    }
 
     // 模板移动构造函数
     template <typename OtherInterface>
     requires std::derived_from<OtherInterface, Interface>
 
     RefCountPtr(RefCountPtr<OtherInterface>&& ref_ptr)
-    noexcept : p_object(std::move(ref_ptr.p_object)) { ref_ptr.p_object = nullptr; }
+    noexcept
+        : p_object(std::move(ref_ptr.p_object))
+    {
+        ref_ptr.p_object = nullptr;
+    }
 
     ~RefCountPtr() { Release(); }
 
@@ -124,7 +146,7 @@ class RefCountPtr final
     {
         if (p_object != nullptr)
             {
-                auto p_refcounter = Debug::StaticCheckPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
+                auto p_refcounter = Debug::CheckDynamicPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
                 if (p_refcounter != nullptr)
                     {
                         return p_refcounter->GetNumOfStrongRef();
@@ -138,7 +160,7 @@ class RefCountPtr final
     {
         if (p_object != nullptr)
             {
-                auto p_refcounter = Debug::StaticCheckPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
+                auto p_refcounter = Debug::CheckDynamicPointerCast<ReferenceCounter, IReferenceCounter>(p_object->GetReferenceCounter());
                 if (p_refcounter != nullptr)
                     {
                         return p_refcounter->GetNumOfWeakRef();
@@ -219,13 +241,13 @@ class RefCountPtr final
     Interface* RawPtr() const noexcept { return p_object; }
 
     template <typename OtherInterface>
-    requires std::derived_from<OtherInterface, Interface> OtherInterface* RawPtr() noexcept
+    requires std::derived_from<OtherInterface, IObject> OtherInterface* RawPtr() noexcept
     {
-        return Debug::StaticCheckPointerCast<OtherInterface, Interface>(p_object);
+        return Debug::CheckDynamicPointerCast<OtherInterface, Interface>(p_object);
     }
     template <typename OtherInterface>
-    requires std::derived_from<OtherInterface, Interface>
-    const OtherInterface* RawPtr() const noexcept { return Debug::StaticCheckPointerCast<OtherInterface, Interface>(p_object); }
+    requires std::derived_from<OtherInterface, IObject>
+    const OtherInterface* RawPtr() const noexcept { return Debug::CheckDynamicPointerCast<OtherInterface, Interface>(p_object); }
 
     // 隐式转换
     operator Interface*() noexcept { return RawPtr(); }

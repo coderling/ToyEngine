@@ -7,7 +7,7 @@ using namespace Toy::Engine;
 
 namespace Toy::Graphics
 {
-class IGPUResource : public IObject, public NoCopy
+class IGPUResource
 {
    public:
     virtual IDeviceResource* GetResource() = 0;

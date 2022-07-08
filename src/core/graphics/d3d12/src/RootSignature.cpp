@@ -1,7 +1,7 @@
 #include "RootSignature.hpp"
 #include <GlobalEnvironment.hpp>
 #include <IApp.hpp>
-#include <IGraphics.hpp>
+#include <IRenderDevice.hpp>
 #include "Utility.hpp"
 
 using namespace Toy::Graphics;

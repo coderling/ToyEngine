@@ -2,7 +2,7 @@
 #include <GlobalEnvironment.hpp>
 #include <GraphicsDef.hpp>
 #include "GraphicsCommandQueueD3D12.hpp"
-#include "IGraphics.hpp"
+#include "IRenderDevice.hpp"
 #include "Utility.hpp"
 
 namespace Toy::Graphics

@@ -16,7 +16,7 @@ class D3D12Factory final : public ID3D12Factory
     void CreateDXCCompiler(IDXCCompiler** pp_compiler) override
     {
         auto raw_ptr = Engine::MakeReferenceCounter<DXCCompiler>()();
-        raw_ptr->QueryInterface(IDXCCompiler::CLS_UUID, reinterpret_cast<IObject**>(pp_compiler));
+        raw_ptr->QueryInterface(IDXCCompiler::IDXCCompiler_UUID, reinterpret_cast<IObject**>(pp_compiler));
     }
 };
 }  // namespace Toy::Graphics

@@ -33,12 +33,22 @@ else()
     message("Not support platform current platform")
 endif()
 
+set(SUPPORT_D3D12 FALSE CACHE INTERNAL "")
+
+if(TARGET_PLATFORM_WIN)
+    set(SUPPORT_D3D12 TRUE CACHE INTERNAL "enable d3d12 supported")
+endif()
+
 add_library(EngineBuildSetting INTERFACE)
 target_compile_definitions(EngineBuildSetting INTERFACE "$<$<CONFIG:DEBUG>:_DEBUG;DEBUG;ENGINE_DEVELOPMENT;ENGINE_DEBUG>")
 target_compile_definitions(EngineBuildSetting INTERFACE "$<$<CONFIG:RELWITHDEBINFO>:ENGINE_DEVELOPMENT;>")
 
 if(TARGET_PLATFORM_WIN)
     target_compile_definitions(EngineBuildSetting INTERFACE PLATFORM_WINDOWS=1)
+endif()
+
+if(SUPPORT_D3D12)
+    target_compile_definitions(EngineBuildSetting INTERFACE SUPPORT_D3D12=1)
 endif()
 
 set(DEBUG_CONFIGS DEBUG CACHE INTERNAL "release configs")

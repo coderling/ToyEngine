@@ -10,11 +10,11 @@ namespace Toy::IO
 class IFileInterface : public Toy::IObject
 {
    public:
-    static constexpr const IUUID CLS_UUID = {/* 71dc3d44-bd75-495d-be1f-adf39859edcd */
-                                             0x71dc3d44,
-                                             0xbd75,
-                                             0x495d,
-                                             {0xbe, 0x1f, 0xad, 0xf3, 0x98, 0x59, 0xed, 0xcd}};
+    INTERFACEUUID(IFileInterface) = {/* 71dc3d44-bd75-495d-be1f-adf39859edcd */
+                                     0x71dc3d44,
+                                     0xbd75,
+                                     0x495d,
+                                     {0xbe, 0x1f, 0xad, 0xf3, 0x98, 0x59, 0xed, 0xcd}};
 
     virtual bool IsExits() const = 0;
 
@@ -56,7 +56,7 @@ class TFile final : public Engine::TObject<IFileInterface>
     void OnDestroy() override { Close(); }
 
    public:
-    IMPLEMENT_QUERYINTERFACE_LOCALLY(TFile, TBase)
+    IMPLEMENT_QUERYINTERFACE_LOCALLY(TFile, TBase, IFileInterface)
 
     NODISCARD inline bool IsExits() const override { return file.IsExits(); }
 

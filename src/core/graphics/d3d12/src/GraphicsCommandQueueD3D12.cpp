@@ -1,9 +1,10 @@
 #include "GraphicsCommandQueueD3D12.hpp"
 #include <vector>
 #include "GlobalEnvironment.hpp"
-#include "IGraphics.hpp"
 #include "IReferenceCounter.hpp"
+#include "IRenderDevice.hpp"
 #include "Utility.hpp"
+
 
 namespace Toy::Graphics
 {

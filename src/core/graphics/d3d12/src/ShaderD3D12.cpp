@@ -164,7 +164,7 @@ void ShaderD3D12::ReflectionShader(Engine::IDataBlob* p_shader_bytecode)
         }
 
     // if vertex shader, create input layout
-    if (this->desc.shader_type)
+    if ((this->desc.shader_type = SHADER_TYPE::SHADER_TYPE_VERTEX))
         {
             CreatePSOInputLayout(d3d_shader_desc, p_reflection.Get());
         }

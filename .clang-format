@@ -4,6 +4,8 @@ IncludeBlocks: Preserve
 AlignEscapedNewlines: Right
 BreakBeforeBraces: Custom
 ColumnLimit: 140
+PackConstructorInitializers: Never
+BinPackParameters: false
 BraceWrapping:   
   AfterClass:      true # false
   AfterControlStatement: true # false

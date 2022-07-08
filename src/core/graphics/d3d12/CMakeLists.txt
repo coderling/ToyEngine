@@ -1,11 +1,13 @@
 set(Includes
-    "include/GraphicsD3D12.hpp"
+    "include/RenderDeviceD3D12.hpp"
+    "include/D3D12MemAlloc.hpp"
 )
 
 set(Sources
-    "src/GraphicsD3D12.cpp"
+    "src/RenderDeviceD3D12.cpp"
     "src/DXCCompiler.cpp"
     "src/D3D12Factory.cpp"
+    "src/D3D12MemAlloc.cpp"
 )
 
 set(Interfaces
@@ -57,7 +59,7 @@ target_link_libraries(Graphics-D3D12-Shared
 )
 
 target_compile_definitions(Graphics-D3D12-Shared PUBLIC ENGINE_DLL_EXPORT=1)
-SetTargetOutputName(Graphics-D3D12-Shared GraphicsD3D12)
+SetTargetOutputName(Graphics-D3D12-Shared RenderDeviceD3D12)
 
 InstallEngineLib(Graphics-D3D12)
 InstallEngineLib(Graphics-D3D12-Shared)

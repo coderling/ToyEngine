@@ -23,7 +23,7 @@ class ReferenceCounterObject : public Interface
     template <typename... InterfaceArgsType>
     ReferenceCounterObject(IReferenceCounter* _p_refcounter, InterfaceArgsType&&... args) noexcept
         : Interface(std::forward<InterfaceArgsType>(args)...),
-          p_refcounter(Debug::StaticCheckPointerCast<ReferenceCounter, IReferenceCounter>(_p_refcounter))
+          p_refcounter(Debug::CheckDynamicPointerCast<ReferenceCounter, IReferenceCounter>(_p_refcounter))
     {
     }
 

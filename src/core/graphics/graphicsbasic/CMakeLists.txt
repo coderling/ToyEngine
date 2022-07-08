@@ -15,6 +15,8 @@ set(Interfaces
     "interface/IGraphicsCommandQueue.hpp"
     "interface/ISwapChain.hpp"
     "interface/IDXCCompiler.hpp"
+    "interface/IRenderDevice.hpp"
+    "interface/RenderDeviceBase.hpp"
 )
 
 add_library(Graphics-Base STATIC ${Includes} ${Sources} ${Interfaces})

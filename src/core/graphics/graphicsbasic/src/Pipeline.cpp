@@ -1,5 +1,5 @@
 #include "Pipeline.hpp"
-#include <IGraphics.hpp>
+#include <IRenderDevice.hpp>
 #include "GlobalEnvironment.hpp"
 
 using namespace Toy::Graphics;

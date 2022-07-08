@@ -1,7 +1,7 @@
 #include "FenceD3D12.hpp"
 #include <DebugUtility.hpp>
 #include <GlobalEnvironment.hpp>
-#include <IGraphics.hpp>
+#include <IRenderDevice.hpp>
 #include "Utility.hpp"
 
 namespace Toy::Graphics

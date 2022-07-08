@@ -1,5 +1,5 @@
 #include "UploadBuffer_D3D12.hpp"
-#include <IGraphics.hpp>
+#include <IRenderDevice.hpp>
 #include <algorithm>
 #include "CStringTool.hpp"
 #include "EngineUtility.hpp"

@@ -5,7 +5,7 @@
 
 namespace Toy::Graphics
 {
-class IGraphics;
+class IRenderDevice;
 class IPipeline;
 }  // namespace Toy::Graphics
 
@@ -19,7 +19,7 @@ namespace Toy::Engine
 struct GlobalEnvironment
 {
    public:
-    Toy::Graphics::IGraphics* GetGraphics() const noexcept { return graphics; }
+    Toy::Graphics::IRenderDevice* GetGraphics() const noexcept { return graphics; }
     Toy::Graphics::IPipeline* GetPipeline() const noexcept { return pipeline; }
     const AppArgs* GetArgs() const noexcept { return init_args; }
     void* GetHwnd() const noexcept { return hwnd; }
@@ -28,7 +28,7 @@ struct GlobalEnvironment
    private:
     friend class SystemMgr;
     friend class Platform::EngineLoop;
-    Toy::Graphics::IGraphics* graphics = nullptr;
+    Toy::Graphics::IRenderDevice* graphics = nullptr;
     Toy::Graphics::IPipeline* pipeline = nullptr;
     const AppArgs* init_args = nullptr;
     void* hwnd = nullptr;

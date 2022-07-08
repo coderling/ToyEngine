@@ -10,7 +10,7 @@ namespace Toy::Graphics
 
 IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, DXCCompiler) {}
 
-IMPLEMENT_QUERYINTERFACE(DXCCompiler, TBase)
+IMPLEMENT_QUERYINTERFACE(DXCCompiler, TBase, IDXCCompiler)
 
 ICompileArgs* DXCCompiler::GetArgsHandle(const wchar_t* path)
 {
@@ -84,7 +84,7 @@ void DXCCompiler::Compile(Engine::IDataBlob** pp_shader_bytecode, Engine::IDataB
 
     ASSERT_SUCCEEDED(p_result->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&p_shader), &p_shader_name));
     auto ref_ptr = Engine::DataBlob::Create(p_shader->GetBufferSize(), p_shader->GetBufferPointer());
-    tr = ref_ptr->QueryInterface(Engine::IDataBlob::CLS_UUID, reinterpret_cast<IObject**>(pp_shader_bytecode));
+    tr = ref_ptr->QueryInterface(Engine::IDataBlob::IDataBlob_UUID, reinterpret_cast<IObject**>(pp_shader_bytecode));
     if (p_shader_name != nullptr)
         {
             try
@@ -112,7 +112,7 @@ void DXCCompiler::Compile(Engine::IDataBlob** pp_shader_bytecode, Engine::IDataB
     if (SUCCEEDED(hr))
         {
             auto pdb_ref_ptr = Engine::DataBlob::Create(p_pdb->GetBufferSize(), p_pdb->GetBufferPointer());
-            ref_ptr->QueryInterface(Engine::IDataBlob::CLS_UUID, reinterpret_cast<IObject**>(pp_shader_pdb));
+            ref_ptr->QueryInterface(Engine::IDataBlob::IDataBlob_UUID, reinterpret_cast<IObject**>(pp_shader_pdb));
             if (p_pdbname != nullptr)
                 {
                     try
