@@ -67,14 +67,14 @@ class TObject : public ReferenceCounterObject<Interface>
     friend class Toy::Engine::MakeReferenceCounter;                                                                                        \
     explicit CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept
 
-#define IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBASE, CLASS_TYPE, ...)                                                                            \
-    CLASS_TYPE::CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept                                                        \
-        : TBase(p_refcounter)
+#define IMPLEMENT_CONSTRUCT_DEFINE_HEAD(CLASS_TYPE, ...) CLASS_TYPE::CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept
 
-#define IMPLEMENT_CONSTRUCT_LOCALLY(TBASE, CLASS_TYPE, ...)                                                                                \
+#define IMPLEMENT_CONSTRUCT_LOCALLY(CLASS_TYPE, ...)                                                                                       \
     template <typename ObjectType, typename AllocatorType>                                                                                 \
     friend class Toy::Engine::MakeReferenceCounter;                                                                                        \
-    explicit CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept                                                           \
-        : TBase(p_refcounter)
+    explicit CLASS_TYPE(IReferenceCounter* p_refcounter, ##__VA_ARGS__) noexcept
+
+#define IMPLEMENT_CONSTRUCT_INIT_LIST(TBASE, ...)                                                                                          \
+        :TBASE(p_refcounter, ##__VA_ARGS__)
 
 }  // namespace Toy::Engine

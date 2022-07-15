@@ -1,26 +1,25 @@
 #pragma once
 
-#include "ISwapChain.hpp"
-
 #include <dxgi1_6.h>
 #include <wrl.h>
-#include "TObject.hpp"
+#include "D3D12TypeTraits.hpp"
+#include "IRenderDeviceD3D12.hpp"
+#include "ISwapChainD3D12.hpp"
+#include "SwapChainBase.hpp"
 
 using namespace Microsoft::WRL;
 
 namespace Toy::Graphics
 {
-class SwapChain final : public Toy::Engine::TObject<ISwapChain>
+class SwapChainD3D12 final : public SwapChainBase<D3D12TypeTraits>
 {
     using TBase = Toy::Engine::TObject<ISwapChain>;
     bool is_fullscreen;
     ComPtr<IDXGISwapChain3> swapchain = nullptr;
 
-    IMPLEMENT_CONSTRUCT_STATEMENT(SwapChain);
+    IMPLEMENT_CONSTRUCT_STATEMENT(SwapChainD3D12, IRenderDeviceD3D12* _p_render_device, IDeviceContextD3D12* _p_device_context, void* hwnd);
 
    public:
-    IMPLEMENT_QUERYINTERFACE_STATEMENT();
-    int Initialize(IDXGIFactory* factory);
     void Present() override;
     void Resize(uint32_t width, uint32_t height) override;
     void SetFullScreen(bool state) override;

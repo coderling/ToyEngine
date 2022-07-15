@@ -5,6 +5,7 @@ AlignEscapedNewlines: Right
 BreakBeforeBraces: Custom
 ColumnLimit: 140
 PackConstructorInitializers: Never
+SortIncludes: false
 BinPackParameters: false
 BraceWrapping:   
   AfterClass:      true # false

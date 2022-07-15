@@ -1,24 +1,24 @@
 #pragma once
 #include <memory>
 #include "Client.hpp"
-#include "ISystem.hpp"
 
 namespace Toy::Platform
 {
-class EngineLoop : public Engine::ISystem
+class Application final
 {
     std::unique_ptr<Engine::IClient> client;
     std::unique_ptr<Engine::ISystem> system_mgr;
 
    public:
-    explicit EngineLoop(std::unique_ptr<Engine::IClient> _client);
+    explicit Application(std::unique_ptr<Engine::IClient> _client);
 
-    ~EngineLoop() noexcept override;
-    int Initialize() override;
-    void Tick() override;
+    ~Application() noexcept;
+    int Initialize();
+    void Tick();
 
    private:
-    void Finalize() override;
+    void Finalize();
     int SystemSetup();
+    int GraphicsSetUp();
 };
 }  // namespace Toy::Platform

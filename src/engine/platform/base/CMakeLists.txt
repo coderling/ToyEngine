@@ -3,13 +3,12 @@ set(Includes
 )
 
 set(Sources
-    "src/EngineLoop.cpp"
+    "src/Empty.cpp"
 )
 
 set(Interfaces
-    "interface/Client.hpp"
-    "interface/EngineLoop.hpp"
     "interface/Platform.hpp"
+    "interface/INativeWindow.hpp"
 )
 
 add_library(EnginePlatform-Basic STATIC ${Includes} ${Interfaces} ${Sources})

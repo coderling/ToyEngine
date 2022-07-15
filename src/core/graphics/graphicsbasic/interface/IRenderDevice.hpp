@@ -1,9 +1,12 @@
 #pragma once
 
 #include "GraphicsDef.hpp"
-#include "IGraphicsCommandQueue.hpp"
+#include "ICommandQueue.hpp"
 #include "IObject.hpp"
+#include "IPipelineState.hpp"
+#include "IShader.hpp"
 #include "ISwapChain.hpp"
+#include "PipelineStateCreateInfo.hpp"
 
 using namespace Toy::Engine;
 
@@ -20,12 +23,12 @@ class IRenderDevice : public IObject
     static IRenderDevice* GetInstance();
     virtual int Initialize() = 0;
     virtual IDevice* GetDevice() const noexcept = 0;
-    virtual ISwapChain* GetSwapChain() const noexcept = 0;
-    virtual IGraphicsCommandQueue* GetCommandQueue() const noexcept = 0;
+    virtual ICommandQueue* GetCommandQueue() const noexcept = 0;
     virtual void WaitForGpu() = 0;
     virtual void FinishFrame() = 0;
+    virtual void CreatePipelineState(const PipelineStateCreateInfo& create_info, IPipelineState** pp_pipelinestate) = 0;
+    virtual void CreateShader(const ShaderCreateInfo& create_info, IShader** pp_shader) = 0;
 
-   protected:
    protected:
 };
 }  // namespace Toy::Graphics

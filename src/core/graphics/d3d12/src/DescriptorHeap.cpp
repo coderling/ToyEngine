@@ -5,6 +5,88 @@
 
 namespace Toy::Graphics
 {
+//------------------------------------------NullDescriptors------------------------------//
+ComPtr<ID3D12Resource> CreateDefaultTexture(ID3D12Device* device, const D3D12_RESOURCE_FLAGS& flag)
+{
+    D3D12_RESOURCE_DESC desc{};
+    desc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+    desc.Alignment = 0;
+    desc.Width = 128;
+    desc.Height = 128;
+    desc.DepthOrArraySize = 1;
+    desc.MipLevels = 1;
+    desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+    desc.SampleDesc = DXGI_SAMPLE_DESC{1, 0};
+    desc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+    desc.Flags = flag;
+
+    D3D12_HEAP_PROPERTIES d3d12_heap_properties;
+
+    d3d12_heap_properties.Type = D3D12_HEAP_TYPE_DEFAULT;
+    d3d12_heap_properties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+    d3d12_heap_properties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+    d3d12_heap_properties.CreationNodeMask = 1;
+    d3d12_heap_properties.VisibleNodeMask = 1;
+
+    ComPtr<ID3D12Resource> texture;
+    device->CreateCommittedResource(&d3d12_heap_properties, D3D12_HEAP_FLAG_NONE, &desc, D3D12_RESOURCE_STATE_COMMON, nullptr,
+                                    MY_IID_PPV_ARGS(&texture));
+    return texture;
+}
+
+ComPtr<ID3D12DescriptorHeap> CreateNullDescriptorsHeap(RenderDeviceD3D12& device,
+                                                       const std::size_t& num_descriptors,
+                                                       const D3D12_DESCRIPTOR_HEAP_TYPE& heap_type)
+{
+    ComPtr<ID3D12DescriptorHeap> heap;
+    auto d3d12_device = device.GetDevice();
+    D3D12_DESCRIPTOR_HEAP_DESC desc;
+    desc.NumDescriptors = num_descriptors;
+    desc.Type = heap_type;
+    desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+    desc.NodeMask = 0; /*zero not support mulitple adapter*/
+    d3d12_device->CreateDescriptorHeap(&desc, MY_IID_PPV_ARGS(&heap));
+    const auto inc_size = d3d12_device->GetDescriptorHandleIncrementSize(heap_type);
+    auto cpu_handle = heap->GetCPUDescriptorHandleForHeapStart();
+    if (heap_type == D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)
+        {
+            auto texture = CreateDefaultTexture(d3d12_device, D3D12_RESOURCE_FLAG_NONE);
+
+            for (uint32_t i = 0; i < num_descriptors; ++i, cpu_handle.ptr += inc_size)
+                {
+                    d3d12_device->CreateShaderResourceView(texture.Get(), nullptr, cpu_handle);
+                }
+        }
+    else if (heap_type == D3D12_DESCRIPTOR_HEAP_TYPE_RTV)
+        {
+            auto texture = CreateDefaultTexture(d3d12_device, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
+
+            for (uint32_t i = 0; i < num_descriptors; ++i, cpu_handle.ptr += inc_size)
+                {
+                    d3d12_device->CreateShaderResourceView(texture.Get(), nullptr, cpu_handle);
+                }
+        }
+    else if (heap_type == D3D12_DESCRIPTOR_HEAP_TYPE_DSV)
+        {
+            auto texture = CreateDefaultTexture(d3d12_device, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+
+            for (uint32_t i = 0; i < num_descriptors; ++i, cpu_handle.ptr += inc_size)
+                {
+                    d3d12_device->CreateShaderResourceView(texture.Get(), nullptr, cpu_handle);
+                }
+        }
+    else if (heap_type == D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER)
+        {
+            // no null descriptor
+        }
+    else
+        {
+            LOG_ERROR("unsupported heap_type:", heap_type);
+        }
+    return heap;
+}
+//------------------------------------------End：NullDescriptors------------------------------//
+
 //------------------------------------------DescriptorHeapAllocation------------------------------//
 DescriptorHeapAllocation::DescriptorHeapAllocation() noexcept
     : cpu_base_address{0},
@@ -88,6 +170,7 @@ DescriptorHeapAllocationMgr::DescriptorHeapAllocationMgr(IDescriptorAllocator& _
                                                          const uint16_t& mgr_id) noexcept
     : DescriptorHeapAllocationMgr{_allocator,
                                   mem_allocator,
+                                  device,
                                   [&] {
                                       ComPtr<ID3D12DescriptorHeap> heap;
                                       device.GetDevice()->CreateDescriptorHeap(&heap_desc, MY_IID_PPV_ARGS(&heap));
@@ -102,6 +185,7 @@ DescriptorHeapAllocationMgr::DescriptorHeapAllocationMgr(IDescriptorAllocator& _
 
 DescriptorHeapAllocationMgr::DescriptorHeapAllocationMgr(IDescriptorAllocator& _allocator,
                                                          IAllocator& mem_allocator,
+                                                         RenderDeviceD3D12& device,
                                                          ID3D12DescriptorHeap* p_descriptor_heap,
                                                          const uint16_t& _mgr_id,
                                                          const std::size_t& offset,
@@ -110,7 +194,9 @@ DescriptorHeapAllocationMgr::DescriptorHeapAllocationMgr(IDescriptorAllocator& _
       allocator{_allocator},
       descriptor_heap{p_descriptor_heap},
       heap_desc{p_descriptor_heap->GetDesc()},
-      mgr_id{_mgr_id}
+      mgr_id{_mgr_id},
+      device_d3d12{device},
+      null_descriptor_heap{CreateNullDescriptorsHeap(device_d3d12, null_descriptor_count, heap_desc.Type)}
 {
     cpu_base_address = descriptor_heap->GetCPUDescriptorHandleForHeapStart();
     cpu_base_address.ptr = static_cast<SIZE_T>(cpu_base_address.ptr + UINT64(offset) * UINT64(allocator.GetDescirptorIncSize()));
@@ -146,6 +232,15 @@ DescriptorHeapAllocation DescriptorHeapAllocationMgr::Allocate(const std::size_t
 
     auto allocation = DescriptorHeapAllocation(allocator, mgr_id, count, cpu_ptr, gpu_ptr);
     allocation.block_offset = block_alloc.address_offset;
+
+    // init set descriptor to null descriptor
+    auto null_descriptors_cpu_handle = null_descriptor_heap->GetCPUDescriptorHandleForHeapStart();
+    for (uint32_t i = 0; i < count; i += null_descriptor_count)
+        {
+            const auto copy_num = std::min(static_cast<uint32_t>(null_descriptor_count), static_cast<uint32_t>(count - 1));
+            auto dest_cpu_handle = allocation.GetCPUHandle(i);
+            device_d3d12.GetDevice()->CopyDescriptorsSimple(copy_num, dest_cpu_handle, null_descriptors_cpu_handle, heap_desc.Type);
+        }
     return allocation;
 }
 
@@ -173,12 +268,13 @@ const uint16_t DescriptorHeapAllocationMgr::GetMgrId() const noexcept { return m
 //--------------------------------------------DecriptorSuballocationMgr----------------------------//
 DecriptorSuballocationMgr::DecriptorSuballocationMgr(IDescriptorAllocator& _allocator,
                                                      IAllocator& mem_allocator,
+                                                     RenderDeviceD3D12& device,
                                                      ID3D12DescriptorHeap* p_descriptor_heap,
                                                      const uint16_t& mgr_id,
                                                      const std::size_t& offset,
                                                      const std::size_t& num_descriptors,
                                                      const std::size_t& dynamic_chunk_size) noexcept
-    : alloc_mgr{_allocator, mem_allocator, p_descriptor_heap, mgr_id, offset, num_descriptors},
+    : alloc_mgr{_allocator, mem_allocator, device, p_descriptor_heap, mgr_id, offset, num_descriptors},
       chunk_size{dynamic_chunk_size},
       current_chunk_offset{0},
       allocator{_allocator}
@@ -345,8 +441,9 @@ GPUDescriptorHeap::GPUDescriptorHeap(IAllocator& _mem_allocator,
       descriptor_size{static_cast<uint16_t>(device.GetDevice()->GetDescriptorHandleIncrementSize(heap_type))},
       device_d3d12{device},
       mem_allocator{_mem_allocator},
-      static_alloc_mgr{*this, mem_allocator, descriptor_heap.Get(), 0, 0, num_static_descriptors},
-      dynamic_alloc_mgr{*this, mem_allocator, descriptor_heap.Get(), 1, num_static_descriptors, num_dynamic_descriptors, dynamic_chunk_size}
+      static_alloc_mgr{*this, mem_allocator, device, descriptor_heap.Get(), 0, 0, num_static_descriptors},
+      dynamic_alloc_mgr{
+          *this, mem_allocator, device, descriptor_heap.Get(), 1, num_static_descriptors, num_dynamic_descriptors, dynamic_chunk_size}
 {
 }
 

@@ -1,4 +1,4 @@
-add_subdirectory(testCom)
+add_subdirectory(helloGraphics)
 
 if(MSVC)
     message("LKSJGKLSDJ:" _MSC_VER)

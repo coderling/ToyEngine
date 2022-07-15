@@ -23,6 +23,7 @@ set(Interfaces
     "interface/RefCountWeakPtr.hpp"
     "interface/TObject.hpp"
     "interface/DataBlob.hpp"
+    "interface/CommandLineParse.hpp"
 )
 
 add_library(Common-Interface INTERFACE)

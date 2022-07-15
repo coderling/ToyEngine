@@ -1,5 +1,9 @@
 #pragma once
+#include "EngineSetting.hpp"
 #include "IDXCCompiler.hpp"
+#include "IDeviceContext.hpp"
+#include "IRenderDevice.hpp"
+#include "ISwapChain.hpp"
 #include "LoadDLL.hpp"
 
 namespace Toy::Graphics
@@ -8,6 +12,10 @@ struct ID3D12Factory
 {
    public:
     virtual void CreateDXCCompiler(IDXCCompiler** pp_compiler) = 0;
+    virtual void CreateDeviceAndDeviceContext(const EngineSetting& setting, IRenderDevice** pp_device, IDeviceContext** pp_context) = 0;
+    virtual void CreateSwapChain(
+        const EngineSetting& setting, IRenderDevice* p_device, IDeviceContext* p_context, void* hwnd, ISwapChain** pp_swapchain) = 0;
+    virtual void CreateCommandQueue(ID3D12Device* d3d12_device, ICommandQueue** pp_command_queue) = 0;
 };
 
 }  // namespace Toy::Graphics

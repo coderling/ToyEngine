@@ -142,7 +142,6 @@ class MakeReferenceCounter
     }
 };
 
-#define MAKE_REF_OBJECT(ObjectType, allocator, description, ...)                                                                           \
-    MakeReferenceCounter<ObjectType, typename std::remove_reference<decltype(allocator)>::type>(allocator, description, __FILE__,          \
-                                                                                                __LINE__, ##__VA_ARGS__)
+#define MAKE_REF_OBJECT(ObjectType, allocator, description)                                                                                \
+    MakeReferenceCounter<ObjectType, typename std::remove_reference<decltype(allocator)>::type>(allocator, description, __FILE__, __LINE__)
 }  // namespace Toy::Engine

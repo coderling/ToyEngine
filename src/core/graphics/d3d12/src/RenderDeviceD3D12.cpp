@@ -1,8 +1,8 @@
 #include <wrl.h>
 
+#include "CommandQueueD3D12.hpp"
 #include "DefaultMemoryAllocator.hpp"
 #include "GlobalEnvironment.hpp"
-#include "GraphicsCommandQueueD3D12.hpp"
 #include "RenderDeviceD3D12.hpp"
 #include "SwapChainD3D12.hpp"
 #include "Utility.hpp"
@@ -11,7 +11,12 @@ using namespace Microsoft::WRL;
 
 namespace Toy::Graphics
 {
-IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, RenderDeviceD3D12, const EngineSetting& setting),
+IMPLEMENT_CONSTRUCT_DEFINE_HEAD(RenderDeviceD3D12,
+                                const EngineSetting& setting,
+                                ID3D12Device* p_d3d12_device,
+                                ICommandQueueD3D12* _p_command_queue,
+                                IDeviceContextD3D12* _p_device_context)
+IMPLEMENT_CONSTRUCT_INIT_LIST(TBase, setting, _p_command_queue, _p_device_context), p_device{p_d3d12_device},
     // 0: D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV
     // 1: D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER
     // 2: D3D12_DESCRIPTOR_HEAP_TYPE_RTV
@@ -96,7 +101,6 @@ int RenderDeviceD3D12::Initialize()
     D3D12_COMMAND_QUEUE_DESC queue_desc = {};
     queue_desc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     queue_desc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-    command_queue = MakeReferenceCounter<GraphicsCommandQueueD3D12>()(queue_desc);
 
     swapchain = MakeReferenceCounter<SwapChain>()();
 
@@ -134,5 +138,7 @@ void RenderDeviceD3D12::FinishFrame()
     // wai for current frame ready to render
     WaitForGpu();
 }
+
+void RenderDeviceD3D12::CreatePipelineState(const PipelineStateCreateInfo& create_info, IPipelineState** pp_pipelinestate) {}
 
 }  // namespace Toy::Graphics

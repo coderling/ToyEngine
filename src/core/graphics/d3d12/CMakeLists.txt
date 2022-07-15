@@ -1,6 +1,7 @@
 set(Includes
     "include/RenderDeviceD3D12.hpp"
     "include/D3D12MemAlloc.hpp"
+    "include/PipelineStateD3D12.hpp"
 )
 
 set(Sources
@@ -8,12 +9,14 @@ set(Sources
     "src/DXCCompiler.cpp"
     "src/D3D12Factory.cpp"
     "src/D3D12MemAlloc.cpp"
+    "src/PipelineStateD3D12.cpp"
 )
 
 set(Interfaces
     "interface/d3dx12.h"
     "interface/DXCCompiler.hpp"
     "interface/ID3D12Factory.hpp"
+    "interface/IPipelineStateD3D12.hpp"
 )
 
 add_library(Graphics-D3D12 STATIC ${Includes} ${Sources} ${Interfaces})

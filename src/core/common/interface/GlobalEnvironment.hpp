@@ -11,7 +11,7 @@ class IPipeline;
 
 namespace Toy::Platform
 {
-class EngineLoop;
+class Application;
 }
 
 namespace Toy::Engine
@@ -27,7 +27,7 @@ struct GlobalEnvironment
 
    private:
     friend class SystemMgr;
-    friend class Platform::EngineLoop;
+    friend class Platform::Application;
     Toy::Graphics::IRenderDevice* graphics = nullptr;
     Toy::Graphics::IPipeline* pipeline = nullptr;
     const AppArgs* init_args = nullptr;

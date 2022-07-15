@@ -86,7 +86,7 @@ IMPLEMENT_CONSTRUCT_DEFINE_HEAD(TBase, ShaderD3D12, const ShaderCreateInfo& shad
     ReflectionShader(p_shader_bytecode);
 }
 
-IMPLEMENT_QUERYINTERFACE(ShaderD3D12, TBase)
+IMPLEMENT_QUERYINTERFACE(ShaderD3D12, TBase, IShader)
 
 void ShaderD3D12::ReflectionShader(Engine::IDataBlob* p_shader_bytecode)
 {
@@ -128,34 +128,21 @@ void ShaderD3D12::ReflectionShader(Engine::IDataBlob* p_shader_bytecode)
                         break;
                         ;
                     case D3D_SIT_TEXTURE:
-                        resources_rangs.TEX_SRVs.Add(bind_desc.Name, bind_desc.BindPoint, bind_desc.BindCount, bind_desc.Space,
-                                                     bind_desc.Type, bind_desc.Dimension);
+                        resources_rangs.SRVs.Add(bind_desc.Name, bind_desc.BindPoint, bind_desc.BindCount, bind_desc.Space, bind_desc.Type,
+                                                 bind_desc.Dimension);
                         break;
                     case D3D_SIT_SAMPLER:
+                    case D3D_SIT_STRUCTURED:
+                    case D3D_SIT_BYTEADDRESS:
                         resources_rangs.SMPs.Add(bind_desc.Name, bind_desc.BindPoint, bind_desc.BindCount, bind_desc.Space, bind_desc.Type,
                                                  bind_desc.Dimension);
                         break;
                     case D3D_SIT_UAV_RWTYPED:
-                        if (bind_desc.Dimension == D3D_SRV_DIMENSION_BUFFER)
-                            {
-                                resources_rangs.BUFFER_UAVs.Add(bind_desc.Name, bind_desc.BindPoint, bind_desc.BindCount, bind_desc.Space,
-                                                                bind_desc.Type, bind_desc.Dimension);
-                            }
-                        else
-                            {
-                                resources_rangs.TEX_UAVs.Add(bind_desc.Name, bind_desc.BindPoint, bind_desc.BindCount, bind_desc.Space,
-                                                             bind_desc.Type, bind_desc.Dimension);
-                            }
-                        break;
-                    case D3D_SIT_STRUCTURED:
-                    case D3D_SIT_BYTEADDRESS:
-                        resources_rangs.BUFFER_SRVs.Add(bind_desc.Name, bind_desc.BindPoint, bind_desc.BindCount, bind_desc.Space,
-                                                        bind_desc.Type, bind_desc.Dimension);
-                        break;
                     case D3D_SIT_UAV_RWSTRUCTURED:
                     case D3D_SIT_UAV_RWBYTEADDRESS:
-                        resources_rangs.BUFFER_UAVs.Add(bind_desc.Name, bind_desc.BindPoint, bind_desc.BindCount, bind_desc.Space,
-                                                        bind_desc.Type, bind_desc.Dimension);
+                        resources_rangs.UAVs.Add(bind_desc.Name, bind_desc.BindPoint, bind_desc.BindCount, bind_desc.Space, bind_desc.Type,
+                                                 bind_desc.Dimension);
+                        break;
                         break;
                     default:
                         ENGINE_ASSERT_EXPR("Not Supported ResourceType:", bind_desc.Type);

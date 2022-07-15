@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <string>
 
 namespace Toy::Engine
 {
@@ -41,6 +42,8 @@ struct EngineSetting final
     int32_t frame_count = 3;
 
     bool hdr = false;
+
+    std::string data_path;
 
     EngineD3D12Setting d3d12;
 };

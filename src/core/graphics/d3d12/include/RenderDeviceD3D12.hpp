@@ -3,10 +3,13 @@
 #include <wrl.h>
 #include <memory>
 #include <vector>
+#include "D3D12TypeTraits.hpp"
 #include "DescriptorHeap.hpp"
 #include "EngineSetting.hpp"
 #include "FenceD3D12.hpp"
-#include "GraphicsCommandQueueD3D12.hpp"
+#include "ICommandQueueD3D12.hpp"
+#include "IPipelineStateD3D12.hpp"
+#include "IRenderDeviceD3D12.hpp"
 #include "RefCountPtr.hpp"
 #include "RenderDeviceBase.hpp"
 #include "SwapChainD3D12.hpp"
@@ -15,18 +18,11 @@ using namespace Microsoft::WRL;
 
 namespace Toy::Graphics
 {
-class RenderDeviceD3D12 final : public RenderDeviceBase<IRenderDevice>
-{
-    using TBase = RenderDeviceBase<IRenderDevice>;
-    ComPtr<IDevice> device;
-    RefCountPtr<SwapChain> swapchain;
-    RefCountPtr<GraphicsCommandQueueD3D12> command_queue;
-    ComPtr<IDeviceCommandAllocator> common_allocator;
 
-    // synchronization
-    UINT frame_index = 0;
-    RefCountPtr<FenceD3D12> p_fence;
-    std::vector<UINT64> fence_values;
+class RenderDeviceD3D12 final : public RenderDeviceBase<D3D12TypeTraits>
+{
+    using TBase = RenderDeviceBase<D3D12TypeTraits>;
+    ComPtr<ID3D12Device> p_device;
 
     // 0: D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV
     // 1: D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER
@@ -42,9 +38,8 @@ class RenderDeviceD3D12 final : public RenderDeviceBase<IRenderDevice>
 
     int Initialize() override;
 
-    IDevice* GetDevice() const noexcept override { return device.Get(); }
-    ISwapChain* GetSwapChain() const noexcept override { return swapchain.RawPtr(); }
-    IGraphicsCommandQueue* GetCommandQueue() const noexcept override { return command_queue.RawPtr(); }
+    IDevice* GetDevice() const noexcept override { return p_device.Get(); }
+    ICommandQueue* GetCommandQueue() const noexcept override { return p_command_queue.RawPtr(); }
     void WaitForGpu() override;
     void FinishFrame() override;
     template <typename ObjectType, typename = typename std::enable_if<std::is_object<ObjectType>::value>::type>
@@ -52,10 +47,17 @@ class RenderDeviceD3D12 final : public RenderDeviceBase<IRenderDevice>
     {
     }
 
+    void CreatePipelineState(const PipelineStateCreateInfo& create_info, IPipelineState** pp_pipelinestate) override;
+
+    void CreateShader(const ShaderCreateInfo& create_info, IShader** pp_shader) override;
+
    protected:
     void OnDestroy() override;
 
    private:
-    IMPLEMENT_CONSTRUCT_STATEMENT(RenderDeviceD3D12, const EngineSetting& setting);
+    IMPLEMENT_CONSTRUCT_STATEMENT(RenderDeviceD3D12,
+                                  const EngineSetting& setting,
+                                  ID3D12Device* p_d3d12_device,
+                                  ICommandQueueD3D12* p_command_queue);
 };
 }  // namespace Toy::Graphics

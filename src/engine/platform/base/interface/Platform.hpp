@@ -1,13 +1,15 @@
 #pragma once
 
 #include <string>
-#include "pch.hpp"
 #include "AppArgs.hpp"
+#include "Client.hpp"
+#include "INativeWindow.hpp"
 
 namespace Toy::Platform
 {
-	int TOY_LIB_API InitEngine(const std::string& title);
-	int TOY_LIB_API InitEngine(const Toy::Engine::AppArgs& args);
-	int TOY_LIB_API StartEngine();
-}
+int InitEngine(const std::string& title);
+int InitEngine(const Toy::Engine::AppArgs& args);
+int StartEngine();
 
+void CreateNativeWndow(INativeWindow** pp_nativewindow);
+}  // namespace Toy::Platform

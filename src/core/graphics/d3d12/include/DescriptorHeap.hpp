@@ -73,6 +73,8 @@ class IDescriptorAllocator
 
 class DescriptorHeapAllocationMgr final
 {
+    static constexpr const uint16_t null_descriptor_count = 64;
+
     Engine::VariableSizeAllocationsManager block_alloc_mgr;
     IDescriptorAllocator& allocator;
     ComPtr<ID3D12DescriptorHeap> descriptor_heap;
@@ -80,6 +82,8 @@ class DescriptorHeapAllocationMgr final
     D3D12_GPU_DESCRIPTOR_HANDLE gpu_base_address;
     D3D12_DESCRIPTOR_HEAP_DESC heap_desc;
     uint16_t mgr_id;
+    RenderDeviceD3D12& device_d3d12;
+    ComPtr<ID3D12DescriptorHeap> null_descriptor_heap;
 
    public:
     DescriptorHeapAllocationMgr(IDescriptorAllocator& _allocator,
@@ -90,6 +94,7 @@ class DescriptorHeapAllocationMgr final
 
     DescriptorHeapAllocationMgr(IDescriptorAllocator& _allocator,
                                 IAllocator& mem_allocator,
+                                RenderDeviceD3D12& device,
                                 ID3D12DescriptorHeap* p_descriptor_heap,
                                 const uint16_t& mgr_id,
                                 const std::size_t& offset,
@@ -115,6 +120,7 @@ class DecriptorSuballocationMgr final
    public:
     DecriptorSuballocationMgr(IDescriptorAllocator& allocator,
                               IAllocator& mem_allocator,
+                              RenderDeviceD3D12& device,
                               ID3D12DescriptorHeap* p_descriptor_heap,
                               const uint16_t& mgr_id,
                               const std::size_t& offset,

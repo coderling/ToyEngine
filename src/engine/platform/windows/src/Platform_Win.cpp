@@ -1,9 +1,9 @@
 #include <memory>
-#include "EngineLoop.hpp"
+#include "Application.hpp"
 #include "Platform.hpp"
 #include "Windows.hpp"
 
-std::unique_ptr<Toy::Platform::EngineLoop> p_engine;
+std::unique_ptr<Toy::Platform::Application> p_engine;
 
 int Toy::Platform::InitEngine(const std::string& title)
 {
@@ -13,7 +13,7 @@ int Toy::Platform::InitEngine(const std::string& title)
 int Toy::Platform::InitEngine(const Toy::Engine::AppArgs& args)
 {
     auto p_client = std::make_unique<Windows>(args);
-    p_engine = std::make_unique<EngineLoop>(std::move(p_client));
+    p_engine = std::make_unique<Application>(std::move(p_client));
     const int& ret = p_engine->Initialize();
     return ret;
 }

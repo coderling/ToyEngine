@@ -1,8 +1,7 @@
-#include "PipelineState.hpp"
+#include "PipelineStateD3D12.hpp"
 #include <DebugUtility.hpp>
 #include <GlobalEnvironment.hpp>
 #include <GraphicsDef.hpp>
-#include <IApp.hpp>
 #include <IRenderDevice.hpp>
 #include "Utility.hpp"
 

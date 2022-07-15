@@ -14,7 +14,11 @@ struct ShaderPSOInputLayout
     std::unique_ptr<D3D12_INPUT_ELEMENT_DESC[]> input_elements;
     std::size_t num;
 
-    ShaderPSOInputLayout() noexcept : input_elements{nullptr}, num{0} {}
+    ShaderPSOInputLayout() noexcept
+        : input_elements{nullptr},
+          num{0}
+    {
+    }
 };
 
 // 一种类型的Shader资源
@@ -36,8 +40,12 @@ struct SingleShaderResourceRangs
     using TRanges = std::vector<ResourceRang>;
     TRanges rangs;
 
-    void Add(const char* vname, const uint16_t& bind_point, const uint16_t& bind_count, const uint16_t& space,
-             const D3D_SHADER_INPUT_TYPE& input_type, const D3D_SRV_DIMENSION& dimension)
+    void Add(const char* vname,
+             const uint16_t& bind_point,
+             const uint16_t& bind_count,
+             const uint16_t& space,
+             const D3D_SHADER_INPUT_TYPE& input_type,
+             const D3D_SRV_DIMENSION& dimension)
     {
         ResourceRang rang{vname, bind_point, bind_count, space, static_cast<uint32_t>(input_type), static_cast<uint32_t>(dimension)};
 #if ENGINE_DEVELOPMENT
@@ -117,12 +125,10 @@ struct SingleShaderResourceRangs
 
 struct ShaderResourceBindingRangs
 {
-    SingleShaderResourceRangs CBVs;         // CBV
-    SingleShaderResourceRangs TEX_SRVs;     // SRV
-    SingleShaderResourceRangs BUFFER_SRVs;  // SRV
-    SingleShaderResourceRangs TEX_UAVs;     // UAV
-    SingleShaderResourceRangs BUFFER_UAVs;  // UAV
-    SingleShaderResourceRangs SMPs;         // sampler
+    SingleShaderResourceRangs CBVs;  // CBV
+    SingleShaderResourceRangs SRVs;  // SRV
+    SingleShaderResourceRangs UAVs;  // UAV
+    SingleShaderResourceRangs SMPs;  // sampler
 };
 
 }  // namespace Toy::Graphics

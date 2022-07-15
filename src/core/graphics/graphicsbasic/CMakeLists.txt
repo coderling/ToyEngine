@@ -12,11 +12,12 @@ set(Interfaces
     "interface/IPipeline.hpp"
     "interface/PipelineFragment.hpp"
     "interface/IShader.hpp"
-    "interface/IGraphicsCommandQueue.hpp"
+    "interface/ICommandQueue.hpp"
     "interface/ISwapChain.hpp"
     "interface/IDXCCompiler.hpp"
     "interface/IRenderDevice.hpp"
     "interface/RenderDeviceBase.hpp"
+    "interface/IPipelineState.hpp"
 )
 
 add_library(Graphics-Base STATIC ${Includes} ${Sources} ${Interfaces})
